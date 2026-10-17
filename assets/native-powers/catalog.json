@@ -1,0 +1,2312 @@
+[
+  {
+    "id": "stitch",
+    "name": "Stitch Storm",
+    "motif": "purple stitched comet with cream diamond tip",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "hero",
+        "amount": 0
+      }
+    ]
+  },
+  {
+    "id": "sunny",
+    "name": "Sunburst",
+    "motif": "golden stuffed sun ring with soft triangular rays",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "center",
+        "amount": 18
+      }
+    ]
+  },
+  {
+    "id": "patch",
+    "name": "Cotton Party",
+    "motif": "cream cotton ball opening into coral patchwork petals",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "scatter",
+        "amount": 14
+      }
+    ]
+  },
+  {
+    "id": "mint",
+    "name": "Mint Wave",
+    "motif": "mint turquoise curled fleece wave with cream foam",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "bottom",
+        "amount": 16
+      }
+    ]
+  },
+  {
+    "id": "ember",
+    "name": "Ember Rush",
+    "motif": "coral and gold stuffed flame with cream hot center",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "column",
+        "amount": 18
+      }
+    ]
+  },
+  {
+    "id": "luna",
+    "name": "Moon Wish",
+    "motif": "lavender crescent cradling a gold pocket watch",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "top",
+        "amount": 8
+      },
+      {
+        "kind": "buff",
+        "pattern": "time",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "byte",
+    "name": "Star Sweep",
+    "motif": "cyan padded shooting star with three gold circuit stitches",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "row",
+        "amount": 18
+      }
+    ]
+  },
+  {
+    "id": "jester",
+    "name": "Jester Jump",
+    "motif": "coral lavender fabric magician ribbon unfolding into a bow",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "scatter",
+        "amount": 9
+      }
+    ]
+  },
+  {
+    "id": "splash",
+    "name": "Tidal Hug",
+    "motif": "turquoise circular wave with white fleece foam scallops",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "ring",
+        "amount": 18
+      }
+    ]
+  },
+  {
+    "id": "sprout",
+    "name": "Garden Parade",
+    "motif": "lime felt vine curling around a cream seed",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "heroColumn",
+        "amount": 18
+      }
+    ]
+  },
+  {
+    "id": "calico",
+    "name": "Patchwork Pounce",
+    "motif": "calico orange cream black padded paw print",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "zigzag",
+        "amount": 16
+      },
+      {
+        "kind": "buff",
+        "pattern": "coins",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "pup",
+    "name": "Fetch Friends",
+    "motif": "tan stuffed bone with teal stitched fetch trail",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "nearest",
+        "amount": 7
+      },
+      {
+        "kind": "buff",
+        "pattern": "reach",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "bunny",
+    "name": "Pocket Pause",
+    "motif": "cream rabbit-eared pocket watch with pink stitching",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "stop",
+        "amount": 6
+      },
+      {
+        "kind": "transform",
+        "pattern": "top",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "panda",
+    "name": "Bamboo Bridge",
+    "motif": "green bamboo bridge made of rounded fabric poles",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "column",
+        "amount": 8
+      },
+      {
+        "kind": "buff",
+        "pattern": "reach",
+        "amount": 7
+      }
+    ]
+  },
+  {
+    "id": "fox",
+    "name": "Foxfire Fork",
+    "motif": "orange plush fox-tail flame splitting into two tips",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "fork",
+        "amount": 17
+      }
+    ]
+  },
+  {
+    "id": "bear",
+    "name": "Honey Hold",
+    "motif": "gold felt honey pot with a slow curling honey ribbon",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "stop",
+        "amount": 5
+      },
+      {
+        "kind": "buff",
+        "pattern": "coins",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "frog",
+    "name": "Lily Leap",
+    "motif": "green stuffed lily pad springing a cream water drop",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "threePools",
+        "amount": 15
+      },
+      {
+        "kind": "buff",
+        "pattern": "time",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "id": "pig",
+    "name": "Lucky Piggy",
+    "motif": "pink padded piggy bank spilling gold cloth coins",
+    "steps": [
+      {
+        "kind": "bubbles",
+        "pattern": "bottom",
+        "amount": 3
+      },
+      {
+        "kind": "buff",
+        "pattern": "coins",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "penguin",
+    "name": "Ice Slide",
+    "motif": "icy blue plush sled and cream snow trail",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "diagonal",
+        "amount": 16
+      },
+      {
+        "kind": "buff",
+        "pattern": "slow",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "owl",
+    "name": "Night Watch",
+    "motif": "navy felt owl feather around a gold clock dial",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "stop",
+        "amount": 5
+      },
+      {
+        "kind": "buff",
+        "pattern": "reach",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "monkey",
+    "name": "Banana Bounce",
+    "motif": "gold plush banana curling into a spring",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "zigzag",
+        "amount": 8
+      },
+      {
+        "kind": "buff",
+        "pattern": "chain",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "tiger",
+    "name": "Tiger Roar",
+    "motif": "orange black striped plush sound-wave fan",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "cone",
+        "amount": 19
+      }
+    ]
+  },
+  {
+    "id": "shark",
+    "name": "Fin Sweep",
+    "motif": "teal stuffed shark fin cutting through cream fabric foam",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "edges",
+        "amount": 18
+      }
+    ]
+  },
+  {
+    "id": "dino",
+    "name": "Pebble Stomp",
+    "motif": "moss green quilted dinosaur footprint with cream dust",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "bottomCenter",
+        "amount": 18
+      },
+      {
+        "kind": "buff",
+        "pattern": "score",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "dragon",
+    "name": "Dragon Breath",
+    "motif": "ruby gold fabric dragon flame with a forked tail",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "fan",
+        "amount": 18
+      },
+      {
+        "kind": "buff",
+        "pattern": "coins",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "bat",
+    "name": "Echo Time",
+    "motif": "violet stitched bat wings surrounding a silver clock",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "stop",
+        "amount": 4
+      },
+      {
+        "kind": "buff",
+        "pattern": "tap",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "ram",
+    "name": "Wool Roll",
+    "motif": "cream fleece spiral with tan rolled-horn stitches",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "spiral",
+        "amount": 17
+      }
+    ]
+  },
+  {
+    "id": "raccoon",
+    "name": "Masked Match",
+    "motif": "gray plush mask opening to a gold button",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "largest",
+        "amount": 8
+      },
+      {
+        "kind": "buff",
+        "pattern": "coins",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "octopus",
+    "name": "Eight Hugs",
+    "motif": "lavender padded eight-arm swirl with teal suction dots",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "spokes",
+        "amount": 20
+      }
+    ]
+  },
+  {
+    "id": "ghost",
+    "name": "Boo Switch",
+    "motif": "white stuffed ghost-shaped silk puff with lilac hem",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "checker",
+        "amount": 10
+      },
+      {
+        "kind": "buff",
+        "pattern": "link",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "robot",
+    "name": "Button Beam",
+    "motif": "cyan cloth robot button releasing a squared soft beam",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "cross",
+        "amount": 18
+      },
+      {
+        "kind": "buff",
+        "pattern": "score",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "cactus",
+    "name": "Prickle Party",
+    "motif": "lime stuffed cactus star with cream embroidered spines",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "blast",
+        "amount": 7
+      },
+      {
+        "kind": "clear",
+        "pattern": "smallest",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "mushroom",
+    "name": "Mushroom Mix",
+    "motif": "coral spotted felt mushroom cap blooming open",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "bottom",
+        "amount": 8
+      },
+      {
+        "kind": "buff",
+        "pattern": "chain",
+        "amount": 7
+      }
+    ]
+  },
+  {
+    "id": "cupcake",
+    "name": "Frosting Friends",
+    "motif": "pink cream plush frosting spiral with a gold sprinkle",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "ring",
+        "amount": 8
+      },
+      {
+        "kind": "buff",
+        "pattern": "score",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "strawberry",
+    "name": "Berry Basket",
+    "motif": "red stuffed strawberry basket with green felt leaves",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "largest",
+        "amount": 18
+      },
+      {
+        "kind": "buff",
+        "pattern": "coins",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "pumpkin",
+    "name": "Lantern Cross",
+    "motif": "orange padded pumpkin lantern opening a gold cross",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "cross",
+        "amount": 17
+      },
+      {
+        "kind": "buff",
+        "pattern": "coins",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "cloud",
+    "name": "Cloud Drift",
+    "motif": "cream fleece cloud with blue stuffed raindrops",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "slow",
+        "amount": 8
+      },
+      {
+        "kind": "bubbles",
+        "pattern": "top",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "id": "planet",
+    "name": "Orbit Links",
+    "motif": "lavender plush planet with a gold fabric orbital loop",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "link",
+        "amount": 6
+      },
+      {
+        "kind": "buff",
+        "pattern": "reach",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "sol",
+    "name": "Solar Double",
+    "motif": "gold stuffed double sun with coral rays",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "center",
+        "amount": 12
+      },
+      {
+        "kind": "clear",
+        "pattern": "edges",
+        "amount": 10
+      }
+    ]
+  },
+  {
+    "id": "treasure",
+    "name": "Treasure Trail",
+    "motif": "teal gold padded treasure chest opening on a ribbon",
+    "steps": [
+      {
+        "kind": "bubbles",
+        "pattern": "scatter",
+        "amount": 4
+      },
+      {
+        "kind": "buff",
+        "pattern": "coins",
+        "amount": 7
+      }
+    ]
+  },
+  {
+    "id": "jingle_cub",
+    "name": "Jingle Chain",
+    "motif": "red gold stuffed jingle bell with holly bow",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "chain",
+        "amount": 8
+      },
+      {
+        "kind": "clear",
+        "pattern": "hero",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "cocoa_claus",
+    "name": "Cocoa Clock",
+    "motif": "red cream plush cocoa mug with clock-shaped marshmallow",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "stop",
+        "amount": 6
+      },
+      {
+        "kind": "bubbles",
+        "pattern": "bottom",
+        "amount": 1
+      }
+    ]
+  },
+  {
+    "id": "holly_hare",
+    "name": "Holly Hop",
+    "motif": "green felt holly sprig tied with a coral bunny bow",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "fork",
+        "amount": 9
+      },
+      {
+        "kind": "buff",
+        "pattern": "time",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "id": "noel_narwhal",
+    "name": "Northern Ripple",
+    "motif": "icy teal plush narwhal horn inside a snowy ripple",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "ring",
+        "amount": 15
+      },
+      {
+        "kind": "buff",
+        "pattern": "slow",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "ginger_snap",
+    "name": "Ginger Zigzag",
+    "motif": "tan gingerbread lightning biscuit with white stitched icing",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "zigzag",
+        "amount": 18
+      },
+      {
+        "kind": "bubbles",
+        "pattern": "center",
+        "amount": 1
+      }
+    ]
+  },
+  {
+    "id": "merry_moose",
+    "name": "Antler Arch",
+    "motif": "brown stuffed antler arch with gold bells",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "arch",
+        "amount": 18
+      },
+      {
+        "kind": "buff",
+        "pattern": "score",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "pudding_plum",
+    "name": "Plum Surprise",
+    "motif": "purple padded Christmas pudding opening a cream top",
+    "steps": [
+      {
+        "kind": "bubbles",
+        "pattern": "checker",
+        "amount": 3
+      },
+      {
+        "kind": "buff",
+        "pattern": "score",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "tinsel_turtle",
+    "name": "Tinsel Trail",
+    "motif": "teal fabric turtle-shell spiral wrapped in gold tinsel",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "spiral",
+        "amount": 9
+      },
+      {
+        "kind": "buff",
+        "pattern": "reach",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "ribbon_robin",
+    "name": "Ribbon Rally",
+    "motif": "red gold silk plush ribbon with robin-feather ends",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "link",
+        "amount": 5
+      },
+      {
+        "kind": "clear",
+        "pattern": "row",
+        "amount": 8
+      }
+    ]
+  },
+  {
+    "id": "snowbell_seal",
+    "name": "Snowbell Pause",
+    "motif": "white blue fleece snowbell with gold clock clapper",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "stop",
+        "amount": 5
+      },
+      {
+        "kind": "clear",
+        "pattern": "bottom",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "boo_berry",
+    "name": "Berry Haunt",
+    "motif": "purple berry-shaped plush ghost with mint leaf hood",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "top",
+        "amount": 7
+      },
+      {
+        "kind": "buff",
+        "pattern": "blast",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "candy_corn",
+    "name": "Candy Cascade",
+    "motif": "cream orange gold stacked candy-corn plush comet",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "triangle",
+        "amount": 18
+      },
+      {
+        "kind": "buff",
+        "pattern": "coins",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "cauldron_cat",
+    "name": "Potion Swap",
+    "motif": "violet felt cauldron pouring a mint potion ribbon",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "largest",
+        "amount": 10
+      },
+      {
+        "kind": "bubbles",
+        "pattern": "center",
+        "amount": 1
+      }
+    ]
+  },
+  {
+    "id": "cobweb_cub",
+    "name": "Web Wonders",
+    "motif": "silver cream embroidered spiderweb on a purple hoop",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "reach",
+        "amount": 8
+      },
+      {
+        "kind": "buff",
+        "pattern": "blast",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "fang_fawn",
+    "name": "Fang Flash",
+    "motif": "plum velvet two-fang crescent with coral lining",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "split",
+        "amount": 17
+      },
+      {
+        "kind": "buff",
+        "pattern": "time",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "id": "mallow_mummy",
+    "name": "Bandage Bind",
+    "motif": "cream padded mummy ribbon unrolling with gold stitches",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "link",
+        "amount": 7
+      },
+      {
+        "kind": "transform",
+        "pattern": "column",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "pumpkin_pup",
+    "name": "Pumpkin Patches",
+    "motif": "orange patchwork pumpkin seed parcel with green bow",
+    "steps": [
+      {
+        "kind": "bubbles",
+        "pattern": "corners",
+        "amount": 4
+      },
+      {
+        "kind": "clear",
+        "pattern": "bottomCenter",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "spooky_squid",
+    "name": "Inky Hour",
+    "motif": "violet plush ink swirl holding a mint hourglass",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "stop",
+        "amount": 5
+      },
+      {
+        "kind": "transform",
+        "pattern": "spokes",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "truffle_troll",
+    "name": "Truffle Tunnel",
+    "motif": "brown cocoa padded tunnel arch with mint crystal studs",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "column",
+        "amount": 14
+      },
+      {
+        "kind": "bubbles",
+        "pattern": "bottom",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "id": "velvet_vamp",
+    "name": "Velvet Veil",
+    "motif": "burgundy velvet cape folding into a cream bat collar",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "edges",
+        "amount": 10
+      },
+      {
+        "kind": "buff",
+        "pattern": "score",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "aurora_fox",
+    "name": "Aurora Arc",
+    "motif": "teal pink lavender soft aurora ribbon with gold stitches",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "arch",
+        "amount": 17
+      },
+      {
+        "kind": "buff",
+        "pattern": "link",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "blizzard_bun",
+    "name": "Blizzard Burst",
+    "motif": "white ice-blue plush six-arm snowflake",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "diagonalCross",
+        "amount": 18
+      },
+      {
+        "kind": "buff",
+        "pattern": "slow",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "chilly_chick",
+    "name": "Chilly Hatch",
+    "motif": "pale yellow padded egg in an icy blue knitted shell",
+    "steps": [
+      {
+        "kind": "bubbles",
+        "pattern": "top",
+        "amount": 3
+      },
+      {
+        "kind": "buff",
+        "pattern": "stop",
+        "amount": 3
+      }
+    ]
+  },
+  {
+    "id": "frost_finch",
+    "name": "Frost Flight",
+    "motif": "ice-blue plush feather with snowy cream fringe",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "top",
+        "amount": 14
+      },
+      {
+        "kind": "buff",
+        "pattern": "reach",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "icicle_imp",
+    "name": "Icicle Ladder",
+    "motif": "cyan stuffed icicle ladder with rounded white tips",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "ladder",
+        "amount": 18
+      },
+      {
+        "kind": "buff",
+        "pattern": "time",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "id": "mittens_mole",
+    "name": "Mittens Mix",
+    "motif": "red blue paired wool mittens joined by cream yarn",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "left",
+        "amount": 8
+      },
+      {
+        "kind": "transform",
+        "pattern": "right",
+        "amount": 8
+      }
+    ]
+  },
+  {
+    "id": "polar_peach",
+    "name": "Polar Pearl",
+    "motif": "peach velvet pearl in a white fleece snow shell",
+    "steps": [
+      {
+        "kind": "bubbles",
+        "pattern": "center",
+        "amount": 3
+      },
+      {
+        "kind": "buff",
+        "pattern": "slow",
+        "amount": 7
+      }
+    ]
+  },
+  {
+    "id": "slush_sloth",
+    "name": "Slow Snow",
+    "motif": "mint lilac padded snow swirl with cozy scarf",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "slow",
+        "amount": 10
+      },
+      {
+        "kind": "buff",
+        "pattern": "coins",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "snowflake_yak",
+    "name": "Snowflake Still",
+    "motif": "cream shaggy snowflake wrapped around a blue clock",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "stop",
+        "amount": 7
+      },
+      {
+        "kind": "buff",
+        "pattern": "chain",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "woolly_walrus",
+    "name": "Woolly Wave",
+    "motif": "cream wool wave with two soft ivory tusk tips",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "bottom",
+        "amount": 18
+      },
+      {
+        "kind": "buff",
+        "pattern": "reach",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "blossom_bee",
+    "name": "Pollen Partners",
+    "motif": "gold plush pollen ball with pink blossom petals",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "threePools",
+        "amount": 9
+      },
+      {
+        "kind": "buff",
+        "pattern": "chain",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "clover_calf",
+    "name": "Lucky Clover",
+    "motif": "green stuffed four-leaf clover with cream vein stitches",
+    "steps": [
+      {
+        "kind": "bubbles",
+        "pattern": "diamond",
+        "amount": 4
+      },
+      {
+        "kind": "buff",
+        "pattern": "time",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "id": "daisy_duck",
+    "name": "Daisy Dance",
+    "motif": "cream plush daisy ring with round gold center",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "petals",
+        "amount": 17
+      },
+      {
+        "kind": "buff",
+        "pattern": "score",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "dewdrop_deer",
+    "name": "Dewdrop Links",
+    "motif": "teal stuffed dew drop framed by green leaf antlers",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "reach",
+        "amount": 9
+      },
+      {
+        "kind": "transform",
+        "pattern": "top",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "fern_ferret",
+    "name": "Fern Curl",
+    "motif": "lime felt fern frond unfurling from a mint coil",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "spiral",
+        "amount": 18
+      },
+      {
+        "kind": "buff",
+        "pattern": "link",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "lilac_lamb",
+    "name": "Lilac Lullaby",
+    "motif": "lilac wool blossom cradling a cream hourglass",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "stop",
+        "amount": 5
+      },
+      {
+        "kind": "buff",
+        "pattern": "slow",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "petal_piglet",
+    "name": "Petal Paint",
+    "motif": "coral plush petal paintbrush with pink flower tip",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "petals",
+        "amount": 10
+      },
+      {
+        "kind": "buff",
+        "pattern": "coins",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "pollen_puff",
+    "name": "Pollen Pop",
+    "motif": "gold fleece pollen puff with cream seed parachutes",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "blast",
+        "amount": 8
+      },
+      {
+        "kind": "clear",
+        "pattern": "top",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "rainy_roo",
+    "name": "Rainy Rainbow",
+    "motif": "pastel stuffed rainbow arch releasing blue cloth rain",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "link",
+        "amount": 6
+      },
+      {
+        "kind": "bubbles",
+        "pattern": "top",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "id": "tulip_toad",
+    "name": "Tulip Trio",
+    "motif": "pink cream green padded tulip opening three petals",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "threePools",
+        "amount": 18
+      },
+      {
+        "kind": "transform",
+        "pattern": "bottom",
+        "amount": 3
+      }
+    ]
+  },
+  {
+    "id": "bonbon_bunny",
+    "name": "Bonbon Boom",
+    "motif": "pink foil-like stitched fabric bonbon with cream bow",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "tap",
+        "amount": 5
+      },
+      {
+        "kind": "buff",
+        "pattern": "coins",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "carrot_cub",
+    "name": "Carrot Column",
+    "motif": "orange stuffed carrot rocket with green felt leaves",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "column",
+        "amount": 16
+      },
+      {
+        "kind": "transform",
+        "pattern": "bottom",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "dottie_dove",
+    "name": "Dotted Flight",
+    "motif": "cream padded spotted dove feather with lavender dots",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "checker",
+        "amount": 18
+      },
+      {
+        "kind": "buff",
+        "pattern": "time",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "id": "egglet",
+    "name": "Egg Surprise",
+    "motif": "pastel quilted egg opening to a gold fabric star",
+    "steps": [
+      {
+        "kind": "bubbles",
+        "pattern": "scatter",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "flopsy_flan",
+    "name": "Flan Flip",
+    "motif": "gold cream plush pudding flipping from a pink cup",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "diagonal",
+        "amount": 9
+      },
+      {
+        "kind": "buff",
+        "pattern": "score",
+        "amount": 7
+      }
+    ]
+  },
+  {
+    "id": "jelly_joey",
+    "name": "Jelly Jump",
+    "motif": "lavender padded jelly spring with mint polka dots",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "reach",
+        "amount": 7
+      },
+      {
+        "kind": "buff",
+        "pattern": "chain",
+        "amount": 7
+      }
+    ]
+  },
+  {
+    "id": "marzipan_mouse",
+    "name": "Marzipan Minis",
+    "motif": "cream almond plush mouse-ear candy with pink bow",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "smallest",
+        "amount": 10
+      },
+      {
+        "kind": "buff",
+        "pattern": "drops",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "peep_pea",
+    "name": "Peep Pause",
+    "motif": "yellow fleece chick clock inside a mint pea pod",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "stop",
+        "amount": 4
+      },
+      {
+        "kind": "bubbles",
+        "pattern": "top",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "id": "sprinkle_squeak",
+    "name": "Sprinkle Shower",
+    "motif": "coral padded sprinkle shaker with colorful cloth confetti",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "scatter",
+        "amount": 18
+      },
+      {
+        "kind": "buff",
+        "pattern": "score",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "truffle_tweet",
+    "name": "Truffle Trail",
+    "motif": "cocoa felt truffle bird trail with cream piped seams",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "zigzag",
+        "amount": 15
+      },
+      {
+        "kind": "buff",
+        "pattern": "drops",
+        "amount": 7
+      }
+    ]
+  },
+  {
+    "id": "beach_bean",
+    "name": "Beach Break",
+    "motif": "coral teal stuffed beach umbrella with clock center",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "stop",
+        "amount": 6
+      },
+      {
+        "kind": "buff",
+        "pattern": "link",
+        "amount": 3
+      }
+    ]
+  },
+  {
+    "id": "coral_crab",
+    "name": "Coral Claws",
+    "motif": "coral plush crab-claw pair with cream scalloped tips",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "edges",
+        "amount": 16
+      },
+      {
+        "kind": "transform",
+        "pattern": "center",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "coconut_cub",
+    "name": "Coconut Cup",
+    "motif": "brown cream padded coconut cup with green straw",
+    "steps": [
+      {
+        "kind": "bubbles",
+        "pattern": "bottom",
+        "amount": 4
+      },
+      {
+        "kind": "buff",
+        "pattern": "time",
+        "amount": 3
+      }
+    ]
+  },
+  {
+    "id": "lemon_lobster",
+    "name": "Lemon Line",
+    "motif": "gold plush lemon slice with coral fabric claw handles",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "row",
+        "amount": 15
+      },
+      {
+        "kind": "buff",
+        "pattern": "coins",
+        "amount": 8
+      }
+    ]
+  },
+  {
+    "id": "melon_manatee",
+    "name": "Melon Match",
+    "motif": "pink green stuffed watermelon slice with black seed stitches",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "row",
+        "amount": 10
+      },
+      {
+        "kind": "buff",
+        "pattern": "reach",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "peach_pelican",
+    "name": "Peach Parcel",
+    "motif": "peach padded delivery pouch with cream feather flap",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "lowest",
+        "amount": 8
+      },
+      {
+        "kind": "buff",
+        "pattern": "drops",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "pineapple_puff",
+    "name": "Pineapple Pop",
+    "motif": "gold quilted pineapple burst with lime felt crown",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "diamond",
+        "amount": 18
+      },
+      {
+        "kind": "buff",
+        "pattern": "blast",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "seabreeze_ray",
+    "name": "Sea Breeze",
+    "motif": "teal cream plush manta wing carrying a curling breeze",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "slow",
+        "amount": 6
+      },
+      {
+        "kind": "buff",
+        "pattern": "reach",
+        "amount": 8
+      }
+    ]
+  },
+  {
+    "id": "sorbet_otter",
+    "name": "Sorbet Swirl",
+    "motif": "pink mint cream stuffed sorbet swirl with gold cone",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "ring",
+        "amount": 10
+      },
+      {
+        "kind": "buff",
+        "pattern": "link",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "sunny_shrimp",
+    "name": "Shrimp Spark",
+    "motif": "coral padded shrimp-shaped spark with gold stitched tail",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "fan",
+        "amount": 16
+      },
+      {
+        "kind": "bubbles",
+        "pattern": "right",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "id": "acorn_alpaca",
+    "name": "Acorn Cache",
+    "motif": "brown gold stuffed acorn pouch spilling tiny felt nuts",
+    "steps": [
+      {
+        "kind": "bubbles",
+        "pattern": "left",
+        "amount": 3
+      },
+      {
+        "kind": "buff",
+        "pattern": "coins",
+        "amount": 8
+      }
+    ]
+  },
+  {
+    "id": "amber_armadillo",
+    "name": "Amber Armor",
+    "motif": "amber quilted shell shield opening radial padded plates",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "blast",
+        "amount": 6
+      },
+      {
+        "kind": "buff",
+        "pattern": "score",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "chestnut_chip",
+    "name": "Chestnut Chase",
+    "motif": "cocoa cream stuffed chestnut rolling along a leaf tail",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "lowest",
+        "amount": 16
+      },
+      {
+        "kind": "buff",
+        "pattern": "drops",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "cider_corgi",
+    "name": "Cider Clock",
+    "motif": "amber plush cider mug with an apple clock dial",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "stop",
+        "amount": 5
+      },
+      {
+        "kind": "buff",
+        "pattern": "score",
+        "amount": 7
+      }
+    ]
+  },
+  {
+    "id": "hazel_hedgehog",
+    "name": "Hazel Spikes",
+    "motif": "tan cream padded hazelnut burst with rounded felt spikes",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "spokes",
+        "amount": 18
+      },
+      {
+        "kind": "buff",
+        "pattern": "coins",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "maple_moth",
+    "name": "Maple Wings",
+    "motif": "rust gold plush maple-leaf moth wings opening wide",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "diagonalCross",
+        "amount": 16
+      },
+      {
+        "kind": "buff",
+        "pattern": "reach",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "nutmeg_newt",
+    "name": "Nutmeg Magic",
+    "motif": "cinnamon padded spice pouch with cream swirling dust",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "checker",
+        "amount": 8
+      },
+      {
+        "kind": "buff",
+        "pattern": "blast",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "persimmon_pal",
+    "name": "Persimmon Pause",
+    "motif": "orange stuffed persimmon clock with green leaf hands",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "stop",
+        "amount": 6
+      },
+      {
+        "kind": "transform",
+        "pattern": "center",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "russet_raccoon",
+    "name": "Russet Rake",
+    "motif": "russet felt rake sweeping quilted autumn leaves",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "ladder",
+        "amount": 17
+      },
+      {
+        "kind": "buff",
+        "pattern": "coins",
+        "amount": 7
+      }
+    ]
+  },
+  {
+    "id": "toffee_turkey",
+    "name": "Toffee Fan",
+    "motif": "caramel plush turkey-tail fan with cream toffee seams",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "fan",
+        "amount": 17
+      },
+      {
+        "kind": "buff",
+        "pattern": "chain",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "blush_badger",
+    "name": "Blush Bonds",
+    "motif": "pink velvet heart knot with cream braided stitches",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "link",
+        "amount": 8
+      },
+      {
+        "kind": "transform",
+        "pattern": "nearest",
+        "amount": 3
+      }
+    ]
+  },
+  {
+    "id": "cherry_chinchilla",
+    "name": "Cherry Twins",
+    "motif": "red plush twin cherries joined by mint ribbon stems",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "left",
+        "amount": 6
+      },
+      {
+        "kind": "clear",
+        "pattern": "right",
+        "amount": 9
+      }
+    ]
+  },
+  {
+    "id": "cupid_capy",
+    "name": "Cupid Links",
+    "motif": "pink stuffed heart arrow with cream feather fins",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "reach",
+        "amount": 10
+      },
+      {
+        "kind": "buff",
+        "pattern": "link",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "fondant_fawn",
+    "name": "Fondant Flutter",
+    "motif": "cream rose fondant heart with padded antler flourishes",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "heart",
+        "amount": 10
+      },
+      {
+        "kind": "buff",
+        "pattern": "score",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "heart_hamster",
+    "name": "Heart Beat",
+    "motif": "coral stuffed heart pulsing with cream double stitching",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "heart",
+        "amount": 18
+      },
+      {
+        "kind": "buff",
+        "pattern": "time",
+        "amount": 3
+      }
+    ]
+  },
+  {
+    "id": "lovey_lynx",
+    "name": "Love Letters",
+    "motif": "pink plush envelope opening a cream heart seal",
+    "steps": [
+      {
+        "kind": "bubbles",
+        "pattern": "heart",
+        "amount": 3
+      },
+      {
+        "kind": "buff",
+        "pattern": "link",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "macaron_mouse",
+    "name": "Macaron Mix",
+    "motif": "mint pink padded macaron opening its cream filling",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "split",
+        "amount": 10
+      },
+      {
+        "kind": "buff",
+        "pattern": "coins",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "raspberry_ram",
+    "name": "Raspberry Roll",
+    "motif": "raspberry velvet spiral sweet with gold wool stitches",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "spiral",
+        "amount": 16
+      },
+      {
+        "kind": "buff",
+        "pattern": "blast",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "rosebud_raven",
+    "name": "Rosebud Rest",
+    "motif": "burgundy plush rosebud around a cream hourglass",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "stop",
+        "amount": 7
+      },
+      {
+        "kind": "transform",
+        "pattern": "highest",
+        "amount": 3
+      }
+    ]
+  },
+  {
+    "id": "sweetheart_swan",
+    "name": "Swan Duet",
+    "motif": "cream pink stuffed swan ribbons forming an open heart",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "arch",
+        "amount": 12
+      },
+      {
+        "kind": "transform",
+        "pattern": "bottom",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "comet_cub",
+    "name": "Comet Crossing",
+    "motif": "gold plush comet with navy star-spotted tail",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "diagonal",
+        "amount": 20
+      },
+      {
+        "kind": "buff",
+        "pattern": "score",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "cosmic_koala",
+    "name": "Cosmic Connect",
+    "motif": "lilac stuffed galaxy knot with teal orbit ribbons",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "link",
+        "amount": 7
+      },
+      {
+        "kind": "buff",
+        "pattern": "blast",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "dreamy_dragon",
+    "name": "Dream Drift",
+    "motif": "navy lavender plush dragon dream cloud with gold stars",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "stop",
+        "amount": 4
+      },
+      {
+        "kind": "buff",
+        "pattern": "drops",
+        "amount": 8
+      }
+    ]
+  },
+  {
+    "id": "eclipse_ewe",
+    "name": "Eclipse Ring",
+    "motif": "navy wool moon crossing a cream gold sun halo",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "ring",
+        "amount": 20
+      },
+      {
+        "kind": "buff",
+        "pattern": "time",
+        "amount": 3
+      }
+    ]
+  },
+  {
+    "id": "galaxy_gecko",
+    "name": "Galaxy Gather",
+    "motif": "teal violet padded gecko-tail galaxy spiral",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "spokes",
+        "amount": 10
+      },
+      {
+        "kind": "buff",
+        "pattern": "reach",
+        "amount": 7
+      }
+    ]
+  },
+  {
+    "id": "lunar_lemur",
+    "name": "Lunar Leap",
+    "motif": "cream lavender stuffed crescent stepping stones",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "threePools",
+        "amount": 16
+      },
+      {
+        "kind": "buff",
+        "pattern": "stop",
+        "amount": 3
+      }
+    ]
+  },
+  {
+    "id": "meteor_moth",
+    "name": "Meteor Shower",
+    "motif": "orange navy plush meteor with three cream fabric trails",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "scatter",
+        "amount": 20
+      },
+      {
+        "kind": "buff",
+        "pattern": "coins",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "nebula_newbie",
+    "name": "Nebula Nursery",
+    "motif": "lavender pink fleece nebula cradle with gold stars",
+    "steps": [
+      {
+        "kind": "bubbles",
+        "pattern": "top",
+        "amount": 4
+      },
+      {
+        "kind": "buff",
+        "pattern": "drops",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "orbit_owl",
+    "name": "Orbital Order",
+    "motif": "navy gold padded orbital clock with feather-shaped hands",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "ring",
+        "amount": 7
+      },
+      {
+        "kind": "buff",
+        "pattern": "stop",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "twinkle_tapir",
+    "name": "Twinkle Touch",
+    "motif": "lavender plush star wand with a gold twinkling tip",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "tap",
+        "amount": 6
+      },
+      {
+        "kind": "buff",
+        "pattern": "score",
+        "amount": 6
+      }
+    ]
+  },
+  {
+    "id": "confetti_cub",
+    "name": "Confetti Combo",
+    "motif": "coral teal padded confetti cannon opening a cream burst",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "chain",
+        "amount": 9
+      },
+      {
+        "kind": "buff",
+        "pattern": "coins",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "drummer_duck",
+    "name": "Drumline",
+    "motif": "gold red plush drum with cream stitched drumsticks",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "row",
+        "amount": 12
+      },
+      {
+        "kind": "clear",
+        "pattern": "bottom",
+        "amount": 8
+      }
+    ]
+  },
+  {
+    "id": "fiesta_fox",
+    "name": "Fiesta Flip",
+    "motif": "coral orange felt fiesta fan with gold ribbon fringe",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "zigzag",
+        "amount": 10
+      },
+      {
+        "kind": "buff",
+        "pattern": "link",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "id": "firework_finch",
+    "name": "Firework Trio",
+    "motif": "gold coral teal stuffed firework burst with cream star core",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "corners",
+        "amount": 10
+      },
+      {
+        "kind": "clear",
+        "pattern": "center",
+        "amount": 10
+      }
+    ]
+  },
+  {
+    "id": "fortune_frog",
+    "name": "Fortune Frogs",
+    "motif": "green gold plush fortune pouch with cream knot",
+    "steps": [
+      {
+        "kind": "bubbles",
+        "pattern": "scatter",
+        "amount": 3
+      },
+      {
+        "kind": "buff",
+        "pattern": "stop",
+        "amount": 4
+      }
+    ]
+  },
+  {
+    "id": "lantern_lion",
+    "name": "Lantern Light",
+    "motif": "coral gold stuffed lantern unfurling cream light ribbons",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "column",
+        "amount": 12
+      },
+      {
+        "kind": "clear",
+        "pattern": "ring",
+        "amount": 8
+      }
+    ]
+  },
+  {
+    "id": "party_panda",
+    "name": "Party Partners",
+    "motif": "teal lavender padded party hat with cream pompom",
+    "steps": [
+      {
+        "kind": "transform",
+        "pattern": "largest",
+        "amount": 7
+      },
+      {
+        "kind": "buff",
+        "pattern": "link",
+        "amount": 7
+      }
+    ]
+  },
+  {
+    "id": "ribbon_redpanda",
+    "name": "Ribbon Run",
+    "motif": "rust teal plush ribbon rolling into a long bow",
+    "steps": [
+      {
+        "kind": "clear",
+        "pattern": "zigzag",
+        "amount": 14
+      },
+      {
+        "kind": "buff",
+        "pattern": "reach",
+        "amount": 9
+      }
+    ]
+  },
+  {
+    "id": "sparkle_seal",
+    "name": "Sparkle Show",
+    "motif": "ice blue cream padded star shower with gold sequins",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "blast",
+        "amount": 5
+      },
+      {
+        "kind": "bubbles",
+        "pattern": "diamond",
+        "amount": 3
+      }
+    ]
+  },
+  {
+    "id": "wish_wombat",
+    "name": "Wish Weaver",
+    "motif": "lavender gold plush wishing-star loom with cream threads",
+    "steps": [
+      {
+        "kind": "buff",
+        "pattern": "stop",
+        "amount": 4
+      },
+      {
+        "kind": "buff",
+        "pattern": "link",
+        "amount": 4
+      },
+      {
+        "kind": "buff",
+        "pattern": "score",
+        "amount": 4
+      }
+    ]
+  }
+]

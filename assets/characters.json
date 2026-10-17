@@ -1,0 +1,4682 @@
+[
+  {
+    "id": "stitch",
+    "name": "Chitaky",
+    "description": "Purple-mask original",
+    "palette": [
+      "#8623ed",
+      "#fff6df",
+      "#352a35"
+    ],
+    "skill": "thread_burst",
+    "sprite": "assets/characters/256/stitch.png",
+    "icon": "assets/characters/icons/stitch.png",
+    "high_resolution": "assets/characters/512/stitch.png",
+    "selected": "assets/characters/selected/stitch.png",
+    "nativeSize": [
+      331,
+      310
+    ],
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/stitch_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/stitch_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/stitch_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "group": "Originals",
+    "powerFamily": "stitch",
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "sunny",
+    "name": "Sunny",
+    "description": "Happy sun",
+    "palette": [
+      "#ffae00",
+      "#ff7109",
+      "#fff3c7"
+    ],
+    "skill": "sunburst",
+    "sprite": "assets/characters/256/sunny.png",
+    "icon": "assets/characters/icons/sunny.png",
+    "high_resolution": "assets/characters/512/sunny.png",
+    "selected": "assets/characters/selected/sunny.png",
+    "nativeSize": [
+      326,
+      314
+    ],
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/sunny_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/sunny_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/sunny_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "group": "Originals",
+    "powerFamily": "sunny",
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "patch",
+    "name": "Patch",
+    "description": "Patchwork button-eye",
+    "palette": [
+      "#8d35b7",
+      "#91808f",
+      "#fff3df"
+    ],
+    "skill": "patch_pop",
+    "sprite": "assets/characters/256/patch.png",
+    "icon": "assets/characters/icons/patch.png",
+    "high_resolution": "assets/characters/512/patch.png",
+    "selected": "assets/characters/selected/patch.png",
+    "nativeSize": [
+      326,
+      318
+    ],
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/patch_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/patch_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/patch_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "group": "Originals",
+    "powerFamily": "patch",
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "mint",
+    "name": "Mint",
+    "description": "Mint slime",
+    "palette": [
+      "#70e0bc",
+      "#19bca3",
+      "#fff1da"
+    ],
+    "skill": "mint_wave",
+    "sprite": "assets/characters/256/mint.png",
+    "icon": "assets/characters/icons/mint.png",
+    "high_resolution": "assets/characters/512/mint.png",
+    "selected": "assets/characters/selected/mint.png",
+    "nativeSize": [
+      330,
+      315
+    ],
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/mint_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/mint_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/mint_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "group": "Originals",
+    "powerFamily": "mint",
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "ember",
+    "name": "Ember",
+    "description": "Fire spirit",
+    "palette": [
+      "#ec301b",
+      "#ff9910",
+      "#fff2d8"
+    ],
+    "skill": "flame_sweep",
+    "sprite": "assets/characters/256/ember.png",
+    "icon": "assets/characters/icons/ember.png",
+    "high_resolution": "assets/characters/512/ember.png",
+    "selected": "assets/characters/selected/ember.png",
+    "nativeSize": [
+      316,
+      327
+    ],
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/ember_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/ember_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/ember_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "group": "Originals",
+    "powerFamily": "ember",
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "luna",
+    "name": "Luna",
+    "description": "Sleepy moon",
+    "palette": [
+      "#173b93",
+      "#ffd145",
+      "#fff3dc"
+    ],
+    "skill": "moonfall",
+    "sprite": "assets/characters/256/luna.png",
+    "icon": "assets/characters/icons/luna.png",
+    "high_resolution": "assets/characters/512/luna.png",
+    "selected": "assets/characters/selected/luna.png",
+    "nativeSize": [
+      328,
+      324
+    ],
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/luna_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/luna_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/luna_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "group": "Originals",
+    "powerFamily": "luna",
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "byte",
+    "name": "Byte",
+    "description": "Cyan robot",
+    "palette": [
+      "#e9f2f6",
+      "#0dd6f6",
+      "#24253d"
+    ],
+    "skill": "scanline",
+    "sprite": "assets/characters/256/byte.png",
+    "icon": "assets/characters/icons/byte.png",
+    "high_resolution": "assets/characters/512/byte.png",
+    "selected": "assets/characters/selected/byte.png",
+    "nativeSize": [
+      330,
+      323
+    ],
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/byte_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/byte_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/byte_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "group": "Originals",
+    "powerFamily": "byte",
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "jester",
+    "name": "Jester",
+    "description": "Pink-purple jester",
+    "palette": [
+      "#f13baa",
+      "#8329bd",
+      "#fff0d6"
+    ],
+    "skill": "confetti",
+    "sprite": "assets/characters/256/jester.png",
+    "icon": "assets/characters/icons/jester.png",
+    "high_resolution": "assets/characters/512/jester.png",
+    "selected": "assets/characters/selected/jester.png",
+    "nativeSize": [
+      326,
+      329
+    ],
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/jester_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/jester_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/jester_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "group": "Originals",
+    "powerFamily": "jester",
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "splash",
+    "name": "Splash",
+    "description": "Silly aqua creature",
+    "palette": [
+      "#25c9ce",
+      "#cef3df",
+      "#ee4c8d"
+    ],
+    "skill": "splash_ring",
+    "sprite": "assets/characters/256/splash.png",
+    "icon": "assets/characters/icons/splash.png",
+    "high_resolution": "assets/characters/512/splash.png",
+    "selected": "assets/characters/selected/splash.png",
+    "nativeSize": [
+      330,
+      325
+    ],
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/splash_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/splash_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/splash_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "group": "Originals",
+    "powerFamily": "splash",
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "sprout",
+    "name": "Sprout",
+    "description": "One-eyed green creature",
+    "palette": [
+      "#aad330",
+      "#356c32",
+      "#fff0d1"
+    ],
+    "skill": "leaf_burst",
+    "sprite": "assets/characters/256/sprout.png",
+    "icon": "assets/characters/icons/sprout.png",
+    "high_resolution": "assets/characters/512/sprout.png",
+    "selected": "assets/characters/selected/sprout.png",
+    "nativeSize": [
+      333,
+      328
+    ],
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/sprout_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/sprout_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/sprout_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "group": "Originals",
+    "powerFamily": "sprout",
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "calico",
+    "name": "Calico",
+    "description": "Calico cat",
+    "box": [
+      0,
+      44,
+      224,
+      274
+    ],
+    "bottom": 268,
+    "nativeSize": [
+      204,
+      208
+    ],
+    "refinedSourceCrop": [
+      0,
+      46,
+      237,
+      284
+    ],
+    "group": "Animals",
+    "palette": [
+      "#ff6042",
+      "#fff2d9",
+      "#efb24d"
+    ],
+    "skill": "thread_burst",
+    "powerFamily": "stitch",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/calico.png",
+    "icon": "assets/characters/icons/calico.png",
+    "high_resolution": "assets/characters/512/calico.png",
+    "selected": "assets/characters/selected/calico.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/calico_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/calico_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/calico_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "pup",
+    "name": "Biscuit",
+    "description": "Floppy-eared puppy",
+    "box": [
+      224,
+      54,
+      472,
+      274
+    ],
+    "bottom": 268,
+    "nativeSize": [
+      247,
+      200
+    ],
+    "refinedSourceCrop": [
+      211,
+      54,
+      486,
+      283
+    ],
+    "group": "Animals",
+    "palette": [
+      "#3daae3",
+      "#a4673d",
+      "#fff4df"
+    ],
+    "skill": "thread_burst",
+    "powerFamily": "stitch",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/pup.png",
+    "icon": "assets/characters/icons/pup.png",
+    "high_resolution": "assets/characters/512/pup.png",
+    "selected": "assets/characters/selected/pup.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/pup_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/pup_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/pup_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "bunny",
+    "name": "Mochi",
+    "description": "Rabbit with carrot",
+    "box": [
+      470,
+      8,
+      682,
+      274
+    ],
+    "bottom": 268,
+    "nativeSize": [
+      209,
+      251
+    ],
+    "refinedSourceCrop": [
+      457,
+      4,
+      692,
+      285
+    ],
+    "group": "Animals",
+    "palette": [
+      "#ff8ca7",
+      "#fff4df",
+      "#ff9e21"
+    ],
+    "skill": "moonfall",
+    "powerFamily": "luna",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/bunny.png",
+    "icon": "assets/characters/icons/bunny.png",
+    "high_resolution": "assets/characters/512/bunny.png",
+    "selected": "assets/characters/selected/bunny.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/bunny_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/bunny_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/bunny_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "panda",
+    "name": "Bamboo",
+    "description": "Panda",
+    "box": [
+      685,
+      55,
+      911,
+      274
+    ],
+    "bottom": 268,
+    "nativeSize": [
+      214,
+      202
+    ],
+    "refinedSourceCrop": [
+      674,
+      51,
+      918,
+      284
+    ],
+    "group": "Animals",
+    "palette": [
+      "#fff6e2",
+      "#282527",
+      "#77b731"
+    ],
+    "skill": "leaf_burst",
+    "powerFamily": "sprout",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/panda.png",
+    "icon": "assets/characters/icons/panda.png",
+    "high_resolution": "assets/characters/512/panda.png",
+    "selected": "assets/characters/selected/panda.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/panda_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/panda_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/panda_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "fox",
+    "name": "Rusty",
+    "description": "Fox",
+    "box": [
+      913,
+      49,
+      1140,
+      274
+    ],
+    "bottom": 268,
+    "nativeSize": [
+      223,
+      212
+    ],
+    "refinedSourceCrop": [
+      900,
+      43,
+      1154,
+      284
+    ],
+    "group": "Animals",
+    "palette": [
+      "#ff7b23",
+      "#fff2da",
+      "#a74920"
+    ],
+    "skill": "flame_sweep",
+    "powerFamily": "ember",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/fox.png",
+    "icon": "assets/characters/icons/fox.png",
+    "high_resolution": "assets/characters/512/fox.png",
+    "selected": "assets/characters/selected/fox.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/fox_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/fox_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/fox_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "bear",
+    "name": "Honey",
+    "description": "Honey bear",
+    "box": [
+      1150,
+      57,
+      1374,
+      274
+    ],
+    "bottom": 268,
+    "nativeSize": [
+      204,
+      204
+    ],
+    "refinedSourceCrop": [
+      1139,
+      52,
+      1374,
+      284
+    ],
+    "group": "Animals",
+    "palette": [
+      "#ad6234",
+      "#ffc72e",
+      "#fff1d3"
+    ],
+    "skill": "sunburst",
+    "powerFamily": "sunny",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/bear.png",
+    "icon": "assets/characters/icons/bear.png",
+    "high_resolution": "assets/characters/512/bear.png",
+    "selected": "assets/characters/selected/bear.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/bear_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/bear_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/bear_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "frog",
+    "name": "Puddle",
+    "description": "Frog",
+    "box": [
+      0,
+      277,
+      232,
+      484
+    ],
+    "bottom": 478,
+    "nativeSize": [
+      211,
+      193
+    ],
+    "refinedSourceCrop": [
+      0,
+      274,
+      239,
+      495
+    ],
+    "group": "Animals",
+    "palette": [
+      "#a7d843",
+      "#3f8a32",
+      "#f9b3b5"
+    ],
+    "skill": "mint_wave",
+    "powerFamily": "mint",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/frog.png",
+    "icon": "assets/characters/icons/frog.png",
+    "high_resolution": "assets/characters/512/frog.png",
+    "selected": "assets/characters/selected/frog.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/frog_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/frog_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/frog_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "pig",
+    "name": "Peaches",
+    "description": "Pig",
+    "box": [
+      237,
+      282,
+      455,
+      484
+    ],
+    "bottom": 479,
+    "nativeSize": [
+      209,
+      190
+    ],
+    "refinedSourceCrop": [
+      225,
+      286,
+      468,
+      496
+    ],
+    "group": "Animals",
+    "palette": [
+      "#ffb0be",
+      "#f34676",
+      "#fff1e7"
+    ],
+    "skill": "patch_pop",
+    "powerFamily": "patch",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/pig.png",
+    "icon": "assets/characters/icons/pig.png",
+    "high_resolution": "assets/characters/512/pig.png",
+    "selected": "assets/characters/selected/pig.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/pig_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/pig_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/pig_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "penguin",
+    "name": "Waddle",
+    "description": "Penguin",
+    "box": [
+      459,
+      273,
+      684,
+      484
+    ],
+    "bottom": 478,
+    "nativeSize": [
+      217,
+      207
+    ],
+    "refinedSourceCrop": [
+      444,
+      262,
+      693,
+      496
+    ],
+    "group": "Animals",
+    "palette": [
+      "#275cca",
+      "#50bce9",
+      "#fff2dc"
+    ],
+    "skill": "moonfall",
+    "powerFamily": "luna",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/penguin.png",
+    "icon": "assets/characters/icons/penguin.png",
+    "high_resolution": "assets/characters/512/penguin.png",
+    "selected": "assets/characters/selected/penguin.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/penguin_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/penguin_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/penguin_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "owl",
+    "name": "Hoot",
+    "description": "Owl",
+    "box": [
+      684,
+      282,
+      908,
+      484
+    ],
+    "bottom": 480,
+    "nativeSize": [
+      222,
+      197
+    ],
+    "refinedSourceCrop": [
+      671,
+      280,
+      923,
+      497
+    ],
+    "group": "Animals",
+    "palette": [
+      "#a77553",
+      "#fff0cc",
+      "#efbc39"
+    ],
+    "skill": "moonfall",
+    "powerFamily": "luna",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/owl.png",
+    "icon": "assets/characters/icons/owl.png",
+    "high_resolution": "assets/characters/512/owl.png",
+    "selected": "assets/characters/selected/owl.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/owl_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/owl_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/owl_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "monkey",
+    "name": "Banjo",
+    "description": "Monkey",
+    "box": [
+      907,
+      274,
+      1152,
+      484
+    ],
+    "bottom": 480,
+    "nativeSize": [
+      248,
+      210
+    ],
+    "refinedSourceCrop": [
+      891,
+      260,
+      1165,
+      496
+    ],
+    "group": "Animals",
+    "palette": [
+      "#af6933",
+      "#ffcd31",
+      "#fff1d8"
+    ],
+    "skill": "confetti",
+    "powerFamily": "jester",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/monkey.png",
+    "icon": "assets/characters/icons/monkey.png",
+    "high_resolution": "assets/characters/512/monkey.png",
+    "selected": "assets/characters/selected/monkey.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/monkey_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/monkey_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/monkey_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "tiger",
+    "name": "Tango",
+    "description": "Tiger",
+    "box": [
+      1153,
+      291,
+      1374,
+      484
+    ],
+    "bottom": 479,
+    "nativeSize": [
+      211,
+      192
+    ],
+    "refinedSourceCrop": [
+      1141,
+      283,
+      1374,
+      496
+    ],
+    "group": "Animals",
+    "palette": [
+      "#ffaf24",
+      "#412827",
+      "#ffebd0"
+    ],
+    "skill": "flame_sweep",
+    "powerFamily": "ember",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/tiger.png",
+    "icon": "assets/characters/icons/tiger.png",
+    "high_resolution": "assets/characters/512/tiger.png",
+    "selected": "assets/characters/selected/tiger.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/tiger_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/tiger_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/tiger_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "shark",
+    "name": "Chomp",
+    "description": "Shark",
+    "box": [
+      0,
+      485,
+      238,
+      702
+    ],
+    "bottom": 696,
+    "nativeSize": [
+      230,
+      207
+    ],
+    "refinedSourceCrop": [
+      0,
+      479,
+      253,
+      717
+    ],
+    "group": "Animals",
+    "palette": [
+      "#399bdf",
+      "#fff3e2",
+      "#6d1b28"
+    ],
+    "skill": "splash_ring",
+    "powerFamily": "splash",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/shark.png",
+    "icon": "assets/characters/icons/shark.png",
+    "high_resolution": "assets/characters/512/shark.png",
+    "selected": "assets/characters/selected/shark.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/shark_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/shark_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/shark_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "dino",
+    "name": "Pebble",
+    "description": "Triceratops",
+    "box": [
+      239,
+      492,
+      455,
+      702
+    ],
+    "bottom": 697,
+    "nativeSize": [
+      212,
+      201
+    ],
+    "refinedSourceCrop": [
+      226,
+      488,
+      469,
+      717
+    ],
+    "group": "Animals",
+    "palette": [
+      "#7cb735",
+      "#b6d943",
+      "#fff0c7"
+    ],
+    "skill": "leaf_burst",
+    "powerFamily": "sprout",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/dino.png",
+    "icon": "assets/characters/icons/dino.png",
+    "high_resolution": "assets/characters/512/dino.png",
+    "selected": "assets/characters/selected/dino.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/dino_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/dino_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/dino_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "dragon",
+    "name": "Cinder",
+    "description": "Dragon",
+    "box": [
+      459,
+      489,
+      685,
+      702
+    ],
+    "bottom": 697,
+    "nativeSize": [
+      225,
+      200
+    ],
+    "refinedSourceCrop": [
+      446,
+      490,
+      701,
+      717
+    ],
+    "group": "Animals",
+    "palette": [
+      "#f43d31",
+      "#ffbe24",
+      "#652725"
+    ],
+    "skill": "flame_sweep",
+    "powerFamily": "ember",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/dragon.png",
+    "icon": "assets/characters/icons/dragon.png",
+    "high_resolution": "assets/characters/512/dragon.png",
+    "selected": "assets/characters/selected/dragon.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/dragon_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/dragon_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/dragon_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "bat",
+    "name": "Echo",
+    "description": "Bat",
+    "box": [
+      674,
+      494,
+      920,
+      702
+    ],
+    "bottom": 696,
+    "nativeSize": [
+      244,
+      195
+    ],
+    "refinedSourceCrop": [
+      659,
+      492,
+      935,
+      715
+    ],
+    "group": "Animals",
+    "palette": [
+      "#8e449c",
+      "#e880bb",
+      "#321e42"
+    ],
+    "skill": "moonfall",
+    "powerFamily": "luna",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/bat.png",
+    "icon": "assets/characters/icons/bat.png",
+    "high_resolution": "assets/characters/512/bat.png",
+    "selected": "assets/characters/selected/bat.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/bat_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/bat_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/bat_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "ram",
+    "name": "Woolly",
+    "description": "Ram",
+    "box": [
+      911,
+      496,
+      1151,
+      702
+    ],
+    "bottom": 697,
+    "nativeSize": [
+      236,
+      191
+    ],
+    "refinedSourceCrop": [
+      897,
+      493,
+      1161,
+      716
+    ],
+    "group": "Animals",
+    "palette": [
+      "#fff0d9",
+      "#c79768",
+      "#ffca34"
+    ],
+    "skill": "patch_pop",
+    "powerFamily": "patch",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/ram.png",
+    "icon": "assets/characters/icons/ram.png",
+    "high_resolution": "assets/characters/512/ram.png",
+    "selected": "assets/characters/selected/ram.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/ram_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/ram_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/ram_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "raccoon",
+    "name": "Bandit",
+    "description": "Raccoon",
+    "box": [
+      1151,
+      498,
+      1374,
+      702
+    ],
+    "bottom": 696,
+    "nativeSize": [
+      213,
+      195
+    ],
+    "refinedSourceCrop": [
+      1141,
+      494,
+      1374,
+      717
+    ],
+    "group": "Animals",
+    "palette": [
+      "#92909a",
+      "#2f2b30",
+      "#72b63e"
+    ],
+    "skill": "thread_burst",
+    "powerFamily": "stitch",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/raccoon.png",
+    "icon": "assets/characters/icons/raccoon.png",
+    "high_resolution": "assets/characters/512/raccoon.png",
+    "selected": "assets/characters/selected/raccoon.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/raccoon_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/raccoon_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/raccoon_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "octopus",
+    "name": "Inky",
+    "description": "Octopus",
+    "box": [
+      0,
+      714,
+      234,
+      916
+    ],
+    "bottom": 909,
+    "nativeSize": [
+      223,
+      187
+    ],
+    "refinedSourceCrop": [
+      0,
+      721,
+      250,
+      929
+    ],
+    "group": "Animals",
+    "palette": [
+      "#fa5267",
+      "#ffb6ca",
+      "#302426"
+    ],
+    "skill": "splash_ring",
+    "powerFamily": "splash",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/octopus.png",
+    "icon": "assets/characters/icons/octopus.png",
+    "high_resolution": "assets/characters/512/octopus.png",
+    "selected": "assets/characters/selected/octopus.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/octopus_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/octopus_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/octopus_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "ghost",
+    "name": "Boo",
+    "description": "Wizard ghost",
+    "box": [
+      234,
+      706,
+      461,
+      916
+    ],
+    "bottom": 909,
+    "nativeSize": [
+      224,
+      200
+    ],
+    "refinedSourceCrop": [
+      220,
+      696,
+      476,
+      930
+    ],
+    "group": "Things",
+    "palette": [
+      "#f3f0fb",
+      "#9950d5",
+      "#ef416c"
+    ],
+    "skill": "confetti",
+    "powerFamily": "jester",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/ghost.png",
+    "icon": "assets/characters/icons/ghost.png",
+    "high_resolution": "assets/characters/512/ghost.png",
+    "selected": "assets/characters/selected/ghost.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/ghost_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/ghost_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/ghost_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "robot",
+    "name": "Beep",
+    "description": "Antenna robot",
+    "box": [
+      462,
+      719,
+      687,
+      916
+    ],
+    "bottom": 910,
+    "nativeSize": [
+      211,
+      190
+    ],
+    "refinedSourceCrop": [
+      450,
+      708,
+      699,
+      929
+    ],
+    "group": "Things",
+    "palette": [
+      "#e9f3f9",
+      "#34c4eb",
+      "#192534"
+    ],
+    "skill": "scanline",
+    "powerFamily": "byte",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/robot.png",
+    "icon": "assets/characters/icons/robot.png",
+    "high_resolution": "assets/characters/512/robot.png",
+    "selected": "assets/characters/selected/robot.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/robot_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/robot_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/robot_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "cactus",
+    "name": "Prickle",
+    "description": "Flower cactus",
+    "box": [
+      685,
+      702,
+      917,
+      916
+    ],
+    "bottom": 910,
+    "nativeSize": [
+      227,
+      205
+    ],
+    "refinedSourceCrop": [
+      673,
+      694,
+      933,
+      929
+    ],
+    "group": "Things",
+    "palette": [
+      "#77b637",
+      "#f45ca3",
+      "#fff2b2"
+    ],
+    "skill": "leaf_burst",
+    "powerFamily": "sprout",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/cactus.png",
+    "icon": "assets/characters/icons/cactus.png",
+    "high_resolution": "assets/characters/512/cactus.png",
+    "selected": "assets/characters/selected/cactus.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/cactus_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/cactus_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/cactus_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "mushroom",
+    "name": "Button",
+    "description": "Mushroom",
+    "box": [
+      914,
+      714,
+      1147,
+      916
+    ],
+    "bottom": 909,
+    "nativeSize": [
+      229,
+      190
+    ],
+    "refinedSourceCrop": [
+      902,
+      714,
+      1160,
+      931
+    ],
+    "group": "Things",
+    "palette": [
+      "#f44432",
+      "#fff0d3",
+      "#3c963f"
+    ],
+    "skill": "patch_pop",
+    "powerFamily": "patch",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/mushroom.png",
+    "icon": "assets/characters/icons/mushroom.png",
+    "high_resolution": "assets/characters/512/mushroom.png",
+    "selected": "assets/characters/selected/mushroom.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/mushroom_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/mushroom_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/mushroom_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "cupcake",
+    "name": "Cupcake",
+    "description": "Cupcake",
+    "box": [
+      1150,
+      704,
+      1374,
+      916
+    ],
+    "bottom": 910,
+    "nativeSize": [
+      211,
+      205
+    ],
+    "refinedSourceCrop": [
+      1140,
+      695,
+      1374,
+      931
+    ],
+    "group": "Things",
+    "palette": [
+      "#f688c0",
+      "#fff0d4",
+      "#e9345b"
+    ],
+    "skill": "sunburst",
+    "powerFamily": "sunny",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/cupcake.png",
+    "icon": "assets/characters/icons/cupcake.png",
+    "high_resolution": "assets/characters/512/cupcake.png",
+    "selected": "assets/characters/selected/cupcake.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/cupcake_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/cupcake_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/cupcake_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "strawberry",
+    "name": "Berry",
+    "description": "Strawberry",
+    "box": [
+      2,
+      922,
+      227,
+      1128
+    ],
+    "bottom": 1121,
+    "nativeSize": [
+      205,
+      199
+    ],
+    "refinedSourceCrop": [
+      0,
+      910,
+      237,
+      1141
+    ],
+    "group": "Things",
+    "palette": [
+      "#ed3852",
+      "#6fac37",
+      "#ffca38"
+    ],
+    "skill": "thread_burst",
+    "powerFamily": "stitch",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/strawberry.png",
+    "icon": "assets/characters/icons/strawberry.png",
+    "high_resolution": "assets/characters/512/strawberry.png",
+    "selected": "assets/characters/selected/strawberry.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/strawberry_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/strawberry_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/strawberry_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "pumpkin",
+    "name": "Pipkin",
+    "description": "Pumpkin",
+    "box": [
+      230,
+      921,
+      456,
+      1128
+    ],
+    "bottom": 1120,
+    "nativeSize": [
+      216,
+      198
+    ],
+    "refinedSourceCrop": [
+      216,
+      911,
+      464,
+      1139
+    ],
+    "group": "Things",
+    "palette": [
+      "#ff971e",
+      "#3c8336",
+      "#442719"
+    ],
+    "skill": "sunburst",
+    "powerFamily": "sunny",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/pumpkin.png",
+    "icon": "assets/characters/icons/pumpkin.png",
+    "high_resolution": "assets/characters/512/pumpkin.png",
+    "selected": "assets/characters/selected/pumpkin.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/pumpkin_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/pumpkin_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/pumpkin_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "cloud",
+    "name": "Puff",
+    "description": "Cloud",
+    "box": [
+      454,
+      927,
+      691,
+      1128
+    ],
+    "bottom": 1120,
+    "nativeSize": [
+      237,
+      198
+    ],
+    "refinedSourceCrop": [
+      441,
+      918,
+      702,
+      1140
+    ],
+    "group": "Things",
+    "palette": [
+      "#f6f5f0",
+      "#a0d6e9",
+      "#ffdb42"
+    ],
+    "skill": "mint_wave",
+    "powerFamily": "mint",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/cloud.png",
+    "icon": "assets/characters/icons/cloud.png",
+    "high_resolution": "assets/characters/512/cloud.png",
+    "selected": "assets/characters/selected/cloud.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/cloud_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/cloud_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/cloud_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "planet",
+    "name": "Orbit",
+    "description": "Ringed planet",
+    "box": [
+      688,
+      923,
+      916,
+      1128
+    ],
+    "bottom": 1121,
+    "nativeSize": [
+      228,
+      195
+    ],
+    "refinedSourceCrop": [
+      674,
+      911,
+      930,
+      1139
+    ],
+    "group": "Things",
+    "palette": [
+      "#213f9e",
+      "#af9be9",
+      "#ffdd61"
+    ],
+    "skill": "moonfall",
+    "powerFamily": "luna",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/planet.png",
+    "icon": "assets/characters/icons/planet.png",
+    "high_resolution": "assets/characters/512/planet.png",
+    "selected": "assets/characters/selected/planet.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/planet_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/planet_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/planet_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "sol",
+    "name": "Sol",
+    "description": "Little sun",
+    "box": [
+      915,
+      922,
+      1146,
+      1128
+    ],
+    "bottom": 1122,
+    "nativeSize": [
+      229,
+      201
+    ],
+    "refinedSourceCrop": [
+      903,
+      910,
+      1162,
+      1143
+    ],
+    "group": "Things",
+    "palette": [
+      "#ffc52b",
+      "#ff9d17",
+      "#fff2c1"
+    ],
+    "skill": "sunburst",
+    "powerFamily": "sunny",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/sol.png",
+    "icon": "assets/characters/icons/sol.png",
+    "high_resolution": "assets/characters/512/sol.png",
+    "selected": "assets/characters/selected/sol.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/sol_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/sol_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/sol_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "treasure",
+    "name": "Trinket",
+    "description": "Treasure chest",
+    "box": [
+      1152,
+      923,
+      1374,
+      1128
+    ],
+    "bottom": 1120,
+    "nativeSize": [
+      213,
+      192
+    ],
+    "refinedSourceCrop": [
+      1140,
+      912,
+      1374,
+      1139
+    ],
+    "group": "Things",
+    "palette": [
+      "#863aca",
+      "#efb738",
+      "#fff0d5"
+    ],
+    "skill": "confetti",
+    "powerFamily": "jester",
+    "source": "source_art/approved_expansion_30.png",
+    "sprite": "assets/characters/256/treasure.png",
+    "icon": "assets/characters/icons/treasure.png",
+    "high_resolution": "assets/characters/512/treasure.png",
+    "selected": "assets/characters/selected/treasure.png",
+    "highResolutionNote": "512px is an upscale of the approved composite; native RGBA cutout included.",
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.418,
+    "animations": {
+      "idle": {
+        "path": "assets/animations/characters/treasure_idle.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 8,
+        "loop": true
+      },
+      "select": {
+        "path": "assets/animations/characters/treasure_select.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 6,
+        "fps": 12,
+        "loop": false
+      },
+      "clear": {
+        "path": "assets/animations/characters/treasure_clear.png",
+        "frameWidth": 256,
+        "frameHeight": 256,
+        "frames": 8,
+        "fps": 18,
+        "loop": false
+      }
+    },
+    "alphaProcessing": "Independent silhouette, opaque interior, subpixel antialiasing, transparent padding."
+  },
+  {
+    "id": "jingle_cub",
+    "name": "Jingle Cub",
+    "description": "cranberry-red panda, cream muzzle, tiny sewn holly leaves and gold bell",
+    "group": "Christmas",
+    "seasonal": true,
+    "powerFamily": "stitch",
+    "skill": "thread_burst",
+    "sprite": "assets/seasonal/256/jingle_cub.png",
+    "selected": "assets/seasonal/256/jingle_cub.png",
+    "icon": "assets/seasonal/256/jingle_cub.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "cocoa_claus",
+    "name": "Cocoa Claus",
+    "description": "warm cocoa bear, red Santa cap sewn into its round body, cream beard muzzle",
+    "group": "Christmas",
+    "seasonal": true,
+    "powerFamily": "sunny",
+    "skill": "sunburst",
+    "sprite": "assets/seasonal/256/cocoa_claus.png",
+    "selected": "assets/seasonal/256/cocoa_claus.png",
+    "icon": "assets/seasonal/256/cocoa_claus.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "holly_hare",
+    "name": "Holly Hare",
+    "description": "cream rabbit, short sage ears, deep green holly collar and red berry nose",
+    "group": "Christmas",
+    "seasonal": true,
+    "powerFamily": "patch",
+    "skill": "patch_pop",
+    "sprite": "assets/seasonal/256/holly_hare.png",
+    "selected": "assets/seasonal/256/holly_hare.png",
+    "icon": "assets/seasonal/256/holly_hare.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "noel_narwhal",
+    "name": "Noel Narwhal",
+    "description": "icy blue narwhal, short candy-striped horn, cream belly",
+    "group": "Christmas",
+    "seasonal": true,
+    "powerFamily": "mint",
+    "skill": "mint_wave",
+    "sprite": "assets/seasonal/256/noel_narwhal.png",
+    "selected": "assets/seasonal/256/noel_narwhal.png",
+    "icon": "assets/seasonal/256/noel_narwhal.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "ginger_snap",
+    "name": "Ginger Snap",
+    "description": "round gingerbread puppy, cinnamon felt, cream icing seams and cherry cheeks",
+    "group": "Christmas",
+    "seasonal": true,
+    "powerFamily": "ember",
+    "skill": "flame_sweep",
+    "sprite": "assets/seasonal/256/ginger_snap.png",
+    "selected": "assets/seasonal/256/ginger_snap.png",
+    "icon": "assets/seasonal/256/ginger_snap.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "merry_moose",
+    "name": "Merry Moose",
+    "description": "caramel moose, small soft felt antlers and cranberry scarf",
+    "group": "Christmas",
+    "seasonal": true,
+    "powerFamily": "luna",
+    "skill": "moonfall",
+    "sprite": "assets/seasonal/256/merry_moose.png",
+    "selected": "assets/seasonal/256/merry_moose.png",
+    "icon": "assets/seasonal/256/merry_moose.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "pudding_plum",
+    "name": "Pudding Plum",
+    "description": "round plum pudding hedgehog, cocoa body and cream snowy forehead",
+    "group": "Christmas",
+    "seasonal": true,
+    "powerFamily": "byte",
+    "skill": "scanline",
+    "sprite": "assets/seasonal/256/pudding_plum.png",
+    "selected": "assets/seasonal/256/pudding_plum.png",
+    "icon": "assets/seasonal/256/pudding_plum.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "tinsel_turtle",
+    "name": "Tinsel Turtle",
+    "description": "pine-green turtle with gold stitched star shell and cream face",
+    "group": "Christmas",
+    "seasonal": true,
+    "powerFamily": "jester",
+    "skill": "confetti",
+    "sprite": "assets/seasonal/256/tinsel_turtle.png",
+    "selected": "assets/seasonal/256/tinsel_turtle.png",
+    "icon": "assets/seasonal/256/tinsel_turtle.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "ribbon_robin",
+    "name": "Ribbon Robin",
+    "description": "round red-breasted robin, chocolate wings and tiny mint ribbon",
+    "group": "Christmas",
+    "seasonal": true,
+    "powerFamily": "splash",
+    "skill": "splash_ring",
+    "sprite": "assets/seasonal/256/ribbon_robin.png",
+    "selected": "assets/seasonal/256/ribbon_robin.png",
+    "icon": "assets/seasonal/256/ribbon_robin.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "snowbell_seal",
+    "name": "Snowbell Seal",
+    "description": "cream baby seal with icy-blue flippers and small cranberry earmuffs",
+    "group": "Christmas",
+    "seasonal": true,
+    "powerFamily": "sprout",
+    "skill": "leaf_burst",
+    "sprite": "assets/seasonal/256/snowbell_seal.png",
+    "selected": "assets/seasonal/256/snowbell_seal.png",
+    "icon": "assets/seasonal/256/snowbell_seal.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "boo_berry",
+    "name": "Boo Berry",
+    "description": "round lavender ghost bear with scalloped felt bottom and cream face",
+    "group": "Halloween",
+    "seasonal": true,
+    "powerFamily": "sunny",
+    "skill": "sunburst",
+    "sprite": "assets/seasonal/256/boo_berry.png",
+    "selected": "assets/seasonal/256/boo_berry.png",
+    "icon": "assets/seasonal/256/boo_berry.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "candy_corn",
+    "name": "Candy Corn",
+    "description": "round cream kitten whose whole body has candy-corn orange and yellow sewn panels",
+    "group": "Halloween",
+    "seasonal": true,
+    "powerFamily": "patch",
+    "skill": "patch_pop",
+    "sprite": "assets/seasonal/256/candy_corn.png",
+    "selected": "assets/seasonal/256/candy_corn.png",
+    "icon": "assets/seasonal/256/candy_corn.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "cauldron_cat",
+    "name": "Cauldron Cat",
+    "description": "deep plum cat with sage green belly and small matching witch hat",
+    "group": "Halloween",
+    "seasonal": true,
+    "powerFamily": "mint",
+    "skill": "mint_wave",
+    "sprite": "assets/seasonal/256/cauldron_cat.png",
+    "selected": "assets/seasonal/256/cauldron_cat.png",
+    "icon": "assets/seasonal/256/cauldron_cat.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "cobweb_cub",
+    "name": "Cobweb Cub",
+    "description": "round smoky-blue bear with fine silver embroidered web on forehead",
+    "group": "Halloween",
+    "seasonal": true,
+    "powerFamily": "ember",
+    "skill": "flame_sweep",
+    "sprite": "assets/seasonal/256/cobweb_cub.png",
+    "selected": "assets/seasonal/256/cobweb_cub.png",
+    "icon": "assets/seasonal/256/cobweb_cub.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "fang_fawn",
+    "name": "Fang Fawn",
+    "description": "dusky purple deer with tiny cream felt fangs and maroon collar",
+    "group": "Halloween",
+    "seasonal": true,
+    "powerFamily": "luna",
+    "skill": "moonfall",
+    "sprite": "assets/seasonal/256/fang_fawn.png",
+    "selected": "assets/seasonal/256/fang_fawn.png",
+    "icon": "assets/seasonal/256/fang_fawn.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "mallow_mummy",
+    "name": "Mallow Mummy",
+    "description": "cream marshmallow bunny with soft oatmeal bandage panels and one pink ear",
+    "group": "Halloween",
+    "seasonal": true,
+    "powerFamily": "byte",
+    "skill": "scanline",
+    "sprite": "assets/seasonal/256/mallow_mummy.png",
+    "selected": "assets/seasonal/256/mallow_mummy.png",
+    "icon": "assets/seasonal/256/mallow_mummy.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "pumpkin_pup",
+    "name": "Pumpkin Pup",
+    "description": "pumpkin orange dog with sage stem tuft and dark floppy ears",
+    "group": "Halloween",
+    "seasonal": true,
+    "powerFamily": "jester",
+    "skill": "confetti",
+    "sprite": "assets/seasonal/256/pumpkin_pup.png",
+    "selected": "assets/seasonal/256/pumpkin_pup.png",
+    "icon": "assets/seasonal/256/pumpkin_pup.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "spooky_squid",
+    "name": "Spooky Squid",
+    "description": "round lilac squid with tiny curled tentacles and moon-shaped cream face",
+    "group": "Halloween",
+    "seasonal": true,
+    "powerFamily": "splash",
+    "skill": "splash_ring",
+    "sprite": "assets/seasonal/256/spooky_squid.png",
+    "selected": "assets/seasonal/256/spooky_squid.png",
+    "icon": "assets/seasonal/256/spooky_squid.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "truffle_troll",
+    "name": "Truffle Troll",
+    "description": "moss green round troll, short mauve horns, friendly toothy smile",
+    "group": "Halloween",
+    "seasonal": true,
+    "powerFamily": "sprout",
+    "skill": "leaf_burst",
+    "sprite": "assets/seasonal/256/truffle_troll.png",
+    "selected": "assets/seasonal/256/truffle_troll.png",
+    "icon": "assets/seasonal/256/truffle_troll.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "velvet_vamp",
+    "name": "Velvet Vamp",
+    "description": "round burgundy bat, tiny integrated wings and cream heart-shaped face",
+    "group": "Halloween",
+    "seasonal": true,
+    "powerFamily": "stitch",
+    "skill": "thread_burst",
+    "sprite": "assets/seasonal/256/velvet_vamp.png",
+    "selected": "assets/seasonal/256/velvet_vamp.png",
+    "icon": "assets/seasonal/256/velvet_vamp.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "aurora_fox",
+    "name": "Aurora Fox",
+    "description": "round icy mint arctic fox with lilac ear tips and cream muzzle",
+    "group": "Winter",
+    "seasonal": true,
+    "powerFamily": "patch",
+    "skill": "patch_pop",
+    "sprite": "assets/seasonal/256/aurora_fox.png",
+    "selected": "assets/seasonal/256/aurora_fox.png",
+    "icon": "assets/seasonal/256/aurora_fox.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "blizzard_bun",
+    "name": "Blizzard Bun",
+    "description": "round snowy rabbit with stubby powder-blue ears and lavender scarf",
+    "group": "Winter",
+    "seasonal": true,
+    "powerFamily": "mint",
+    "skill": "mint_wave",
+    "sprite": "assets/seasonal/256/blizzard_bun.png",
+    "selected": "assets/seasonal/256/blizzard_bun.png",
+    "icon": "assets/seasonal/256/blizzard_bun.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "chilly_chick",
+    "name": "Chilly Chick",
+    "description": "pale blue baby penguin with cream face and knitted rose cap",
+    "group": "Winter",
+    "seasonal": true,
+    "powerFamily": "ember",
+    "skill": "flame_sweep",
+    "sprite": "assets/seasonal/256/chilly_chick.png",
+    "selected": "assets/seasonal/256/chilly_chick.png",
+    "icon": "assets/seasonal/256/chilly_chick.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "frost_finch",
+    "name": "Frost Finch",
+    "description": "round pale lavender finch with icy white wing patches",
+    "group": "Winter",
+    "seasonal": true,
+    "powerFamily": "luna",
+    "skill": "moonfall",
+    "sprite": "assets/seasonal/256/frost_finch.png",
+    "selected": "assets/seasonal/256/frost_finch.png",
+    "icon": "assets/seasonal/256/frost_finch.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "icicle_imp",
+    "name": "Icicle Imp",
+    "description": "round turquoise snow monster with two short cream horns and shy smile",
+    "group": "Winter",
+    "seasonal": true,
+    "powerFamily": "byte",
+    "skill": "scanline",
+    "sprite": "assets/seasonal/256/icicle_imp.png",
+    "selected": "assets/seasonal/256/icicle_imp.png",
+    "icon": "assets/seasonal/256/icicle_imp.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "mittens_mole",
+    "name": "Mittens Mole",
+    "description": "round gray mole with rose-pink mitten paws and cream muzzle",
+    "group": "Winter",
+    "seasonal": true,
+    "powerFamily": "jester",
+    "skill": "confetti",
+    "sprite": "assets/seasonal/256/mittens_mole.png",
+    "selected": "assets/seasonal/256/mittens_mole.png",
+    "icon": "assets/seasonal/256/mittens_mole.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "polar_peach",
+    "name": "Polar Peach",
+    "description": "pale peach polar bear with cream fur panels and mint earmuffs",
+    "group": "Winter",
+    "seasonal": true,
+    "powerFamily": "splash",
+    "skill": "splash_ring",
+    "sprite": "assets/seasonal/256/polar_peach.png",
+    "selected": "assets/seasonal/256/polar_peach.png",
+    "icon": "assets/seasonal/256/polar_peach.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "slush_sloth",
+    "name": "Slush Sloth",
+    "description": "round misty-blue sloth with dark blue eye patches and cream belly",
+    "group": "Winter",
+    "seasonal": true,
+    "powerFamily": "sprout",
+    "skill": "leaf_burst",
+    "sprite": "assets/seasonal/256/slush_sloth.png",
+    "selected": "assets/seasonal/256/slush_sloth.png",
+    "icon": "assets/seasonal/256/slush_sloth.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "snowflake_yak",
+    "name": "Snowflake Yak",
+    "description": "round cream yak with lilac fringe and short icy blue horns",
+    "group": "Winter",
+    "seasonal": true,
+    "powerFamily": "stitch",
+    "skill": "thread_burst",
+    "sprite": "assets/seasonal/256/snowflake_yak.png",
+    "selected": "assets/seasonal/256/snowflake_yak.png",
+    "icon": "assets/seasonal/256/snowflake_yak.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "woolly_walrus",
+    "name": "Woolly Walrus",
+    "description": "round slate-blue walrus with two short cream tusks and pink cheeks",
+    "group": "Winter",
+    "seasonal": true,
+    "powerFamily": "sunny",
+    "skill": "sunburst",
+    "sprite": "assets/seasonal/256/woolly_walrus.png",
+    "selected": "assets/seasonal/256/woolly_walrus.png",
+    "icon": "assets/seasonal/256/woolly_walrus.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "blossom_bee",
+    "name": "Blossom Bee",
+    "description": "round buttery yellow bee, cocoa felt stripes, pale pink flower tuft",
+    "group": "Spring",
+    "seasonal": true,
+    "powerFamily": "mint",
+    "skill": "mint_wave",
+    "sprite": "assets/seasonal/256/blossom_bee.png",
+    "selected": "assets/seasonal/256/blossom_bee.png",
+    "icon": "assets/seasonal/256/blossom_bee.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "clover_calf",
+    "name": "Clover Calf",
+    "description": "round sage-green calf with cream patches and clover-shaped forelock",
+    "group": "Spring",
+    "seasonal": true,
+    "powerFamily": "ember",
+    "skill": "flame_sweep",
+    "sprite": "assets/seasonal/256/clover_calf.png",
+    "selected": "assets/seasonal/256/clover_calf.png",
+    "icon": "assets/seasonal/256/clover_calf.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "daisy_duck",
+    "name": "Daisy Duck",
+    "description": "round buttercream duck with apricot beak and small white daisy bonnet",
+    "group": "Spring",
+    "seasonal": true,
+    "powerFamily": "luna",
+    "skill": "moonfall",
+    "sprite": "assets/seasonal/256/daisy_duck.png",
+    "selected": "assets/seasonal/256/daisy_duck.png",
+    "icon": "assets/seasonal/256/daisy_duck.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "dewdrop_deer",
+    "name": "Dewdrop Deer",
+    "description": "round mint deer, cream muzzle, pink flower-shaped ear details",
+    "group": "Spring",
+    "seasonal": true,
+    "powerFamily": "byte",
+    "skill": "scanline",
+    "sprite": "assets/seasonal/256/dewdrop_deer.png",
+    "selected": "assets/seasonal/256/dewdrop_deer.png",
+    "icon": "assets/seasonal/256/dewdrop_deer.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "fern_ferret",
+    "name": "Fern Ferret",
+    "description": "round pale green ferret with cream face and dark fern leaf patches",
+    "group": "Spring",
+    "seasonal": true,
+    "powerFamily": "jester",
+    "skill": "confetti",
+    "sprite": "assets/seasonal/256/fern_ferret.png",
+    "selected": "assets/seasonal/256/fern_ferret.png",
+    "icon": "assets/seasonal/256/fern_ferret.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "lilac_lamb",
+    "name": "Lilac Lamb",
+    "description": "round pastel-lilac lamb with scalloped fleece and cream face",
+    "group": "Spring",
+    "seasonal": true,
+    "powerFamily": "splash",
+    "skill": "splash_ring",
+    "sprite": "assets/seasonal/256/lilac_lamb.png",
+    "selected": "assets/seasonal/256/lilac_lamb.png",
+    "icon": "assets/seasonal/256/lilac_lamb.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "petal_piglet",
+    "name": "Petal Piglet",
+    "description": "round cherry-blossom pink piglet with cream petal face markings",
+    "group": "Spring",
+    "seasonal": true,
+    "powerFamily": "sprout",
+    "skill": "leaf_burst",
+    "sprite": "assets/seasonal/256/petal_piglet.png",
+    "selected": "assets/seasonal/256/petal_piglet.png",
+    "icon": "assets/seasonal/256/petal_piglet.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "pollen_puff",
+    "name": "Pollen Puff",
+    "description": "round golden bumblebee bear with cream cheeks and small mint wings",
+    "group": "Spring",
+    "seasonal": true,
+    "powerFamily": "stitch",
+    "skill": "thread_burst",
+    "sprite": "assets/seasonal/256/pollen_puff.png",
+    "selected": "assets/seasonal/256/pollen_puff.png",
+    "icon": "assets/seasonal/256/pollen_puff.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "rainy_roo",
+    "name": "Rainy Roo",
+    "description": "round periwinkle kangaroo with small ears and cream raindrop belly",
+    "group": "Spring",
+    "seasonal": true,
+    "powerFamily": "sunny",
+    "skill": "sunburst",
+    "sprite": "assets/seasonal/256/rainy_roo.png",
+    "selected": "assets/seasonal/256/rainy_roo.png",
+    "icon": "assets/seasonal/256/rainy_roo.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "tulip_toad",
+    "name": "Tulip Toad",
+    "description": "round rose-pink toad with sage cheeks and tulip-shaped forehead petals",
+    "group": "Spring",
+    "seasonal": true,
+    "powerFamily": "patch",
+    "skill": "patch_pop",
+    "sprite": "assets/seasonal/256/tulip_toad.png",
+    "selected": "assets/seasonal/256/tulip_toad.png",
+    "icon": "assets/seasonal/256/tulip_toad.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "bonbon_bunny",
+    "name": "Bonbon Bunny",
+    "description": "round cocoa rabbit with cream muzzle and pastel blue inner ears",
+    "group": "Easter",
+    "seasonal": true,
+    "powerFamily": "ember",
+    "skill": "flame_sweep",
+    "sprite": "assets/seasonal/256/bonbon_bunny.png",
+    "selected": "assets/seasonal/256/bonbon_bunny.png",
+    "icon": "assets/seasonal/256/bonbon_bunny.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "carrot_cub",
+    "name": "Carrot Cub",
+    "description": "round orange bear with green tuft and cream carrot-seam belly",
+    "group": "Easter",
+    "seasonal": true,
+    "powerFamily": "luna",
+    "skill": "moonfall",
+    "sprite": "assets/seasonal/256/carrot_cub.png",
+    "selected": "assets/seasonal/256/carrot_cub.png",
+    "icon": "assets/seasonal/256/carrot_cub.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "dottie_dove",
+    "name": "Dottie Dove",
+    "description": "round cream dove with pastel polka-dot sewn wing patches",
+    "group": "Easter",
+    "seasonal": true,
+    "powerFamily": "byte",
+    "skill": "scanline",
+    "sprite": "assets/seasonal/256/dottie_dove.png",
+    "selected": "assets/seasonal/256/dottie_dove.png",
+    "icon": "assets/seasonal/256/dottie_dove.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "egglet",
+    "name": "Egglet",
+    "description": "round lavender egg chick with scalloped cream shell as body panels",
+    "group": "Easter",
+    "seasonal": true,
+    "powerFamily": "jester",
+    "skill": "confetti",
+    "sprite": "assets/seasonal/256/egglet.png",
+    "selected": "assets/seasonal/256/egglet.png",
+    "icon": "assets/seasonal/256/egglet.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "flopsy_flan",
+    "name": "Flopsy Flan",
+    "description": "round custard rabbit with caramel forehead and tiny cream ears",
+    "group": "Easter",
+    "seasonal": true,
+    "powerFamily": "splash",
+    "skill": "splash_ring",
+    "sprite": "assets/seasonal/256/flopsy_flan.png",
+    "selected": "assets/seasonal/256/flopsy_flan.png",
+    "icon": "assets/seasonal/256/flopsy_flan.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "jelly_joey",
+    "name": "Jelly Joey",
+    "description": "round peach kangaroo with mint belly pocket and lavender ear panels",
+    "group": "Easter",
+    "seasonal": true,
+    "powerFamily": "sprout",
+    "skill": "leaf_burst",
+    "sprite": "assets/seasonal/256/jelly_joey.png",
+    "selected": "assets/seasonal/256/jelly_joey.png",
+    "icon": "assets/seasonal/256/jelly_joey.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "marzipan_mouse",
+    "name": "Marzipan Mouse",
+    "description": "round cream mouse with rose ears and tiny apricot nose",
+    "group": "Easter",
+    "seasonal": true,
+    "powerFamily": "stitch",
+    "skill": "thread_burst",
+    "sprite": "assets/seasonal/256/marzipan_mouse.png",
+    "selected": "assets/seasonal/256/marzipan_mouse.png",
+    "icon": "assets/seasonal/256/marzipan_mouse.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "peep_pea",
+    "name": "Peep Pea",
+    "description": "round pea-green chick with butter-yellow face and cream wings",
+    "group": "Easter",
+    "seasonal": true,
+    "powerFamily": "sunny",
+    "skill": "sunburst",
+    "sprite": "assets/seasonal/256/peep_pea.png",
+    "selected": "assets/seasonal/256/peep_pea.png",
+    "icon": "assets/seasonal/256/peep_pea.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "sprinkle_squeak",
+    "name": "Sprinkle Squeak",
+    "description": "round lavender mouse with tiny pastel embroidered sprinkle stitches",
+    "group": "Easter",
+    "seasonal": true,
+    "powerFamily": "patch",
+    "skill": "patch_pop",
+    "sprite": "assets/seasonal/256/sprinkle_squeak.png",
+    "selected": "assets/seasonal/256/sprinkle_squeak.png",
+    "icon": "assets/seasonal/256/sprinkle_squeak.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "truffle_tweet",
+    "name": "Truffle Tweet",
+    "description": "round cocoa chick with cream face and pale-pink tiny wings",
+    "group": "Easter",
+    "seasonal": true,
+    "powerFamily": "mint",
+    "skill": "mint_wave",
+    "sprite": "assets/seasonal/256/truffle_tweet.png",
+    "selected": "assets/seasonal/256/truffle_tweet.png",
+    "icon": "assets/seasonal/256/truffle_tweet.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "beach_bean",
+    "name": "Beach Bean",
+    "description": "round sand-colored capybara with teal belly and coral cheeks",
+    "group": "Summer",
+    "seasonal": true,
+    "powerFamily": "luna",
+    "skill": "moonfall",
+    "sprite": "assets/seasonal/256/beach_bean.png",
+    "selected": "assets/seasonal/256/beach_bean.png",
+    "icon": "assets/seasonal/256/beach_bean.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "coral_crab",
+    "name": "Coral Crab",
+    "description": "round coral-red crab with stubby claws and cream smile face",
+    "group": "Summer",
+    "seasonal": true,
+    "powerFamily": "byte",
+    "skill": "scanline",
+    "sprite": "assets/seasonal/256/coral_crab.png",
+    "selected": "assets/seasonal/256/coral_crab.png",
+    "icon": "assets/seasonal/256/coral_crab.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "coconut_cub",
+    "name": "Coconut Cub",
+    "description": "round coconut-brown bear with cream forehead and sage ear panels",
+    "group": "Summer",
+    "seasonal": true,
+    "powerFamily": "jester",
+    "skill": "confetti",
+    "sprite": "assets/seasonal/256/coconut_cub.png",
+    "selected": "assets/seasonal/256/coconut_cub.png",
+    "icon": "assets/seasonal/256/coconut_cub.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "lemon_lobster",
+    "name": "Lemon Lobster",
+    "description": "round butter-yellow lobster with tiny apricot claws and cream face",
+    "group": "Summer",
+    "seasonal": true,
+    "powerFamily": "splash",
+    "skill": "splash_ring",
+    "sprite": "assets/seasonal/256/lemon_lobster.png",
+    "selected": "assets/seasonal/256/lemon_lobster.png",
+    "icon": "assets/seasonal/256/lemon_lobster.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "melon_manatee",
+    "name": "Melon Manatee",
+    "description": "round mint manatee with dark green watermelon-seam body and pink belly",
+    "group": "Summer",
+    "seasonal": true,
+    "powerFamily": "sprout",
+    "skill": "leaf_burst",
+    "sprite": "assets/seasonal/256/melon_manatee.png",
+    "selected": "assets/seasonal/256/melon_manatee.png",
+    "icon": "assets/seasonal/256/melon_manatee.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "peach_pelican",
+    "name": "Peach Pelican",
+    "description": "round peach pelican with cream belly and short golden beak pouch",
+    "group": "Summer",
+    "seasonal": true,
+    "powerFamily": "stitch",
+    "skill": "thread_burst",
+    "sprite": "assets/seasonal/256/peach_pelican.png",
+    "selected": "assets/seasonal/256/peach_pelican.png",
+    "icon": "assets/seasonal/256/peach_pelican.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "pineapple_puff",
+    "name": "Pineapple Puff",
+    "description": "round golden pineapple hedgehog with sewn diamond texture and sage tuft",
+    "group": "Summer",
+    "seasonal": true,
+    "powerFamily": "sunny",
+    "skill": "sunburst",
+    "sprite": "assets/seasonal/256/pineapple_puff.png",
+    "selected": "assets/seasonal/256/pineapple_puff.png",
+    "icon": "assets/seasonal/256/pineapple_puff.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "seabreeze_ray",
+    "name": "Seabreeze Ray",
+    "description": "compact round sky-blue stingray with tiny cream fin edges and smile",
+    "group": "Summer",
+    "seasonal": true,
+    "powerFamily": "patch",
+    "skill": "patch_pop",
+    "sprite": "assets/seasonal/256/seabreeze_ray.png",
+    "selected": "assets/seasonal/256/seabreeze_ray.png",
+    "icon": "assets/seasonal/256/seabreeze_ray.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "sorbet_otter",
+    "name": "Sorbet Otter",
+    "description": "round raspberry-and-cream otter with tiny peach paws",
+    "group": "Summer",
+    "seasonal": true,
+    "powerFamily": "mint",
+    "skill": "mint_wave",
+    "sprite": "assets/seasonal/256/sorbet_otter.png",
+    "selected": "assets/seasonal/256/sorbet_otter.png",
+    "icon": "assets/seasonal/256/sorbet_otter.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "sunny_shrimp",
+    "name": "Sunny Shrimp",
+    "description": "round apricot shrimp with curved cream segmented belly and short felt antennae",
+    "group": "Summer",
+    "seasonal": true,
+    "powerFamily": "ember",
+    "skill": "flame_sweep",
+    "sprite": "assets/seasonal/256/sunny_shrimp.png",
+    "selected": "assets/seasonal/256/sunny_shrimp.png",
+    "icon": "assets/seasonal/256/sunny_shrimp.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "acorn_alpaca",
+    "name": "Acorn Alpaca",
+    "description": "round caramel alpaca with cream curly forehead and dark acorn cap",
+    "group": "Autumn",
+    "seasonal": true,
+    "powerFamily": "byte",
+    "skill": "scanline",
+    "sprite": "assets/seasonal/256/acorn_alpaca.png",
+    "selected": "assets/seasonal/256/acorn_alpaca.png",
+    "icon": "assets/seasonal/256/acorn_alpaca.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "amber_armadillo",
+    "name": "Amber Armadillo",
+    "description": "round amber armadillo with cinnamon stitched shell and cream muzzle",
+    "group": "Autumn",
+    "seasonal": true,
+    "powerFamily": "jester",
+    "skill": "confetti",
+    "sprite": "assets/seasonal/256/amber_armadillo.png",
+    "selected": "assets/seasonal/256/amber_armadillo.png",
+    "icon": "assets/seasonal/256/amber_armadillo.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "chestnut_chip",
+    "name": "Chestnut Chip",
+    "description": "round chestnut chipmunk with cream stripes and rusty ears",
+    "group": "Autumn",
+    "seasonal": true,
+    "powerFamily": "splash",
+    "skill": "splash_ring",
+    "sprite": "assets/seasonal/256/chestnut_chip.png",
+    "selected": "assets/seasonal/256/chestnut_chip.png",
+    "icon": "assets/seasonal/256/chestnut_chip.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "cider_corgi",
+    "name": "Cider Corgi",
+    "description": "round apple-red corgi with cream muzzle and small sage leaf tuft",
+    "group": "Autumn",
+    "seasonal": true,
+    "powerFamily": "sprout",
+    "skill": "leaf_burst",
+    "sprite": "assets/seasonal/256/cider_corgi.png",
+    "selected": "assets/seasonal/256/cider_corgi.png",
+    "icon": "assets/seasonal/256/cider_corgi.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "hazel_hedgehog",
+    "name": "Hazel Hedgehog",
+    "description": "round hazelnut hedgehog with russet plush quills and cream face",
+    "group": "Autumn",
+    "seasonal": true,
+    "powerFamily": "stitch",
+    "skill": "thread_burst",
+    "sprite": "assets/seasonal/256/hazel_hedgehog.png",
+    "selected": "assets/seasonal/256/hazel_hedgehog.png",
+    "icon": "assets/seasonal/256/hazel_hedgehog.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "maple_moth",
+    "name": "Maple Moth",
+    "description": "round terracotta moth with compact maple-orange wings and cream face",
+    "group": "Autumn",
+    "seasonal": true,
+    "powerFamily": "sunny",
+    "skill": "sunburst",
+    "sprite": "assets/seasonal/256/maple_moth.png",
+    "selected": "assets/seasonal/256/maple_moth.png",
+    "icon": "assets/seasonal/256/maple_moth.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "nutmeg_newt",
+    "name": "Nutmeg Newt",
+    "description": "round cinnamon newt with cream belly and amber stitched spots",
+    "group": "Autumn",
+    "seasonal": true,
+    "powerFamily": "patch",
+    "skill": "patch_pop",
+    "sprite": "assets/seasonal/256/nutmeg_newt.png",
+    "selected": "assets/seasonal/256/nutmeg_newt.png",
+    "icon": "assets/seasonal/256/nutmeg_newt.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "persimmon_pal",
+    "name": "Persimmon Pal",
+    "description": "round persimmon-orange raccoon with cocoa eye patches and sage tuft",
+    "group": "Autumn",
+    "seasonal": true,
+    "powerFamily": "mint",
+    "skill": "mint_wave",
+    "sprite": "assets/seasonal/256/persimmon_pal.png",
+    "selected": "assets/seasonal/256/persimmon_pal.png",
+    "icon": "assets/seasonal/256/persimmon_pal.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "russet_raccoon",
+    "name": "Russet Raccoon",
+    "description": "round russet raccoon with oatmeal face and cranberry ear panels",
+    "group": "Autumn",
+    "seasonal": true,
+    "powerFamily": "ember",
+    "skill": "flame_sweep",
+    "sprite": "assets/seasonal/256/russet_raccoon.png",
+    "selected": "assets/seasonal/256/russet_raccoon.png",
+    "icon": "assets/seasonal/256/russet_raccoon.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "toffee_turkey",
+    "name": "Toffee Turkey",
+    "description": "round caramel turkey with compact fan-shaped cinnamon tail and cream cheeks",
+    "group": "Autumn",
+    "seasonal": true,
+    "powerFamily": "luna",
+    "skill": "moonfall",
+    "sprite": "assets/seasonal/256/toffee_turkey.png",
+    "selected": "assets/seasonal/256/toffee_turkey.png",
+    "icon": "assets/seasonal/256/toffee_turkey.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "blush_badger",
+    "name": "Blush Badger",
+    "description": "round rose badger with cream heart-shaped face and cocoa stripes",
+    "group": "Valentine",
+    "seasonal": true,
+    "powerFamily": "jester",
+    "skill": "confetti",
+    "sprite": "assets/seasonal/256/blush_badger.png",
+    "selected": "assets/seasonal/256/blush_badger.png",
+    "icon": "assets/seasonal/256/blush_badger.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "cherry_chinchilla",
+    "name": "Cherry Chinchilla",
+    "description": "round cherry-pink chinchilla with cream cheeks and round lilac ears",
+    "group": "Valentine",
+    "seasonal": true,
+    "powerFamily": "splash",
+    "skill": "splash_ring",
+    "sprite": "assets/seasonal/256/cherry_chinchilla.png",
+    "selected": "assets/seasonal/256/cherry_chinchilla.png",
+    "icon": "assets/seasonal/256/cherry_chinchilla.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "cupid_capy",
+    "name": "Cupid Capy",
+    "description": "round warm beige capybara with pink sewn heart belly and short cream wings",
+    "group": "Valentine",
+    "seasonal": true,
+    "powerFamily": "sprout",
+    "skill": "leaf_burst",
+    "sprite": "assets/seasonal/256/cupid_capy.png",
+    "selected": "assets/seasonal/256/cupid_capy.png",
+    "icon": "assets/seasonal/256/cupid_capy.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "fondant_fawn",
+    "name": "Fondant Fawn",
+    "description": "round pale-rose deer with cream spots and cocoa ear tips",
+    "group": "Valentine",
+    "seasonal": true,
+    "powerFamily": "stitch",
+    "skill": "thread_burst",
+    "sprite": "assets/seasonal/256/fondant_fawn.png",
+    "selected": "assets/seasonal/256/fondant_fawn.png",
+    "icon": "assets/seasonal/256/fondant_fawn.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "heart_hamster",
+    "name": "Heart Hamster",
+    "description": "round strawberry-pink hamster with a cream heart face and tiny paws",
+    "group": "Valentine",
+    "seasonal": true,
+    "powerFamily": "sunny",
+    "skill": "sunburst",
+    "sprite": "assets/seasonal/256/heart_hamster.png",
+    "selected": "assets/seasonal/256/heart_hamster.png",
+    "icon": "assets/seasonal/256/heart_hamster.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "lovey_lynx",
+    "name": "Lovey Lynx",
+    "description": "round peach lynx with rose ear tufts and cream muzzle",
+    "group": "Valentine",
+    "seasonal": true,
+    "powerFamily": "patch",
+    "skill": "patch_pop",
+    "sprite": "assets/seasonal/256/lovey_lynx.png",
+    "selected": "assets/seasonal/256/lovey_lynx.png",
+    "icon": "assets/seasonal/256/lovey_lynx.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "macaron_mouse",
+    "name": "Macaron Mouse",
+    "description": "round pale pink macaron mouse with cream ruffle seam and cocoa nose",
+    "group": "Valentine",
+    "seasonal": true,
+    "powerFamily": "mint",
+    "skill": "mint_wave",
+    "sprite": "assets/seasonal/256/macaron_mouse.png",
+    "selected": "assets/seasonal/256/macaron_mouse.png",
+    "icon": "assets/seasonal/256/macaron_mouse.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "raspberry_ram",
+    "name": "Raspberry Ram",
+    "description": "round berry ram with short cream curled horns and rosy wool",
+    "group": "Valentine",
+    "seasonal": true,
+    "powerFamily": "ember",
+    "skill": "flame_sweep",
+    "sprite": "assets/seasonal/256/raspberry_ram.png",
+    "selected": "assets/seasonal/256/raspberry_ram.png",
+    "icon": "assets/seasonal/256/raspberry_ram.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "rosebud_raven",
+    "name": "Rosebud Raven",
+    "description": "round dark plum raven with rose-pink chest and small sewn rose tuft",
+    "group": "Valentine",
+    "seasonal": true,
+    "powerFamily": "luna",
+    "skill": "moonfall",
+    "sprite": "assets/seasonal/256/rosebud_raven.png",
+    "selected": "assets/seasonal/256/rosebud_raven.png",
+    "icon": "assets/seasonal/256/rosebud_raven.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "sweetheart_swan",
+    "name": "Sweetheart Swan",
+    "description": "round cream swan with pale pink compact wings and peach beak",
+    "group": "Valentine",
+    "seasonal": true,
+    "powerFamily": "byte",
+    "skill": "scanline",
+    "sprite": "assets/seasonal/256/sweetheart_swan.png",
+    "selected": "assets/seasonal/256/sweetheart_swan.png",
+    "icon": "assets/seasonal/256/sweetheart_swan.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "comet_cub",
+    "name": "Comet Cub",
+    "description": "round midnight-blue bear with golden comet-shaped forehead patch",
+    "group": "Starlight",
+    "seasonal": true,
+    "powerFamily": "splash",
+    "skill": "splash_ring",
+    "sprite": "assets/seasonal/256/comet_cub.png",
+    "selected": "assets/seasonal/256/comet_cub.png",
+    "icon": "assets/seasonal/256/comet_cub.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "cosmic_koala",
+    "name": "Cosmic Koala",
+    "description": "round periwinkle koala with large soft cream ears and tiny golden nose",
+    "group": "Starlight",
+    "seasonal": true,
+    "powerFamily": "sprout",
+    "skill": "leaf_burst",
+    "sprite": "assets/seasonal/256/cosmic_koala.png",
+    "selected": "assets/seasonal/256/cosmic_koala.png",
+    "icon": "assets/seasonal/256/cosmic_koala.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "dreamy_dragon",
+    "name": "Dreamy Dragon",
+    "description": "round lilac baby dragon with tiny mint horns and cream belly",
+    "group": "Starlight",
+    "seasonal": true,
+    "powerFamily": "stitch",
+    "skill": "thread_burst",
+    "sprite": "assets/seasonal/256/dreamy_dragon.png",
+    "selected": "assets/seasonal/256/dreamy_dragon.png",
+    "icon": "assets/seasonal/256/dreamy_dragon.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "eclipse_ewe",
+    "name": "Eclipse Ewe",
+    "description": "round charcoal-blue lamb with cream crescent face marking and gold ears",
+    "group": "Starlight",
+    "seasonal": true,
+    "powerFamily": "sunny",
+    "skill": "sunburst",
+    "sprite": "assets/seasonal/256/eclipse_ewe.png",
+    "selected": "assets/seasonal/256/eclipse_ewe.png",
+    "icon": "assets/seasonal/256/eclipse_ewe.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "galaxy_gecko",
+    "name": "Galaxy Gecko",
+    "description": "round indigo gecko with lilac spots and golden belly",
+    "group": "Starlight",
+    "seasonal": true,
+    "powerFamily": "patch",
+    "skill": "patch_pop",
+    "sprite": "assets/seasonal/256/galaxy_gecko.png",
+    "selected": "assets/seasonal/256/galaxy_gecko.png",
+    "icon": "assets/seasonal/256/galaxy_gecko.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "lunar_lemur",
+    "name": "Lunar Lemur",
+    "description": "round misty lavender lemur with dark blue eye patches and cream muzzle",
+    "group": "Starlight",
+    "seasonal": true,
+    "powerFamily": "mint",
+    "skill": "mint_wave",
+    "sprite": "assets/seasonal/256/lunar_lemur.png",
+    "selected": "assets/seasonal/256/lunar_lemur.png",
+    "icon": "assets/seasonal/256/lunar_lemur.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "meteor_moth",
+    "name": "Meteor Moth",
+    "description": "round deep teal moth with compact gold-speckled wings and cream face",
+    "group": "Starlight",
+    "seasonal": true,
+    "powerFamily": "ember",
+    "skill": "flame_sweep",
+    "sprite": "assets/seasonal/256/meteor_moth.png",
+    "selected": "assets/seasonal/256/meteor_moth.png",
+    "icon": "assets/seasonal/256/meteor_moth.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "nebula_newbie",
+    "name": "Nebula Newbie",
+    "description": "round pastel turquoise alien plush with two short lilac antennae and cream belly",
+    "group": "Starlight",
+    "seasonal": true,
+    "powerFamily": "luna",
+    "skill": "moonfall",
+    "sprite": "assets/seasonal/256/nebula_newbie.png",
+    "selected": "assets/seasonal/256/nebula_newbie.png",
+    "icon": "assets/seasonal/256/nebula_newbie.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "orbit_owl",
+    "name": "Orbit Owl",
+    "description": "round navy owl with golden circular eye disks and cream forehead",
+    "group": "Starlight",
+    "seasonal": true,
+    "powerFamily": "byte",
+    "skill": "scanline",
+    "sprite": "assets/seasonal/256/orbit_owl.png",
+    "selected": "assets/seasonal/256/orbit_owl.png",
+    "icon": "assets/seasonal/256/orbit_owl.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "twinkle_tapir",
+    "name": "Twinkle Tapir",
+    "description": "round violet tapir with cream moon-shaped back panel and short plush nose",
+    "group": "Starlight",
+    "seasonal": true,
+    "powerFamily": "jester",
+    "skill": "confetti",
+    "sprite": "assets/seasonal/256/twinkle_tapir.png",
+    "selected": "assets/seasonal/256/twinkle_tapir.png",
+    "icon": "assets/seasonal/256/twinkle_tapir.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "confetti_cub",
+    "name": "Confetti Cub",
+    "description": "round turquoise bear with tiny colorful embroidered confetti stitches",
+    "group": "Celebration",
+    "seasonal": true,
+    "powerFamily": "sprout",
+    "skill": "leaf_burst",
+    "sprite": "assets/seasonal/256/confetti_cub.png",
+    "selected": "assets/seasonal/256/confetti_cub.png",
+    "icon": "assets/seasonal/256/confetti_cub.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "drummer_duck",
+    "name": "Drummer Duck",
+    "description": "round golden duck with red and cream banded belly panels",
+    "group": "Celebration",
+    "seasonal": true,
+    "powerFamily": "stitch",
+    "skill": "thread_burst",
+    "sprite": "assets/seasonal/256/drummer_duck.png",
+    "selected": "assets/seasonal/256/drummer_duck.png",
+    "icon": "assets/seasonal/256/drummer_duck.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "fiesta_fox",
+    "name": "Fiesta Fox",
+    "description": "round coral fox with cream muzzle and teal ear panels",
+    "group": "Celebration",
+    "seasonal": true,
+    "powerFamily": "sunny",
+    "skill": "sunburst",
+    "sprite": "assets/seasonal/256/fiesta_fox.png",
+    "selected": "assets/seasonal/256/fiesta_fox.png",
+    "icon": "assets/seasonal/256/fiesta_fox.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "firework_finch",
+    "name": "Firework Finch",
+    "description": "round deep-blue finch with tiny gold embroidered starbursts on wings",
+    "group": "Celebration",
+    "seasonal": true,
+    "powerFamily": "patch",
+    "skill": "patch_pop",
+    "sprite": "assets/seasonal/256/firework_finch.png",
+    "selected": "assets/seasonal/256/firework_finch.png",
+    "icon": "assets/seasonal/256/firework_finch.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "fortune_frog",
+    "name": "Fortune Frog",
+    "description": "round jade frog with cream belly and small stitched gold coin patch",
+    "group": "Celebration",
+    "seasonal": true,
+    "powerFamily": "mint",
+    "skill": "mint_wave",
+    "sprite": "assets/seasonal/256/fortune_frog.png",
+    "selected": "assets/seasonal/256/fortune_frog.png",
+    "icon": "assets/seasonal/256/fortune_frog.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "lantern_lion",
+    "name": "Lantern Lion",
+    "description": "round golden lion with compact cranberry mane and cream face",
+    "group": "Celebration",
+    "seasonal": true,
+    "powerFamily": "ember",
+    "skill": "flame_sweep",
+    "sprite": "assets/seasonal/256/lantern_lion.png",
+    "selected": "assets/seasonal/256/lantern_lion.png",
+    "icon": "assets/seasonal/256/lantern_lion.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "party_panda",
+    "name": "Party Panda",
+    "description": "round cream panda with lilac eye patches and short mint party cone sewn on top",
+    "group": "Celebration",
+    "seasonal": true,
+    "powerFamily": "luna",
+    "skill": "moonfall",
+    "sprite": "assets/seasonal/256/party_panda.png",
+    "selected": "assets/seasonal/256/party_panda.png",
+    "icon": "assets/seasonal/256/party_panda.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "ribbon_redpanda",
+    "name": "Ribbon Redpanda",
+    "description": "round russet red panda with cream cheeks and small turquoise bow seam",
+    "group": "Celebration",
+    "seasonal": true,
+    "powerFamily": "byte",
+    "skill": "scanline",
+    "sprite": "assets/seasonal/256/ribbon_redpanda.png",
+    "selected": "assets/seasonal/256/ribbon_redpanda.png",
+    "icon": "assets/seasonal/256/ribbon_redpanda.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "sparkle_seal",
+    "name": "Sparkle Seal",
+    "description": "round lavender seal with tiny gold star stitches and cream face",
+    "group": "Celebration",
+    "seasonal": true,
+    "powerFamily": "jester",
+    "skill": "confetti",
+    "sprite": "assets/seasonal/256/sparkle_seal.png",
+    "selected": "assets/seasonal/256/sparkle_seal.png",
+    "icon": "assets/seasonal/256/sparkle_seal.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  },
+  {
+    "id": "wish_wombat",
+    "name": "Wish Wombat",
+    "description": "round warm caramel wombat with cream muzzle and tiny blue wish-star forehead patch",
+    "group": "Celebration",
+    "seasonal": true,
+    "powerFamily": "splash",
+    "skill": "splash_ring",
+    "sprite": "assets/seasonal/256/wish_wombat.png",
+    "selected": "assets/seasonal/256/wish_wombat.png",
+    "icon": "assets/seasonal/256/wish_wombat.png",
+    "nativeSize": [
+      256,
+      256
+    ],
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "collisionRadiusNormalized": 0.45
+  }
+]

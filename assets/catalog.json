@@ -1,0 +1,298 @@
+{
+  "freeCharacters": [
+    "stitch",
+    "sunny",
+    "mint",
+    "ember",
+    "luna"
+  ],
+  "products": [
+    {
+      "id": "plush_original_friends",
+      "name": "Original Friends",
+      "kind": "characters",
+      "characters": [
+        "patch",
+        "byte",
+        "jester",
+        "splash",
+        "sprout"
+      ],
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_woodland_friends",
+      "name": "Woodland Friends",
+      "kind": "characters",
+      "characters": [
+        "calico",
+        "pup",
+        "bunny",
+        "panda",
+        "fox",
+        "bear",
+        "frog",
+        "pig",
+        "penguin",
+        "owl"
+      ],
+      "suggestedUSD": "2.99"
+    },
+    {
+      "id": "plush_wild_friends",
+      "name": "Wild Friends",
+      "kind": "characters",
+      "characters": [
+        "monkey",
+        "tiger",
+        "shark",
+        "dino",
+        "dragon",
+        "bat",
+        "ram",
+        "raccoon",
+        "octopus"
+      ],
+      "suggestedUSD": "2.99"
+    },
+    {
+      "id": "plush_wonder_friends",
+      "name": "Wonder Friends",
+      "kind": "characters",
+      "characters": [
+        "ghost",
+        "robot",
+        "cactus",
+        "mushroom",
+        "cupcake",
+        "strawberry",
+        "pumpkin",
+        "cloud",
+        "planet",
+        "sol",
+        "treasure"
+      ],
+      "suggestedUSD": "2.99"
+    },
+    {
+      "id": "plush_stargazer_skin",
+      "name": "Stargazer Chitaky",
+      "kind": "skin",
+      "skin": "stargazer",
+      "character": "stitch",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_sailor_skin",
+      "name": "Sailor Sunny",
+      "kind": "skin",
+      "skin": "sunny_sailor",
+      "character": "sunny",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_christmas_friends",
+      "kind": "characters",
+      "name": "Christmas Friends",
+      "characters": [
+        "jingle_cub",
+        "cocoa_claus",
+        "holly_hare",
+        "noel_narwhal",
+        "ginger_snap",
+        "merry_moose",
+        "pudding_plum",
+        "tinsel_turtle",
+        "ribbon_robin",
+        "snowbell_seal"
+      ],
+      "suggestedUSD": "2.99",
+      "seasonal": true
+    },
+    {
+      "id": "plush_halloween_friends",
+      "kind": "characters",
+      "name": "Halloween Friends",
+      "characters": [
+        "boo_berry",
+        "candy_corn",
+        "cauldron_cat",
+        "cobweb_cub",
+        "fang_fawn",
+        "mallow_mummy",
+        "pumpkin_pup",
+        "spooky_squid",
+        "truffle_troll",
+        "velvet_vamp"
+      ],
+      "suggestedUSD": "2.99",
+      "seasonal": true
+    },
+    {
+      "id": "plush_winter_friends",
+      "kind": "characters",
+      "name": "Winter Friends",
+      "characters": [
+        "aurora_fox",
+        "blizzard_bun",
+        "chilly_chick",
+        "frost_finch",
+        "icicle_imp",
+        "mittens_mole",
+        "polar_peach",
+        "slush_sloth",
+        "snowflake_yak",
+        "woolly_walrus"
+      ],
+      "suggestedUSD": "2.99",
+      "seasonal": true
+    },
+    {
+      "id": "plush_spring_friends",
+      "kind": "characters",
+      "name": "Spring Friends",
+      "characters": [
+        "blossom_bee",
+        "clover_calf",
+        "daisy_duck",
+        "dewdrop_deer",
+        "fern_ferret",
+        "lilac_lamb",
+        "petal_piglet",
+        "pollen_puff",
+        "rainy_roo",
+        "tulip_toad"
+      ],
+      "suggestedUSD": "2.99",
+      "seasonal": true
+    },
+    {
+      "id": "plush_easter_friends",
+      "kind": "characters",
+      "name": "Easter Friends",
+      "characters": [
+        "bonbon_bunny",
+        "carrot_cub",
+        "dottie_dove",
+        "egglet",
+        "flopsy_flan",
+        "jelly_joey",
+        "marzipan_mouse",
+        "peep_pea",
+        "sprinkle_squeak",
+        "truffle_tweet"
+      ],
+      "suggestedUSD": "2.99",
+      "seasonal": true
+    },
+    {
+      "id": "plush_summer_friends",
+      "kind": "characters",
+      "name": "Summer Friends",
+      "characters": [
+        "beach_bean",
+        "coral_crab",
+        "coconut_cub",
+        "lemon_lobster",
+        "melon_manatee",
+        "peach_pelican",
+        "pineapple_puff",
+        "seabreeze_ray",
+        "sorbet_otter",
+        "sunny_shrimp"
+      ],
+      "suggestedUSD": "2.99",
+      "seasonal": true
+    },
+    {
+      "id": "plush_autumn_friends",
+      "kind": "characters",
+      "name": "Autumn Friends",
+      "characters": [
+        "acorn_alpaca",
+        "amber_armadillo",
+        "chestnut_chip",
+        "cider_corgi",
+        "hazel_hedgehog",
+        "maple_moth",
+        "nutmeg_newt",
+        "persimmon_pal",
+        "russet_raccoon",
+        "toffee_turkey"
+      ],
+      "suggestedUSD": "2.99",
+      "seasonal": true
+    },
+    {
+      "id": "plush_valentine_friends",
+      "kind": "characters",
+      "name": "Valentine Friends",
+      "characters": [
+        "blush_badger",
+        "cherry_chinchilla",
+        "cupid_capy",
+        "fondant_fawn",
+        "heart_hamster",
+        "lovey_lynx",
+        "macaron_mouse",
+        "raspberry_ram",
+        "rosebud_raven",
+        "sweetheart_swan"
+      ],
+      "suggestedUSD": "2.99",
+      "seasonal": true
+    },
+    {
+      "id": "plush_starlight_friends",
+      "kind": "characters",
+      "name": "Starlight Friends",
+      "characters": [
+        "comet_cub",
+        "cosmic_koala",
+        "dreamy_dragon",
+        "eclipse_ewe",
+        "galaxy_gecko",
+        "lunar_lemur",
+        "meteor_moth",
+        "nebula_newbie",
+        "orbit_owl",
+        "twinkle_tapir"
+      ],
+      "suggestedUSD": "2.99",
+      "seasonal": true
+    },
+    {
+      "id": "plush_celebration_friends",
+      "kind": "characters",
+      "name": "Celebration Friends",
+      "characters": [
+        "confetti_cub",
+        "drummer_duck",
+        "fiesta_fox",
+        "firework_finch",
+        "fortune_frog",
+        "lantern_lion",
+        "party_panda",
+        "ribbon_redpanda",
+        "sparkle_seal",
+        "wish_wombat"
+      ],
+      "suggestedUSD": "2.99",
+      "seasonal": true
+    }
+  ],
+  "skins": [
+    {
+      "id": "stargazer",
+      "character": "stitch",
+      "sprite": "assets/skins/stargazer.png",
+      "name": "Stargazer"
+    },
+    {
+      "id": "sunny_sailor",
+      "character": "sunny",
+      "sprite": "assets/skins/sunny-sailor.png",
+      "name": "Sailor"
+    }
+  ]
+}

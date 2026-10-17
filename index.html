@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#73b7ad"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="Connect, squish and pop your plush friends. A free touch and mouse puzzle game.">
+<title>Plush Pop — Play with friends</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon.png"><link rel="icon" href="icon.png"><link rel="stylesheet" href="style.css">
+</head><body>
+<main id="stage" aria-label="Plush Pop">
+ <canvas id="game" width="1080" height="1920" tabindex="0" aria-label="Drag through three neighboring matching plushies, then release to pop. Keyboard: arrows move, Space selects, Enter pops, H hints, S shuffles, B uses your skill, Escape pauses."></canvas>
+ <div id="controls" aria-label="Game controls"></div>
+ <div id="loading" role="status"><img src="icon.png" width="112" height="112" alt=""><strong>Plush Pop</strong><span id="progress">Loading your plushies…</span></div>
+</main>
+<p id="announcement" class="sr" role="status" aria-live="polite"></p>
+<script type="module" src="game.mjs"></script>
+</body></html>
