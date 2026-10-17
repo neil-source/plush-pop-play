@@ -70,6 +70,7 @@ export class Art {
     this._grays = new Map();
     this._rims = new Map();
     this._words = new Map();
+    this._panels = new Map();
     this._rainbow = null;
   }
 
@@ -238,8 +239,21 @@ export class Art {
     key = this.resolve(key);
     const source = this.get(key);
     if (!source) return false;
-    const picture = options.gray ? this._gray(key, source) : source;
-    return this._paint(ctx, picture, cx, cy, this._placement(key, source, w, h, options.bodyDiameter), options);
+    const picture = this.images[key]?.slice ? this._panel(key,source,w,h) : options.gray ? this._gray(key, source) : source;
+    return this._paint(ctx, picture, cx, cy, this._placement(options.bodyKey||key, source, w, h, options.bodyDiameter), options);
+  }
+  _panel(key,source,w,h){
+    const id=key+':'+w+':'+h,old=cached(this._panels,id);if(old)return old;
+    const tile=canvas(w*2,h*2),c=tile.getContext('2d'),cap=this.images[key].slice,edge=Math.min(24,w/3,h/3);
+    const sx=[0,cap,source.width-cap,source.width],sy=[0,cap,source.height-cap,source.height],dx=[0,edge,w-edge,w],dy=[0,edge,h-edge,h];c.scale(2,2);
+    for(let row=0;row<3;row++)for(let col=0;col<3;col++){
+      const sw=sx[col+1]-sx[col],sh=sy[row+1]-sy[row],tw=sw*edge/cap,th=sh*edge/cap;
+      if(row===1&&col===1){c.drawImage(source,sx[col],sy[row],sw,sh,dx[col],dy[row],dx[col+1]-dx[col],dy[row+1]-dy[row]);continue;}
+      c.save();c.beginPath();c.rect(dx[col],dy[row],dx[col+1]-dx[col],dy[row+1]-dy[row]);c.clip();
+      for(let y=dy[row];y<dy[row+1];y+=th)for(let x=dx[col];x<dx[col+1];x+=tw)c.drawImage(source,sx[col],sy[row],sw,sh,x,y,tw,th);
+      c.restore();
+    }
+    return remember(this._panels,id,tile,24);
   }
 
   gray(ctx, key, cx, cy, w, h, options = {}) {
