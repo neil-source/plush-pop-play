@@ -4,8 +4,9 @@ export class Idle {
  reset(){this.poses.clear();this.quiet=0;this.next=5;}
  begin(body){
   if(!body||body.type==='bubble'||this.poses.has(body.id))return;
-  const frames=!body.skin&&!!this.art.images['idle_'+body.type+'_0'];
-  this.poses.set(body.id,{type:body.type,age:0,duration:frames?(['stitch','mint','ember'].includes(body.type)?1.12:1.9):1.6,frames,chirped:false});
+  const artID=body.skin?'skin_'+body.skin:body.type;
+  if(!this.art.images['idle_'+artID+'_0'])return;
+  this.poses.set(body.id,{type:body.type,skin:body.skin,artID,age:0,duration:1.8,chirped:false});
  }
  update(dt,blocked=false){
   const g=this.game;this.chirpCooldown=Math.max(0,this.chirpCooldown-dt);
@@ -18,13 +19,14 @@ export class Idle {
   }
   for(const [id,p]of this.poses){
    const b=g.round.bodies.find(b=>b.id===id);p.age+=dt;
-   if(!b||b.type!==p.type||p.age>=p.duration||Math.hypot(b.vx,b.vy)>30){this.poses.delete(id);continue;}
+   if(!b||b.type!==p.type||b.skin!==p.skin||p.age>=p.duration||Math.hypot(b.vx,b.vy)>30){this.poses.delete(id);continue;}
    if(['owl','penguin'].includes(p.type)&&p.age>=p.duration*.25&&!p.chirped&&this.chirpCooldown<=0){this.chirp();p.chirped=true;this.chirpCooldown=5;}
   }
  }
  pose(body){
-  const p=this.poses.get(body.id);if(!p||p.type!==body.type)return null;
-  const t=p.age/p.duration,envelope=Math.sin(t*Math.PI),wiggle=Math.sin(t*Math.PI*4)*envelope;
-  return{key:p.frames?'idle_'+p.type+'_'+Math.min(3,Math.floor(t*4)):null,angle:wiggle*.18,x:0,y:0,xScale:1,yScale:1};
+  const p=this.poses.get(body.id);if(!p||p.type!==body.type||p.skin!==body.skin)return null;
+  // Anticipation, wink/wave, alternating wave, then settle. Only drawn pixels move.
+  const sequence=[0,1,2,1,2,3],frame=sequence[Math.min(5,Math.floor(p.age/p.duration*6))];
+  return{key:'idle_'+p.artID+'_'+frame,angle:0,x:0,y:0,xScale:1,yScale:1};
  }
 }

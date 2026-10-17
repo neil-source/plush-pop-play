@@ -86,7 +86,7 @@ function drawBodies(){
   const matching=last&&!selected.has(b.id)&&game.matches(last,b)&&playable(b),s=game.profile.motion?(actual.squash||0):0,stretch=game.profile.motion?Math.min(.055,Math.max(0,actual.vy)/14000):0;
   const lean=game.profile.motion&&r.feverLeft>0?Math.sin(uiTime*2.3+b.id*.7)*.1:0;
   const rest=idle.pose(b);
-  image(rest?.key||key,b.x+(rest?.x||0),b.y+(rest?.y||0),bubble?64.8:52,bubble?64.8:52,{bodyKey:key,bodyDiameter:bubble?undefined:52,angle:b.angle+lean+(rest?.angle||0),gray:matching,scaleX:rest?1:1+s-stretch,scaleY:rest?1:1-s+stretch});
+  image(rest?.key||key,b.x,b.y,bubble?64.8:52,bubble?64.8:52,{bodyKey:rest?.key||key,bodyDiameter:bubble?undefined:52,angle:b.angle+(rest?0:lean),gray:matching,scaleX:rest?1:1+s-stretch,scaleY:rest?1:1-s+stretch});
   if(selected.has(b.id)||game.hints.includes(b.id)||focusedID===b.id)art.silhouette(ctx,key,b.x,b.y,bubble?64.8:52,b.angle,selected.has(b.id)?'#7ffbff':focusedID===b.id?'#ffe598':'#b1ffcb',selected.has(b.id)?2:3);
  }
  const chain=game.chain.map(id=>r.bodies.find(b=>b.id===id)).filter(Boolean);
