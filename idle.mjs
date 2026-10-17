@@ -25,7 +25,6 @@ export class Idle {
  pose(body){
   const p=this.poses.get(body.id);if(!p||p.type!==body.type)return null;
   const t=p.age/p.duration,envelope=Math.sin(t*Math.PI),wiggle=Math.sin(t*Math.PI*4)*envelope;
-  const puff=1+envelope*.14;
-  return{key:p.frames?'idle_'+p.type+'_'+Math.min(3,Math.floor(t*4)):null,angle:wiggle*.18,x:wiggle*2.5,y:-envelope*7.5,xScale:puff+wiggle*.06,yScale:puff-wiggle*.06};
+  return{key:p.frames?'idle_'+p.type+'_'+Math.min(3,Math.floor(t*4)):null,angle:wiggle*.18,x:wiggle*2.5,y:-envelope*7.5,xScale:1,yScale:1};
  }
 }
