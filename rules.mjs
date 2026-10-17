@@ -1,5 +1,4 @@
-// Public companion rules. The five starter IDs come from the shared catalog.
-// Purchases and the private native owner's unlock are never imported here.
+// Temporary character access comes from the build, never a saved purchase or URL flag.
 export const SIZE=52,RADIUS=23.6,POPULATION=100;
 export const playable=b=>b.y>=205&&b.y<=816;
 export const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
@@ -40,7 +39,8 @@ export function selectPattern(step,input,hero,seed=1){
 }
 export class Game{
  constructor(data,storage=null){
-  this.data=data;this.storage=storage;this.allowed=[...data.catalog.freeCharacters];this.powers=Object.fromEntries(data.powers.map(p=>[p.id,p]));
+  this.data=data;this.storage=storage;this.previewCharacters=data.access?.previewAllCharacters===true;
+  this.allowed=[...new Set([...data.catalog.freeCharacters,...(this.previewCharacters?data.characters.map(c=>c.id):[])])];this.powers=Object.fromEntries(data.powers.map(p=>[p.id,p]));
   this.profile={hero:'stitch',coins:0,best:0,sound:true,music:true,motion:true,boosts:{}};
   this.round=null;this.paused=true;this.finished=false;this.chain=[];this.hints=[];this.feedback=[];this.superLeft=0;this.hintLeft=0;this.newBest=false;this.savingFailed=false;
   this.load();
@@ -64,9 +64,12 @@ export class Game{
  emit(kind,fields={}){this.feedback.push({kind,...fields});}
  random(){let x=this.round.seed>>>0;x^=x<<13;x^=x>>>17;x^=x<<5;this.round.seed=x>>>0;return (x>>>0)/4294967296;}
  choose(list){return list[Math.floor(this.random()*list.length)];}
- start(seed=Date.now()>>>0){
+ start(seed=Date.now()>>>0,candidates=this.allowed){
   const hero=this.allowed.includes(this.profile.hero)?this.profile.hero:this.allowed[0];
-  this.round={id:Date.now()+'-'+seed,hero,active:[hero,...this.allowed.filter(t=>t!==hero)],bodies:[],timer:60,elapsed:0,ready:2.2,feverLeft:0,feverScore:0,shuffleCooldown:0,lastClear:-99,score:0,coins:0,combo:0,bestChain:0,popped:0,skill:0,fever:0,nextID:1,lane:0,multiplier:1,seed:seed||1,finale:null,power:null};
+  this.round={id:Date.now()+'-'+seed,hero,active:[],bodies:[],timer:60,elapsed:0,ready:2.2,feverLeft:0,feverScore:0,shuffleCooldown:0,lastClear:-99,score:0,coins:0,combo:0,bestChain:0,popped:0,skill:0,fever:0,nextID:1,lane:0,multiplier:1,seed:seed||1,finale:null,power:null};
+  const friends=[...new Set([...candidates,...this.data.catalog.freeCharacters])].filter(id=>id!==hero&&this.allowed.includes(id));
+  for(let i=friends.length-1;i>0;i--){const j=Math.floor(this.random()*(i+1));[friends[i],friends[j]]=[friends[j],friends[i]];}
+  this.round.active=[hero,...friends.slice(0,4)];
   for(const k of ['time','score','skill'])if(this.profile.boosts[k]>0){this.profile.boosts[k]--;if(k==='time')this.round.timer+=5;if(k==='score')this.round.multiplier=1.15;if(k==='skill')this.round.skill=12;}
   for(let i=0;i<100;i++)this.spawn(i>=97?hero:this.choose(this.round.active));
   this.paused=false;this.finished=false;this.newBest=false;this.chain=[];this.hints=[];this.superLeft=0;this.feedback=[];this.emit('sound',{name:'ready'});this.save();

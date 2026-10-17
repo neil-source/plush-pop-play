@@ -7,6 +7,18 @@ const TESTING=false;
 const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d',{alpha:false}),controls=document.querySelector('#controls'),progress=document.querySelector('#progress'),loading=document.querySelector('#loading');
 const announce=text=>{document.querySelector('#announcement').textContent=text;};
 let art,game,world,fx,idle,data,screen='menu',buttons=[],controlSignature='',activePointer=null,lastPointer=null,lastTime=0,saveClock=0,uiTime=0,focusedID=null,lastSecond=60,lastSkill=false,lastCombo=0,resultAt=0,screenBeforeSettings='menu';
+let collectionPage=0;
+const PAGE_SIZE=9;
+const characterKeys=id=>['char_'+id,...[0,1,2,3].map(i=>'idle_'+id+'_'+i)];
+const roundKeys=()=>[...game.round.active.flatMap(characterKeys),...[0,1,2,3].map(i=>'power_'+game.round.hero+'_'+i)];
+const menuKeys=()=>[game.profile.hero,...game.allowed.filter(id=>id!==game.profile.hero).slice(0,3)].map(id=>'char_'+id);
+const pageKeys=()=>game.allowed.slice(collectionPage*PAGE_SIZE,(collectionPage+1)*PAGE_SIZE).map(id=>'char_'+id);
+async function loadArt(keys){await art.preload(keys);if(keys.some(k=>!art.get(k)))throw Error('Connect to download these plushies, then try again.');}
+async function withArtwork(keys,action){
+ loading.querySelectorAll('button').forEach(b=>b.remove());loading.hidden=false;controls.inert=true;
+ try{await loadArt(keys);action();loading.hidden=true;controls.inert=false;}
+ catch(error){progress.textContent=error.message;for(const [title,fn]of [['Try again',()=>withArtwork(keys,action)],['Back',()=>{loading.hidden=true;controls.inert=false;screen='menu';}]]){const b=document.createElement('button');b.textContent=title;b.onclick=fn;loading.append(b);}}
+}
 const voices=[],music=new Audio('assets/audio/music/cozy_loop.wav');music.loop=true;music.volume=.16;music.preload='none';
 function sound(name,rate=1){if(!game?.profile.sound)return;while(voices.length>=8)voices.shift().pause();const audio=new Audio('assets/audio/sfx/'+name+'.wav');audio.volume=name==='idle_chirp'?.1:.3;audio.playbackRate=rate;voices.push(audio);audio.play().catch(()=>{});}
 function musicSync(){if(screen==='play'&&!game.paused&&game.profile.music)music.play().catch(()=>{});else music.pause();}
@@ -22,9 +34,9 @@ function syncControls(){
  if(signature!==controlSignature){controlSignature=signature;controls.replaceChildren();for(const b of buttons){const n=document.createElement('button');n.type='button';n.dataset.id=b.id;n.style.left=b.x/5.4+'%';n.style.top=b.y/9.6+'%';n.style.width=b.w/5.4+'%';n.style.height=b.h/9.6+'%';n.onclick=()=>{const current=buttons.find(c=>c.id===b.id);if(current&&!current.disabled){sound('tap');current.action();}};controls.append(n);}}
  for(const b of buttons){const n=controls.querySelector(`[data-id="${b.id}"]`);n.disabled=b.disabled;n.setAttribute('aria-label',b.title);n.title=b.title;}
 }
-function go(next){idle?.reset();if(screen==='play'&&next!=='play')game.pause();screen=next;activePointer=null;lastPointer=null;game.chain=[];controlSignature='';musicSync();}
-function start(){idle?.reset();game.start();world.wake();fx.reset();lastSecond=60;lastSkill=false;lastCombo=0;screen='play';activePointer=null;focusedID=null;saveClock=0;musicSync();announce('Connect three matching plushies.');}
-function resume(){idle?.reset();game.resume();screen='play';activePointer=null;lastPointer=null;world.wake();musicSync();}
+function go(next){idle?.reset();if(screen==='play'&&next!=='play')game.pause();activePointer=null;lastPointer=null;game.chain=[];controlSignature='';musicSync();const show=()=>{screen=next;};if(next==='collection')return withArtwork(pageKeys(),show);if(next==='menu')return withArtwork(menuKeys(),show);show();}
+function start(){idle?.reset();const candidates=navigator.onLine?game.allowed:game.allowed.filter(id=>characterKeys(id).every(k=>art.get(k)));game.start(undefined,candidates);game.pause();return withArtwork(roundKeys(),()=>{world.wake();fx.reset();lastSecond=60;lastSkill=false;lastCombo=0;screen='play';activePointer=null;focusedID=null;saveClock=0;game.resume();if(document.hidden)pause();musicSync();announce('Connect three matching plushies.');});}
+function resume(){idle?.reset();return withArtwork(roundKeys(),()=>{game.resume();screen='play';activePointer=null;lastPointer=null;world.wake();if(document.hidden)pause();musicSync();});}
 function pause(){idle?.reset();if(screen==='play'){game.pause();screen='paused';activePointer=null;lastPointer=null;musicSync();announce('Paused.');}}
 function showSettings(){screenBeforeSettings=screen;go('settings');}
 function meter(key,value,x,y,w,h){image('meter_navy',x,y,w,h);ctx.save();ctx.beginPath();ctx.rect(x-w/2,y-h/2,w*Math.max(0,Math.min(1,value)),h);ctx.clip();image(key,x,y,w,h);ctx.restore();}
@@ -45,15 +57,19 @@ function drawMenu(){
  label('iPad: Share > Add to Home Screen',270,932,13,470);
 }
 function drawCollection(){
- label('YOUR PLUSHIES',270,120,38);label('Pick your leader',270,175,22);
- game.allowed.forEach((id,i)=>{const x=110+(i%3)*160,y=300+Math.floor(i/3)*210,selected=game.profile.hero===id;
-  image(selected?'card_cream':'card_blue',x,y,146,180);portrait(id,x,y-25,85);label(data.characters.find(c=>c.id===id).name,x,y+45,18,130);
-  button('hero-'+id,selected?'Selected':'Choose',x,y+81,130,48,()=>{game.selectHero(id);announce('Selected '+id);},{color:selected?'gold':'green',size:17});
+ label('YOUR PLUSHIES',270,102,38);label(game.previewCharacters?'All 140 unlocked for preview':'Pick your leader',270,153,20);
+ game.allowed.slice(collectionPage*PAGE_SIZE,(collectionPage+1)*PAGE_SIZE).forEach((id,i)=>{const x=110+(i%3)*160,y=245+Math.floor(i/3)*151,selected=game.profile.hero===id,name=data.characters.find(c=>c.id===id).name;
+  image(selected?'card_cream':'card_blue',x,y,146,140);image('char_'+id,x,y-21,90,90);label(name,x,y+31,17,130);
+  label(selected?'SELECTED':'Choose',x,y+57,14,130);
+  buttons.push({id:'hero-'+id,title:(selected?'Selected ':'Choose ')+name,x,y,w:146,h:140,disabled:false,action:()=>withArtwork([...characterKeys(id),...[0,1,2,3].map(i=>'power_'+id+'_'+i)],()=>{game.selectHero(id);announce('Selected '+name);})});
  });
- const power=game.powers[game.profile.hero];label(power.name,270,675,27,450);
- label(power.steps.map(s=>s.kind==='clear'?'Pops a '+s.pattern+' area':s.kind==='transform'?'Changes plushies into your leader':s.kind==='bubbles'?'Makes special bubbles':s.pattern==='time'?'Adds time':'Gives a '+s.pattern+' bonus').join(' / '),270,719,19,470);
- label('More characters are locked in this preview.',270,780,18,470);
- button('back','Back',270,865,280,76,()=>go('menu'),{color:'purple'});
+ const pages=Math.ceil(game.allowed.length/PAGE_SIZE),turn=step=>{collectionPage+=step;go('collection');};
+ button('previous','Previous page',73,664,82,60,()=>turn(-1),{disabled:collectionPage===0,icon:'back'});
+ label('PAGE '+(collectionPage+1)+' / '+pages,270,664,20);
+ button('next','Next page',467,664,82,60,()=>turn(1),{disabled:collectionPage===pages-1,icon:'play'});
+ const power=game.powers[game.profile.hero];label(power.name,270,733,25,450);
+ label(power.steps.map(s=>s.kind==='clear'?'Pops '+(s.pattern==='hero'?'your leader':'a '+s.pattern.replace(/[A-Z]/g,c=>' '+c.toLowerCase())+' area'):s.kind==='transform'?'Changes plushies into your leader':s.kind==='bubbles'?'Makes special bubbles':({time:'Adds time',stop:'Pauses time',slow:'Slows the fall',link:'Connects any type',reach:'Reaches farther',chain:'Connects pairs',blast:'Pops nearby friends',coins:'Extra coins',score:'Extra points',drops:'More leader drops',tap:'Tap to pop'})[s.pattern]||'Gives a bonus').join(' / '),270,774,18,470);
+ button('back','Back',270,871,280,76,()=>go('menu'),{color:'purple'});
 }
 function drawBoosts(){
  label('BOOSTS',270,135,44);image('icon_coin',210,200,36);label(game.profile.coins,290,200,28);
@@ -155,7 +171,7 @@ canvas.addEventListener('pointerup',e=>{if(e.pointerId!==activePointer)return;e.
 function cancelPointer(e){if(!e||e.pointerId===activePointer){game.chain=[];activePointer=null;lastPointer=null;}}
 canvas.addEventListener('pointercancel',cancelPointer);canvas.addEventListener('lostpointercapture',cancelPointer);canvas.addEventListener('contextmenu',e=>e.preventDefault());
 document.addEventListener('keydown',e=>{idle?.reset();
- if(!game)return;if(e.key==='Escape'){e.preventDefault();if(game.chain.length)game.chain=[];else if(screen==='play')pause();else if(screen==='paused')resume();else go('menu');return;}
+ if(!game||!loading.hidden)return;if(e.key==='Escape'){e.preventDefault();if(game.chain.length)game.chain=[];else if(screen==='play')pause();else if(screen==='paused')resume();else go('menu');return;}
  if(screen!=='play'||!game.canAct||e.target.tagName==='BUTTON'&&[' ','Enter'].includes(e.key))return;
  const all=game.round.bodies.filter(playable);if(!all.length)return;let focus=all.find(b=>b.id===focusedID)||all.reduce((a,b)=>b.y>a.y?b:a);focusedID=focus.id;
  if(e.key.startsWith('Arrow')){e.preventDefault();const [dx,dy]=({ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]})[e.key];const next=all.filter(b=>(b.x-focus.x)*dx+(b.y-focus.y)*dy>5).sort((a,b)=>distance(a,focus)+Math.abs((a.x-focus.x)*dy-(a.y-focus.y)*dx)*2-distance(b,focus)-Math.abs((b.x-focus.x)*dy-(b.y-focus.y)*dx)*2)[0];if(next)focusedID=next.id;}
@@ -166,14 +182,19 @@ function resize(){const rect=canvas.getBoundingClientRect(),density=Math.min(2,w
 window.addEventListener('resize',resize);
 async function boot(){
  const fetchJSON=async path=>{const r=await fetch('assets/'+path);if(!r.ok)throw Error('Could not load the game.');return r.json();};
- const [loaded,characters,catalog,powers,bowl]=await Promise.all([Art.load('.',(fraction)=>{progress.textContent='Loading artwork '+Math.round(fraction*100)+'%';}),fetchJSON('characters.json'),fetchJSON('catalog.json'),fetchJSON('native-powers/catalog.json'),fetchJSON('native-stage/geometry.json')]);
- art=loaded;data={characters,catalog,powers,bowl};let storage;try{storage=localStorage;}catch{}game=new Game(data,storage);if(!localStorageSafe()&&!game.round)game.profile.motion=!matchMedia('(prefers-reduced-motion: reduce)').matches;
- const uiKeys=Object.keys(art.images).filter(k=>!k.startsWith('char_')&&!k.startsWith('skin_')&&!k.startsWith('power_'));
- await art.preload([...uiKeys,...game.allowed.flatMap(id=>['char_'+id,'power_'+id+'_0','power_'+id+'_1','power_'+id+'_2','power_'+id+'_3']),...['blast','time','coin','score'].map(k=>'bubble_'+k)]);
+ const [loaded,characters,catalog,powers,bowl,access]=await Promise.all([Art.load('.',(fraction)=>{progress.textContent='Loading artwork '+Math.round(fraction*100)+'%';}),fetchJSON('characters.json'),fetchJSON('catalog.json'),fetchJSON('native-powers/catalog.json'),fetchJSON('native-stage/geometry.json'),fetch('access.json').then(r=>{if(!r.ok)throw Error('Could not load character access.');return r.json();})]);
+ art=loaded;data={characters,catalog,powers,bowl,access};let storage;try{storage=localStorage;}catch{}game=new Game(data,storage);if(!localStorageSafe()&&!game.round)game.profile.motion=!matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const uiKeys=Object.keys(art.images).filter(k=>!/^(char_|skin_|power_|idle_)/.test(k));
+ await art.preload([...uiKeys,...menuKeys(),...catalog.freeCharacters.flatMap(characterKeys),...characterKeys(game.profile.hero),...[0,1,2,3].map(i=>'power_'+game.profile.hero+'_'+i),...(game.round?roundKeys():[]),...['blast','time','coin','score'].map(k=>'bubble_'+k)]);
  if(art.failed.size)throw Error('Some artwork did not load. Check your connection and try again.');
  world=new World(bowl);fx=new Effects(art,game);idle=new Idle(game,art,()=>sound('idle_chirp'));loading.hidden=true;resize();requestAnimationFrame(frame);
  if(TESTING)window.__plushQA={game,world,fx,idle,art,data,start,resume,pause,go,get screen(){return screen;},get buttons(){return buttons.map(({action,...b})=>b);}};
- if('serviceWorker'in navigator&&!TESTING)navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(()=>{});
+ if('serviceWorker'in navigator&&!TESTING)navigator.serviceWorker.register('./sw.js',{scope:'./'}).then(async()=>{
+  await navigator.serviceWorker.ready;if(!navigator.serviceWorker.controller)await new Promise(resolve=>navigator.serviceWorker.addEventListener('controllerchange',resolve,{once:true}));
+  // A first visit can load art before the worker controls the page. Cache those
+  // already-decoded images too, so the first saved nonstarter round works offline.
+  for(const url of art.sources.keys())fetch(url).catch(()=>{});
+ }).catch(()=>{});
 }
 function localStorageSafe(){try{return !!localStorage.getItem('plush_pop_share_v1');}catch{return false;}}
 boot().catch(error=>{progress.textContent=error.message||'The game could not load. Please try again.';const retry=document.createElement('button');retry.textContent='Try again';retry.onclick=()=>location.reload();loading.append(retry);});
