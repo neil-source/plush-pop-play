@@ -3,16 +3,23 @@ import {Game,playable,distance} from './rules.mjs';
 import {World} from './physics.mjs';
 import {Effects} from './effects.mjs';
 import {Idle} from './idle.mjs';
+import {chooseLayout,boardPoint,rewardTarget,inputHint} from './layout.mjs';
+import {drawDesktop} from './desktop.mjs';
 const TESTING=false;
 const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d',{alpha:false}),controls=document.querySelector('#controls'),progress=document.querySelector('#progress'),loading=document.querySelector('#loading');
 const announce=text=>{document.querySelector('#announcement').textContent=text;};
 let art,game,world,fx,idle,data,screen='menu',buttons=[],controlSignature='',activePointer=null,lastPointer=null,lastTime=0,saveClock=0,uiTime=0,focusedID=null,lastSecond=60,lastSkill=false,lastCombo=0,resultAt=0,screenBeforeSettings='menu';
-let collectionPage=0;
-const PAGE_SIZE=9;
+const finePointer=matchMedia('(pointer: fine)'),hoverPointer=matchMedia('(hover: hover)');
+const getLayout=()=>chooseLayout({width:innerWidth,height:innerHeight,fine:finePointer.matches,hover:hoverPointer.matches});
+let layout=getLayout(),inputMode=layout.input,collectionPage=0;
 const characterKeys=id=>['char_'+id,...[0,1,2,3].map(i=>'idle_'+id+'_'+i)];
 const roundKeys=()=>[...game.round.active.flatMap(characterKeys),...[0,1,2,3].map(i=>'power_'+game.round.hero+'_'+i)];
 const menuKeys=()=>[game.profile.hero,...game.allowed.filter(id=>id!==game.profile.hero).slice(0,3)].map(id=>'char_'+id);
-const pageKeys=()=>game.allowed.slice(collectionPage*PAGE_SIZE,(collectionPage+1)*PAGE_SIZE).map(id=>'char_'+id);
+const pageKeys=()=>game.allowed.slice(collectionPage*layout.pageSize,(collectionPage+1)*layout.pageSize).map(id=>'char_'+id);
+const powerText=s=>s.kind==='clear'?'Pops '+(s.pattern==='hero'?'your leader':'a '+s.pattern.replace(/[A-Z]/g,c=>' '+c.toLowerCase())+' area'):s.kind==='transform'?'Changes plushies into your leader':s.kind==='bubbles'?'Makes special bubbles':({time:'Adds time',stop:'Pauses time',slow:'Slows the fall',link:'Connects any type',reach:'Reaches farther',chain:'Connects pairs',blast:'Pops nearby friends',coins:'Extra coins',score:'Extra points',drops:'More leader drops',tap:'Tap to pop'})[s.pattern]||'Gives a bonus';
+const chooseHero=id=>withArtwork([...characterKeys(id),...[0,1,2,3].map(i=>'power_'+id+'_'+i)],()=>{game.selectHero(id);announce('Selected '+data.characters.find(c=>c.id===id).name);});
+const turnPage=step=>{collectionPage+=step;return go('collection');};
+function card(id,name,x,y,w,h,selected,action){buttons.push({id:'hero-'+id,title:(selected?'Selected ':'Choose ')+name,x,y,w,h,disabled:false,action});}
 async function loadArt(keys){await art.preload(keys);if(keys.some(k=>!art.get(k)))throw Error('Connect to download these plushies, then try again.');}
 async function withArtwork(keys,action){
  loading.querySelectorAll('button').forEach(b=>b.remove());loading.hidden=false;controls.inert=true;
@@ -30,8 +37,8 @@ function button(id,title,x,y,w,h,action,{disabled=false,color='blue',icon=null,s
  buttons.push({id,title,x,y,w,h,action:()=>{idle?.reset();action();},disabled});
 }
 function syncControls(){
- const signature=buttons.map(b=>[b.id,b.x,b.y,b.w,b.h].join(':')).join('|');
- if(signature!==controlSignature){controlSignature=signature;controls.replaceChildren();for(const b of buttons){const n=document.createElement('button');n.type='button';n.dataset.id=b.id;n.style.left=b.x/5.4+'%';n.style.top=b.y/9.6+'%';n.style.width=b.w/5.4+'%';n.style.height=b.h/9.6+'%';n.onclick=()=>{const current=buttons.find(c=>c.id===b.id);if(current&&!current.disabled){sound('tap');current.action();}};controls.append(n);}}
+ const signature=layout.width+':'+layout.height+'|'+buttons.map(b=>[b.id,b.x,b.y,b.w,b.h].join(':')).join('|');
+ if(signature!==controlSignature){controlSignature=signature;controls.replaceChildren();for(const b of buttons){const n=document.createElement('button');n.type='button';n.dataset.id=b.id;n.style.left=b.x/layout.width*100+'%';n.style.top=b.y/layout.height*100+'%';n.style.width=b.w/layout.width*100+'%';n.style.height=b.h/layout.height*100+'%';n.onclick=()=>{const current=buttons.find(c=>c.id===b.id);if(current&&!current.disabled){sound('tap');current.action();}};controls.append(n);}}
  for(const b of buttons){const n=controls.querySelector(`[data-id="${b.id}"]`);n.disabled=b.disabled;n.setAttribute('aria-label',b.title);n.title=b.title;}
 }
 function go(next){idle?.reset();if(screen==='play'&&next!=='play')game.pause();activePointer=null;lastPointer=null;game.chain=[];controlSignature='';musicSync();const show=()=>{screen=next;};if(next==='collection')return withArtwork(pageKeys(),show);if(next==='menu')return withArtwork(menuKeys(),show);show();}
@@ -54,21 +61,21 @@ function drawMenu(){
  button('collection','Collection',151,832,222,74,()=>go('collection'),{color:'purple'});
  button('boosts','Boosts',389,832,222,74,()=>go('boosts'),{color:'purple'});
  label('Drag through 3+ matching plushies',270,901,17,455);
- label('iPad: Share > Add to Home Screen',270,932,13,470);
+ label(inputHint({input:inputMode,appleTouch:/iPad|iPhone|iPod/.test(navigator.userAgent)||navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1,installed:navigator.standalone||matchMedia('(display-mode: standalone)').matches}),270,932,13,470);
 }
 function drawCollection(){
  label('YOUR PLUSHIES',270,102,38);label(game.previewCharacters?'All 140 unlocked for preview':'Pick your leader',270,153,20);
- game.allowed.slice(collectionPage*PAGE_SIZE,(collectionPage+1)*PAGE_SIZE).forEach((id,i)=>{const x=110+(i%3)*160,y=245+Math.floor(i/3)*151,selected=game.profile.hero===id,name=data.characters.find(c=>c.id===id).name;
+ game.allowed.slice(collectionPage*layout.pageSize,(collectionPage+1)*layout.pageSize).forEach((id,i)=>{const x=110+(i%3)*160,y=245+Math.floor(i/3)*151,selected=game.profile.hero===id,name=data.characters.find(c=>c.id===id).name;
   image(selected?'card_cream':'card_blue',x,y,146,140);image('char_'+id,x,y-21,90,90);label(name,x,y+31,17,130);
   label(selected?'SELECTED':'Choose',x,y+57,14,130);
-  buttons.push({id:'hero-'+id,title:(selected?'Selected ':'Choose ')+name,x,y,w:146,h:140,disabled:false,action:()=>withArtwork([...characterKeys(id),...[0,1,2,3].map(i=>'power_'+id+'_'+i)],()=>{game.selectHero(id);announce('Selected '+name);})});
+  card(id,name,x,y,146,140,selected,()=>chooseHero(id));
  });
- const pages=Math.ceil(game.allowed.length/PAGE_SIZE),turn=step=>{collectionPage+=step;go('collection');};
- button('previous','Previous page',73,664,82,60,()=>turn(-1),{disabled:collectionPage===0,icon:'back'});
+ const pages=Math.ceil(game.allowed.length/layout.pageSize);
+ button('previous','Previous page',73,664,82,60,()=>turnPage(-1),{disabled:collectionPage===0,icon:'back'});
  label('PAGE '+(collectionPage+1)+' / '+pages,270,664,20);
- button('next','Next page',467,664,82,60,()=>turn(1),{disabled:collectionPage===pages-1,icon:'play'});
+ button('next','Next page',467,664,82,60,()=>turnPage(1),{disabled:collectionPage===pages-1,icon:'play'});
  const power=game.powers[game.profile.hero];label(power.name,270,733,25,450);
- label(power.steps.map(s=>s.kind==='clear'?'Pops '+(s.pattern==='hero'?'your leader':'a '+s.pattern.replace(/[A-Z]/g,c=>' '+c.toLowerCase())+' area'):s.kind==='transform'?'Changes plushies into your leader':s.kind==='bubbles'?'Makes special bubbles':({time:'Adds time',stop:'Pauses time',slow:'Slows the fall',link:'Connects any type',reach:'Reaches farther',chain:'Connects pairs',blast:'Pops nearby friends',coins:'Extra coins',score:'Extra points',drops:'More leader drops',tap:'Tap to pop'})[s.pattern]||'Gives a bonus').join(' / '),270,774,18,470);
+ label(power.steps.map(powerText).join(' / '),270,774,18,470);
  button('back','Back',270,871,280,76,()=>go('menu'),{color:'purple'});
 }
 function drawBoosts(){
@@ -96,7 +103,7 @@ function drawResults(){const r=game.round;
 }
 function drawBodies(){
  const r=game.round,selected=new Set(game.chain),last=r.bodies.find(b=>b.id===game.chain.at(-1));
- ctx.save();ctx.beginPath();ctx.rect(0,174,540,642);ctx.clip();
+ ctx.save();ctx.beginPath();ctx.moveTo(0,data.bowl.top[0][1]);for(const [x,y]of data.bowl.top)ctx.lineTo(x,y);ctx.lineTo(540,data.bowl.top.at(-1)[1]);ctx.lineTo(540,816);ctx.lineTo(0,816);ctx.closePath();ctx.clip();
  const bodies=idle.poses.size?[...r.bodies.filter(b=>!idle.poses.has(b.id)),...r.bodies.filter(b=>idle.poses.has(b.id))]:r.bodies;
  for(const actual of bodies){const b=fx.displayBody(actual);if(b.y<130||b.y>840)continue;const bubble=b.type==='bubble',key=bubble?'bubble_'+b.kind:'char_'+b.type;
   const matching=last&&!selected.has(b.id)&&game.matches(last,b)&&playable(b),s=game.profile.motion?(actual.squash||0):0,stretch=game.profile.motion?Math.min(.055,Math.max(0,actual.vy)/14000):0;
@@ -133,7 +140,13 @@ function drawHUD(){const r=game.round;
  else if(r.elapsed<.65&&!r.popped&&game.superLeft<=0)label('GO!',270,366,58);
 }
 function drawFeverLights(){if(game.round.feverLeft<=0)return;const sides=[data.bowl.top,data.bowl.left,data.bowl.right,data.bowl.floor];let n=0;for(const line of sides)for(let i=0;i<line.length;i+=Math.max(1,Math.floor(line.length/10))){const [x,y]=line[i];image('vfx_sparkle',x,y,13,13,{alpha:game.profile.motion?.45+Math.sin(uiTime*2-n++*.45)*.2:.65});}}
-function draw(){buttons=[];ctx.setTransform(canvas.width/540,0,0,canvas.height/960,0,0);ctx.clearRect(0,0,540,960);
+function draw(){buttons=[];ctx.setTransform(canvas.width/layout.width,0,0,canvas.height/layout.height,0,0);ctx.fillStyle='#25575b';ctx.fillRect(0,0,layout.width,layout.height);
+ if(layout.wide){
+  drawDesktop({ctx,art,game,data,screen,image,label,button,meter,portrait,go,start,resume,pause,showSettings,drawBodies,drawFeverLights,fx,uiTime,resultAt,collectionPage,turnPage,chooseHero,card,powerText,input:inputMode,
+   keepControls:ids=>{buttons=buttons.filter(b=>ids.includes(b.id));},replaceBack:()=>{buttons.find(b=>b.id==='back').action=()=>go(screenBeforeSettings);},
+   toggleSetting:key=>{game.profile[key]=!game.profile[key];game.save();musicSync();},purchaseFeedback:()=>{sound('purchase');announce('Boost ready for your next new round.');}});
+  if(game.savingFailed)label('Progress cannot be saved in this browser.',600,793,12,1100);syncControls();return;
+ }
  const gameplay=screen==='play'||screen==='paused';
  if(!gameplay)image('menu_background',270,480,540,960);
  else art.stage(ctx,gameplay&&game.round?.feverLeft>0,uiTime,game.profile.motion);
@@ -155,13 +168,13 @@ function drain(){for(const e of game.feedback.splice(0)){if(['pop','super','shuf
 function frame(now){const dt=lastTime?Math.min(.05,(now-lastTime)/1000):0;lastTime=now;
  if(screen==='play'&&!game.paused){uiTime+=dt;game.tick(dt);if(!game.paused&&!game.superLeft&&!game.has('stop')&&!game.round.finale)world.advance(game.round.bodies,dt*(game.has('slow')?.55:1),game.profile.motion,game.round.feverLeft>0);idle.update(dt,activePointer!==null);fx.update(dt);drain();
   const r=game.round,second=Math.ceil(r.timer);if(second!==lastSecond&&second>0&&second<=5&&!r.finale){fx.badge(String(second),'',160,280,.5);sound('time_warning');}lastSecond=second;
-  if(r.skill>=12&&!lastSkill&&!r.finale){fx.sparkle(72,885,50);announce('Skill ready.');}lastSkill=r.skill>=12;
+  if(r.skill>=12&&!lastSkill&&!r.finale){const target=rewardTarget(layout,'skill');fx.sparkle(target.x,target.y,50);announce('Skill ready.');}lastSkill=r.skill>=12;
   if(r.combo>=10&&Math.floor(r.combo/10)>Math.floor(lastCombo/10))fx.badge(r.combo+' COMBO!','',350,280,.8);lastCombo=r.combo;
   saveClock+=dt;if(saveClock>3){game.save();saveClock=0;}
  }else if(screen==='results'){fx.update(dt);uiTime+=dt;}else if(screen!=='paused')uiTime+=dt;
  draw();requestAnimationFrame(frame);
 }
-function point(e){const r=canvas.getBoundingClientRect();return{x:(e.clientX-r.left)*540/r.width,y:(e.clientY-r.top)*960/r.height};}
+function point(e){const r=canvas.getBoundingClientRect();return boardPoint(layout,{x:(e.clientX-r.left)*layout.width/r.width,y:(e.clientY-r.top)*layout.height/r.height});}
 function hit(p){if(!game.round)return null;let best=null,d=Infinity;for(const b of game.round.bodies){if(!playable(b))continue;const z=distance(b,p);if(z<(b.type==='bubble'?29:26.5)&&z<d){best=b;d=z;}}return best;}
 function touchPoint(p,first=false){const b=hit(p);if(!b)return;if(first&&b.type==='bubble'){game.activate(b.id);return;}if(first&&game.powerTap(b.id))return;game.extend(b.id);}
 function move(p){if(!lastPointer){lastPointer=p;touchPoint(p);return;}const count=Math.max(1,Math.ceil(distance(lastPointer,p)/9)),from=lastPointer;for(let i=1;i<=count;i++)touchPoint({x:from.x+(p.x-from.x)*i/count,y:from.y+(p.y-from.y)*i/count});lastPointer=p;}
@@ -171,15 +184,28 @@ canvas.addEventListener('pointerup',e=>{if(e.pointerId!==activePointer)return;e.
 function cancelPointer(e){if(!e||e.pointerId===activePointer){game.chain=[];activePointer=null;lastPointer=null;}}
 canvas.addEventListener('pointercancel',cancelPointer);canvas.addEventListener('lostpointercapture',cancelPointer);canvas.addEventListener('contextmenu',e=>e.preventDefault());
 document.addEventListener('keydown',e=>{idle?.reset();
+ inputMode='mouse';document.querySelector('#stage').dataset.input=inputMode;
  if(!game||!loading.hidden)return;if(e.key==='Escape'){e.preventDefault();if(game.chain.length)game.chain=[];else if(screen==='play')pause();else if(screen==='paused')resume();else go('menu');return;}
  if(screen!=='play'||!game.canAct||e.target.tagName==='BUTTON'&&[' ','Enter'].includes(e.key))return;
+ const shortcut=({h:()=>game.hint(),s:()=>game.shuffle(),b:()=>game.useSkill()})[e.key.toLowerCase()];
+ if(shortcut){e.preventDefault();shortcut();drain();return;}
  const all=game.round.bodies.filter(playable);if(!all.length)return;let focus=all.find(b=>b.id===focusedID)||all.reduce((a,b)=>b.y>a.y?b:a);focusedID=focus.id;
  if(e.key.startsWith('Arrow')){e.preventDefault();const [dx,dy]=({ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]})[e.key];const next=all.filter(b=>(b.x-focus.x)*dx+(b.y-focus.y)*dy>5).sort((a,b)=>distance(a,focus)+Math.abs((a.x-focus.x)*dy-(a.y-focus.y)*dx)*2-distance(b,focus)-Math.abs((b.x-focus.x)*dy-(b.y-focus.y)*dx)*2)[0];if(next)focusedID=next.id;}
- else if(e.key===' '){e.preventDefault();if(focus.type==='bubble')game.activate(focus.id);else game.extend(focus.id);}else if(e.key==='Enter'){e.preventDefault();game.release();}else if(e.key==='Backspace'){e.preventDefault();game.chain.pop();}else if(e.key.toLowerCase()==='h')game.hint();else if(e.key.toLowerCase()==='s')game.shuffle();else if(e.key.toLowerCase()==='b')game.useSkill();drain();
+ else if(e.key===' '){e.preventDefault();if(focus.type==='bubble')game.activate(focus.id);else game.extend(focus.id);}else if(e.key==='Enter'){e.preventDefault();game.release();}else if(e.key==='Backspace'){e.preventDefault();game.chain.pop();}drain();
 });
 document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();});window.addEventListener('pagehide',()=>{if(game){game.pause();game.save();music.pause();}});window.addEventListener('blur',()=>pause());
-function resize(){const rect=canvas.getBoundingClientRect(),density=Math.min(2,window.devicePixelRatio||1);canvas.width=Math.max(540,Math.round(rect.width*density));canvas.height=Math.round(canvas.width*16/9);}
+function resize(){
+ const previous=layout;layout=getLayout();const stage=document.querySelector('#stage');stage.dataset.layout=layout.wide?'wide':'compact';stage.dataset.input=inputMode;
+ const style=getComputedStyle(document.body),width=innerWidth-parseFloat(style.paddingLeft)-parseFloat(style.paddingRight),height=innerHeight-parseFloat(style.paddingTop)-parseFloat(style.paddingBottom),scale=Math.min(width/layout.width,height/layout.height);
+ stage.style.width=layout.width*scale+'px';stage.style.height=layout.height*scale+'px';
+ const rect=canvas.getBoundingClientRect(),density=Math.min(2,window.devicePixelRatio||1,Math.sqrt(3500000/(rect.width*rect.height)));
+ canvas.width=Math.max(layout.width,Math.round(rect.width*density));canvas.height=Math.round(canvas.width*layout.height/layout.width);
+ if(game){cancelPointer();idle?.reset();if(previous.wide!==layout.wide){collectionPage=Math.min(Math.ceil(game.allowed.length/layout.pageSize)-1,Math.floor(collectionPage*previous.pageSize/layout.pageSize));if(screen==='collection')go('collection');}}
+}
 window.addEventListener('resize',resize);
+for(const query of [finePointer,hoverPointer])query.addEventListener('change',()=>{inputMode=getLayout().input;resize();});
+document.addEventListener('pointerdown',e=>{inputMode=e.pointerType==='touch'||e.pointerType==='pen'?'touch':'mouse';document.querySelector('#stage').dataset.input=inputMode;},{capture:true});
+resize();
 async function boot(){
  const fetchJSON=async path=>{const r=await fetch('assets/'+path);if(!r.ok)throw Error('Could not load the game.');return r.json();};
  const [loaded,characters,catalog,powers,bowl,access]=await Promise.all([Art.load('.',(fraction)=>{progress.textContent='Loading artwork '+Math.round(fraction*100)+'%';}),fetchJSON('characters.json'),fetchJSON('catalog.json'),fetchJSON('native-powers/catalog.json'),fetchJSON('native-stage/geometry.json'),fetch('access.json').then(r=>{if(!r.ok)throw Error('Could not load character access.');return r.json();})]);
@@ -187,8 +213,8 @@ async function boot(){
  const uiKeys=Object.keys(art.images).filter(k=>!/^(char_|skin_|power_|idle_)/.test(k));
  await art.preload([...uiKeys,...menuKeys(),...catalog.freeCharacters.flatMap(characterKeys),...characterKeys(game.profile.hero),...[0,1,2,3].map(i=>'power_'+game.profile.hero+'_'+i),...(game.round?roundKeys():[]),...['blast','time','coin','score'].map(k=>'bubble_'+k)]);
  if(art.failed.size)throw Error('Some artwork did not load. Check your connection and try again.');
- world=new World(bowl);fx=new Effects(art,game);idle=new Idle(game,art,()=>sound('idle_chirp'));loading.hidden=true;resize();requestAnimationFrame(frame);
- if(TESTING)window.__plushQA={game,world,fx,idle,art,data,start,resume,pause,go,get screen(){return screen;},get buttons(){return buttons.map(({action,...b})=>b);}};
+ world=new World(bowl);fx=new Effects(art,game);fx.target=kind=>rewardTarget(layout,kind);idle=new Idle(game,art,()=>sound('idle_chirp'));loading.hidden=true;resize();requestAnimationFrame(frame);
+ if(TESTING)window.__plushQA={game,world,fx,idle,art,data,start,resume,pause,go,get layout(){return layout;},get screen(){return screen;},get buttons(){return buttons.map(({action,...b})=>b);}};
  if('serviceWorker'in navigator&&!TESTING)navigator.serviceWorker.register('./sw.js',{scope:'./'}).then(async()=>{
   await navigator.serviceWorker.ready;if(!navigator.serviceWorker.controller)await new Promise(resolve=>navigator.serviceWorker.addEventListener('controllerchange',resolve,{once:true}));
   // A first visit can load art before the worker controls the page. Cache those

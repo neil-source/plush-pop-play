@@ -4,6 +4,7 @@ const mix=(a,b,t)=>a+(b-a)*t;
 export const rating=n=>n>=20?'FANTASTIC!':n>=12?'EXCELLENT!':n>=7?'VERY GOOD!':n>=4?'GOOD!':'POP!';
 export class Effects{
  constructor(art,game){this.art=art;this.game=game;this.reset();}
+ target(kind){const [x,y]=({time:[64,65],coin:[230,95],score:[270,49],skill:[72,885],fever:[270,887]})[kind];return{x,y};}
  reset(){this.time=0;this.items=[];this.badges=[];this.super=null;this.counts={};}
  count(k){this.counts[k]=(this.counts[k]||0)+1;}
  add(p){this.items.push({start:this.time,duration:.5,...p});if(this.items.length>400)this.items.splice(0,this.items.length-400);}
@@ -16,8 +17,8 @@ export class Effects{
  }
  wave(x,y,tone='mint',size=150,delay=0){this.add({kind:'wave',key:'fx_wave_'+tone,x,y,size,start:this.time+delay,duration:this.game.profile.motion?.35:.15});}
  sparkle(x,y,size=24,delay=0){this.add({kind:'spark',key:'fx_stars',x,y,size,start:this.time+delay,duration:.38});}
- flight(key,x,y,tx,ty,{delay=0,size=25,character=false,coin=false}={}){
-  this.add({kind:'flight',key,x,y,tx,ty,size,character,coin,start:this.time+delay,duration:this.game.profile.motion?.82:.16,bend:(Math.random()-.5)*150});
+ flight(key,x,y,tx,ty,{delay=0,size=25,character=false,coin=false,destination=null}={}){
+  this.add({kind:'flight',key,x,y,tx,ty,size,character,coin,destination,start:this.time+delay,duration:this.game.profile.motion?.82:.16,bend:(Math.random()-.5)*150});
  }
  impact(b){return this.super?3.65+Math.min(.55,Math.hypot(b.x-270,b.y-490)/600):.09;}
  event(e){const g=this.game,r=g.round,motion=g.profile.motion;this.count(e.kind);
@@ -33,7 +34,7 @@ export class Effects{
    case'bonus':{
     const target=e.type==='time'?[64,65]:e.type==='coin'?[230,95]:[270,49];
     this.badge('+'+e.amount+' '+({time:'SEC',coin:'COINS',score:'POINTS'})[e.type],'',e.x,e.y);
-    this.flight(e.type==='time'?'icon_clock':e.type==='coin'?'fx_coin0':'icon_trophy',e.x,e.y,...target,{size:32});break;
+    this.flight(e.type==='time'?'icon_clock':e.type==='coin'?'fx_coin0':'icon_trophy',e.x,e.y,...target,{size:32,destination:e.type});break;
    }
    case'pop':{
     const count=e.bodies.filter(b=>b.type!=='bubble').length;
@@ -43,11 +44,11 @@ export class Effects{
      this.add({kind:'burst',key:'fx_pop0',x:b.x,y:b.y,size:90,start:this.time+delay,duration:motion?.25:.12});
      if(motion)for(let j=0;j<3;j++){const a=j*Math.PI*2/3+Math.random();this.add({kind:'debris',key:j?'fx_stars':'vfx_puff',x:b.x,y:b.y,dx:Math.cos(a)*60,dy:Math.sin(a)*60,size:j?16:25,start:this.time+delay,duration:.32});}
      if(b.type!=='bubble'){
-      const leader=b.type===r.hero;this.flight('char_'+b.type,b.x,b.y,leader?72:270,leader?885:887,{delay:delay+.03,size:24,character:true});
-      this.flight('fx_coin0',b.x,b.y,230,95,{delay:delay+.04,coin:true});
+      const leader=b.type===r.hero;this.flight('char_'+b.type,b.x,b.y,leader?72:270,leader?885:887,{delay:delay+.03,size:24,character:true,destination:leader?'skill':'fever'});
+      this.flight('fx_coin0',b.x,b.y,230,95,{delay:delay+.04,coin:true,destination:'coin'});
      }
     });
-    for(let i=0;i<Math.min(20,Math.max(0,e.coins-count));i++){const b=e.bodies[i%e.bodies.length];this.flight('fx_coin0',b.x,b.y,230,95,{delay:lastDelay,coin:true});}
+    for(let i=0;i<Math.min(20,Math.max(0,e.coins-count));i++){const b=e.bodies[i%e.bodies.length];this.flight('fx_coin0',b.x,b.y,230,95,{delay:lastDelay,coin:true,destination:'coin'});}
     if(count){const b=e.bodies.at(-1);this.badge(e.power?'SUPER!':rating(count),'+'+e.score,b.x,b.y-30,.9,lastDelay);}
     break;
    }
@@ -72,8 +73,9 @@ export class Effects{
    ctx.save();
    if(p.kind==='flight'){
     if(!motion){a.draw(ctx,p.key,p.x,p.y,p.size,p.size,{alpha:1-t,bodyDiameter:p.character?p.size:undefined});ctx.restore();continue;}
-    const u=ease(t),cx=(p.x+p.tx)/2+p.bend,cy=Math.min(p.y,p.ty)-90;
-    const x=(1-u)**2*p.x+2*(1-u)*u*cx+u*u*p.tx,y=(1-u)**2*p.y+2*(1-u)*u*cy+u*u*p.ty;
+    const {x:tx,y:ty}=p.destination?this.target(p.destination):{x:p.tx,y:p.ty};
+    const u=ease(t),cx=(p.x+tx)/2+p.bend,cy=Math.min(p.y,ty)-90;
+    const x=(1-u)**2*p.x+2*(1-u)*u*cx+u*u*tx,y=(1-u)**2*p.y+2*(1-u)*u*cy+u*u*ty;
     const size=p.size*(1-.4*t),key=p.coin?'fx_coin'+[0,1,2,3,0,3,2,1][Math.floor(t*16)%8]:p.key;
     a.draw(ctx,key,x,y,size,size,{bodyDiameter:p.character?size:undefined,angle:p.character?Math.sin(t*5)*.2:0,alpha:Math.min(1,(1-t)*8)});
    }else if(p.kind==='burst'){
