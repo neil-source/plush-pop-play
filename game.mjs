@@ -81,11 +81,12 @@ function drawResults(){const r=game.round;
 function drawBodies(){
  const r=game.round,selected=new Set(game.chain),last=r.bodies.find(b=>b.id===game.chain.at(-1));
  ctx.save();ctx.beginPath();ctx.rect(0,174,540,642);ctx.clip();
- for(const actual of r.bodies){const b=fx.displayBody(actual);if(b.y<130||b.y>840)continue;const bubble=b.type==='bubble',key=bubble?'bubble_'+b.kind:'char_'+b.type;
+ const bodies=idle.poses.size?[...r.bodies.filter(b=>!idle.poses.has(b.id)),...r.bodies.filter(b=>idle.poses.has(b.id))]:r.bodies;
+ for(const actual of bodies){const b=fx.displayBody(actual);if(b.y<130||b.y>840)continue;const bubble=b.type==='bubble',key=bubble?'bubble_'+b.kind:'char_'+b.type;
   const matching=last&&!selected.has(b.id)&&game.matches(last,b)&&playable(b),s=game.profile.motion?(actual.squash||0):0,stretch=game.profile.motion?Math.min(.055,Math.max(0,actual.vy)/14000):0;
   const lean=game.profile.motion&&r.feverLeft>0?Math.sin(uiTime*2.3+b.id*.7)*.1:0;
   const rest=idle.pose(b);
-  image(rest?.key||key,b.x,b.y+(rest?.y||0),bubble?64.8:52,bubble?64.8:52,{bodyKey:key,bodyDiameter:bubble?undefined:52,angle:b.angle+lean+(rest?.angle||0),gray:matching,scaleX:(1+s-stretch)*(rest?.xScale||1),scaleY:(1-s+stretch)*(rest?.yScale||1)});
+  image(rest?.key||key,b.x+(rest?.x||0),b.y+(rest?.y||0),bubble?64.8:52,bubble?64.8:52,{bodyKey:key,bodyDiameter:bubble?undefined:52,angle:b.angle+lean+(rest?.angle||0),gray:matching,scaleX:(1+s-stretch)*(rest?.xScale||1),scaleY:(1-s+stretch)*(rest?.yScale||1)});
   if(selected.has(b.id)||game.hints.includes(b.id)||focusedID===b.id)art.silhouette(ctx,key,b.x,b.y,bubble?64.8:52,b.angle,selected.has(b.id)?'#7ffbff':focusedID===b.id?'#ffe598':'#b1ffcb',selected.has(b.id)?2:3);
  }
  const chain=game.chain.map(id=>r.bodies.find(b=>b.id===id)).filter(Boolean);

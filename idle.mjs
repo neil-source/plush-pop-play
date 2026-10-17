@@ -5,7 +5,7 @@ export class Idle {
  begin(body){
   if(!body||body.type==='bubble'||this.poses.has(body.id))return;
   const frames=!body.skin&&!!this.art.images['idle_'+body.type+'_0'];
-  this.poses.set(body.id,{type:body.type,age:0,duration:frames?(['stitch','mint','ember'].includes(body.type)?.64:1.35):1.1,frames,chirped:false});
+  this.poses.set(body.id,{type:body.type,age:0,duration:frames?(['stitch','mint','ember'].includes(body.type)?1.12:1.9):1.6,frames,chirped:false});
  }
  update(dt,blocked=false){
   const g=this.game;this.chirpCooldown=Math.max(0,this.chirpCooldown-dt);
@@ -25,6 +25,7 @@ export class Idle {
  pose(body){
   const p=this.poses.get(body.id);if(!p||p.type!==body.type)return null;
   const t=p.age/p.duration,envelope=Math.sin(t*Math.PI),wiggle=Math.sin(t*Math.PI*4)*envelope;
-  return{key:p.frames?'idle_'+p.type+'_'+Math.min(3,Math.floor(t*4)):null,angle:wiggle*.055,y:-envelope*1.3,xScale:1+wiggle*.018,yScale:1-wiggle*.018};
+  const puff=1+envelope*.14;
+  return{key:p.frames?'idle_'+p.type+'_'+Math.min(3,Math.floor(t*4)):null,angle:wiggle*.18,x:wiggle*2.5,y:-envelope*7.5,xScale:puff+wiggle*.06,yScale:puff-wiggle*.06};
  }
 }
