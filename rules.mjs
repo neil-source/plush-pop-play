@@ -41,14 +41,14 @@ export class Game{
  constructor(data,storage=null){
   this.data=data;this.storage=storage;this.previewCharacters=data.access?.previewAllCharacters===true;
   this.allowed=[...new Set([...data.catalog.freeCharacters,...(this.previewCharacters?data.characters.map(c=>c.id):[])])];this.powers=Object.fromEntries(data.powers.map(p=>[p.id,p]));
-  this.profile={hero:'stitch',coins:0,best:0,sound:true,music:true,motion:true,boosts:{}};
+  this.profile={hero:'stitch',coins:0,best:0,sound:true,music:true,motion:true,layout:'auto',boosts:{}};
   this.round=null;this.paused=true;this.finished=false;this.chain=[];this.hints=[];this.feedback=[];this.superLeft=0;this.hintLeft=0;this.newBest=false;this.savingFailed=false;
   this.load();
  }
  load(){try{
   const raw=this.storage?.getItem('plush_pop_share_v1');if(!raw||raw.length>1000000)return;
   const s=JSON.parse(raw);if(s.version!==1)return;
-  const p=s.profile||{};this.profile={hero:this.allowed.includes(p.hero)?p.hero:'stitch',coins:clamp(Number(p.coins)||0,0,1e9),best:clamp(Number(p.best)||0,0,1e9),sound:p.sound!==false,music:p.music!==false,motion:p.motion!==false,boosts:{}};
+  const p=s.profile||{};this.profile={hero:this.allowed.includes(p.hero)?p.hero:'stitch',coins:clamp(Number(p.coins)||0,0,1e9),best:clamp(Number(p.best)||0,0,1e9),sound:p.sound!==false,music:p.music!==false,motion:p.motion!==false,layout:p.layout==='classic'?'classic':'auto',boosts:{}};
   for(const k of ['time','score','skill'])this.profile.boosts[k]=clamp(Math.trunc(Number(p.boosts?.[k])||0),0,999);
   const r=s.round;if(!r)return;
   const nums=['timer','elapsed','ready','feverLeft','shuffleCooldown','lastClear','score','coins','combo','bestChain','popped','skill','fever','nextID','lane','multiplier','seed'];

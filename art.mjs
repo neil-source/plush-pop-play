@@ -71,7 +71,10 @@ export class Art {
     this._rims = new Map();
     this._words = new Map();
     this._panels = new Map();
-    this._rainbow = null;
+    this._fabrics = new Map();
+    this._fabricPixels = 0;
+    this.fever = false;
+    this.phase = 0;
   }
 
   static async load(base = '.', onProgress = () => {}) {
@@ -240,7 +243,14 @@ export class Art {
     const source = this.get(key);
     if (!source) return false;
     const picture = this.images[key]?.slice ? this._panel(key,source,w,h) : options.gray ? this._gray(key, source) : source;
-    return this._paint(ctx, picture, cx, cy, this._placement(options.bodyKey||key, source, w, h, options.bodyDiameter), options);
+    const placement=this._placement(options.bodyKey||key, source, w, h, options.bodyDiameter);
+    if(this.preparingFever && options.rainbow!==false && !/^(char_|skin_|idle_)/.test(key))this._fabric(key+':'+picture.width+':'+picture.height,picture);
+    if(this.fever && options.rainbow!==false && !/^(char_|skin_|idle_)/.test(key)) {
+      const frames=this._fabric(key+':'+picture.width+':'+picture.height,picture),cycle=(this.phase*.07%1)*3,index=Math.floor(cycle),blend=cycle-index;
+      this._paint(ctx,frames[index],cx,cy,placement,options);
+      return this._paint(ctx,frames[(index+1)%3],cx,cy,placement,{...options,alpha:(options.alpha??1)*blend});
+    }
+    return this._paint(ctx, picture, cx, cy, placement, options);
   }
   _panel(key,source,w,h){
     const id=key+':'+w+':'+h,old=cached(this._panels,id);if(old)return old;
@@ -351,31 +361,40 @@ export class Art {
     }, options);
   }
 
-  stage(ctx, fever = false, phase = 0, motion = true) {
-    const source = this.get('puffy_stage');
-    if (!source) return false;
-    this.draw(ctx, 'puffy_stage', 270, 480, 540, 960);
-    if (!fever) return true;
-    if (!this._rainbow) {
-      const tile = canvas(540, 960), c = tile.getContext('2d');
-      c.drawImage(source, 0, 0, 540, 960);
-      try {
-        const pixels = c.getImageData(0, 0, 540, 960), data = pixels.data;
-        for (let y = 0; y < 960; y++) for (let x = 0; x < 540; x++) {
-          const i = (y * 540 + x) * 4;
-          const light = (data[i] * 0.2126 + data[i + 1] * 0.7152 + data[i + 2] * 0.0722) / 255;
-          const t = x / 540 * 0.6 + (1 - y / 960) * 0.8;
-          for (let channel = 0; channel < 3; channel++) {
-            const dye = 0.55 + 0.45 * Math.cos(TAU * (t + channel / 3));
-            data[i + channel] = 255 * clamp(dye * light * 1.45 + Math.max(0, light - 0.72) * 0.3, 0, 1);
-          }
-        }
-        c.putImageData(pixels, 0, 0);
-      } catch { return true; }
-      this._rainbow = tile;
+  // Three cached fabric dyes crossfade with the same phase used by the native
+  // shader. Texture/alpha remain intact; characters and gold target coins opt out.
+  // Pixel work is never repeated per frame. The cache is limited to 48 MiB.
+  _fabric(key,source) {
+    const old=cached(this._fabrics,key);if(old)return old;
+    const scale=Math.min(1,640/Math.max(source.width,source.height));
+    const width=Math.ceil(source.width*scale),height=Math.ceil(source.height*scale),tile=canvas(width,height),c=tile.getContext('2d');
+    c.drawImage(source,0,0,width,height);
+    let original;try{original=c.getImageData(0,0,width,height);}catch{return [source,source,source];}
+    const frames=Array.from({length:3},()=>canvas(width,height)),contexts=frames.map(f=>f.getContext('2d'));
+    const pixels=contexts.map(fc=>fc.createImageData(width,height)),outputs=pixels.map(p=>p.data),src=original.data;
+    // The three phases are RGB permutations of the same dye. Calculate light
+    // once per pixel and trigonometry once per row/column, not nine cosines per pixel.
+    const cosX=Float64Array.from({length:width},(_,x)=>Math.cos(TAU*x/width*.6));
+    const sinX=Float64Array.from({length:width},(_,x)=>Math.sin(TAU*x/width*.6));
+    for(let y=0;y<height;y++){
+      const cy=Math.cos(TAU*(1-y/height)*.8),sy=Math.sin(TAU*(1-y/height)*.8);
+      for(let x=0;x<width;x++){
+        const i=(y*width+x)*4,light=(src[i]*.2126+src[i+1]*.7152+src[i+2]*.0722)/255,shine=Math.max(0,light-.72)*.3;
+        const co=cosX[x]*cy-sinX[x]*sy,si=sinX[x]*cy+cosX[x]*sy;
+        const red=255*clamp((.55+.45*co)*light*1.45+shine,0,1),green=255*clamp((.55+.45*(-.5*co-.866025403784*si))*light*1.45+shine,0,1),blue=255*clamp((.55+.45*(-.5*co+.866025403784*si))*light*1.45+shine,0,1);
+        const a=outputs[0],b=outputs[1],c=outputs[2];
+        a[i]=red;a[i+1]=green;a[i+2]=blue;a[i+3]=src[i+3];
+        b[i]=green;b[i+1]=blue;b[i+2]=red;b[i+3]=src[i+3];
+        c[i]=blue;c[i+1]=red;c[i+2]=green;c[i+3]=src[i+3];
+      }
     }
-    // A subtle opacity breath needs one cached fabric image and leaves sprites untouched.
-    const alpha = motion ? 0.94 + Math.sin(finite(phase, 0) * 1.8) * 0.06 : 1;
-    return this._paint(ctx, this._rainbow, 270, 480, {x: -270, y: -480, w: 540, h: 960}, {alpha});
+    contexts.forEach((fc,i)=>fc.putImageData(pixels[i],0,0));
+    this._fabricPixels+=width*height*3;this._fabrics.set(key,frames);
+    while(this._fabricPixels>12000000&&this._fabrics.size>1){const id=this._fabrics.keys().next().value,first=this._fabrics.get(id);this._fabricPixels-=first[0].width*first[0].height*3;this._fabrics.delete(id);}
+    return frames;
+  }
+  stage(ctx, fever = false, phase = 0, motion = true) {
+    this.fever=fever;this.phase=motion?phase:0;
+    return this.draw(ctx,'puffy_stage',270,480,540,960);
   }
 }

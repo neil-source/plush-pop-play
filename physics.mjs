@@ -1,24 +1,28 @@
 import {RADIUS} from './rules.mjs';
+import {SoftPose} from './motion.mjs';
 const radius=b=>b.type==='bubble'?24:RADIUS;
 export class World{
  constructor(geometry){
-  this.accumulator=0;this.quiet=0;this.sleeping=false;
+  this.accumulator=0;this.quiet=0;this.sleeping=false;this.poses=new Map();
   this.left=geometry.left[0][0];this.right=geometry.right[0][0];
   const floor=geometry.floor,at=x=>{for(let i=1;i<floor.length;i++)if(x<=floor[i][0]){const [ax,ay]=floor[i-1],[bx,by]=floor[i];return ay+Math.max(0,(x-ax)/(bx-ax))*(by-ay);}return floor.at(-1)[1];};
   this.limits=new Map();for(const r of [RADIUS,24])this.limits.set(r,Float64Array.from({length:541},(_,x)=>Math.min(...Array.from({length:24},(_,i)=>at(x+Math.cos(i*Math.PI/12)*r)-Math.sin(i*Math.PI/12)*r))));
  }
  ground(b){const values=this.limits.get(radius(b)),x=Math.max(0,Math.min(539.99,b.x)),a=Math.floor(x);return values[a]+(values[a+1]-values[a])*(x-a);}
  wake(){this.sleeping=false;this.quiet=0;}
- contain(b){const r=radius(b);if(b.x<this.left+r){b.x=this.left+r;if(b.vx<0)b.vx*=-.12;}if(b.x>this.right-r){b.x=this.right-r;if(b.vx>0)b.vx*=-.12;}
+ pose(b){if(!this.poses.has(b.id))this.poses.set(b.id,new SoftPose());return this.poses.get(b.id);}
+ bump(b,strength,horizontal=false){if(b.type!=='bubble')this.pose(b).bump(strength,horizontal);}
+ reset(){this.poses.clear();this.accumulator=0;this.wake();}
+ contain(b){const r=radius(b);if(b.x<this.left+r){b.x=this.left+r;if(b.vx< -65)this.bump(b,-b.vx/180,true);if(b.vx<0)b.vx*=-.12;}if(b.x>this.right-r){b.x=this.right-r;if(b.vx>65)this.bump(b,b.vx/180,true);if(b.vx>0)b.vx*=-.12;}
   const floor=this.ground(b);if(b.y>floor){const values=this.limits.get(r),i=Math.max(1,Math.min(539,Math.round(b.x))),slope=(values[i+1]-values[i-1])/2;
-   b.y=floor;if(b.vy>90)b.squash=Math.max(b.squash||0,Math.min(.18,b.vy/3500));
+   b.y=floor;if(b.vy>65)this.bump(b,b.vy/180);
    if(b.vy>0){b.vx+=slope*b.vy*.25;b.vy*= -.04;}b.vx*=.97;
   }
  }
  advance(bodies,dt,motion=true,fever=false){
-  for(const b of bodies)b.squash=Math.max(0,(b.squash||0)-dt*.9);
-  if(this.sleeping)return;
-  this.accumulator+=Math.min(.1,dt);while(this.accumulator>=1/120){this.step(bodies,1/120,motion,fever);this.accumulator-=1/120;}
+  if(!this.sleeping){this.accumulator+=Math.min(.1,dt);while(this.accumulator>=1/120){this.step(bodies,1/120,motion,fever);this.accumulator-=1/120;}}
+  const ids=new Set(bodies.map(b=>b.id));for(const id of this.poses.keys())if(!ids.has(id))this.poses.delete(id);
+  for(const b of bodies)if(b.type!=='bubble')this.pose(b).step(dt,b.vy,motion);
  }
  step(bodies,dt,motion,fever){
   for(const b of bodies){b.px=b.x;b.py=b.y;b.vy=Math.min(760,b.vy+1100*dt);b.vx*=.997;b.x+=b.vx*dt;b.y+=b.vy*dt;
@@ -33,7 +37,7 @@ export class World{
      if(d2<1e-8){dx=.001;dy=.0001;d2=dx*dx+dy*dy;}const d=Math.sqrt(d2),nx=dx/d,ny=dy/d,correction=Math.max(0,sum-d-.08)*.48;
      a.x-=nx*correction;a.y-=ny*correction;b.x+=nx*correction;b.y+=ny*correction;
      const toward=(b.vx-a.vx)*nx+(b.vy-a.vy)*ny;if(toward<0){const impulse=-toward*.52;a.vx-=nx*impulse;a.vy-=ny*impulse;b.vx+=nx*impulse;b.vy+=ny*impulse;
-      if(motion&&iteration===0&&impulse>100){a.squash=Math.max(a.squash||0,Math.min(.13,impulse/3000));b.squash=Math.max(b.squash||0,Math.min(.13,impulse/3000));}
+      if(motion&&iteration===0&&-toward>65){this.bump(a,-toward/180,Math.abs(nx)>Math.abs(ny));this.bump(b,-toward/180,Math.abs(nx)>Math.abs(ny));}
      }
     }
     const key=gx+gy*32;if(!grid.has(key))grid.set(key,[]);grid.get(key).push(b);
