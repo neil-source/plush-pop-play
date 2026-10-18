@@ -1,6 +1,6 @@
 import {progress,metrics,award,nextMission,migrateUpgrades,powerLevel,parseChallenge,challengeCode} from './progression.mjs';
 // Temporary character access comes from the build, never a saved purchase or URL flag.
-export const SIZE=70,RADIUS=34.5,CANVAS=81.89,POPULATION=55,MIN_POPULATION=53,MAX_POPULATION=57,BOARD_VERSION=5;
+export const SIZE=70,RADIUS=34.5,CANVAS=81.89,POPULATION=45,MIN_POPULATION=43,MAX_POPULATION=47,BOARD_VERSION=6;
 export const playable=b=>b.y>=205&&b.y<=816;
 export const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
 export const clone=x=>JSON.parse(JSON.stringify(x));
