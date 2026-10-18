@@ -1,6 +1,7 @@
 import {progress,metrics,award,nextMission,migrateUpgrades,powerLevel,parseChallenge,challengeCode} from './progression.mjs';
 // Temporary character access comes from the build, never a saved purchase or URL flag.
-export const SIZE=70,RADIUS=34.5,CANVAS=81.89,POPULATION=45,MIN_POPULATION=43,MAX_POPULATION=47,BOARD_VERSION=6;
+// Approximate reference body size; the wider circle leaves breathing room between bodies.
+export const SIZE=72,RADIUS=38,CANVAS=84.23,POPULATION=38,MIN_POPULATION=36,MAX_POPULATION=40,BOARD_VERSION=7;
 export const playable=b=>b.y>=205&&b.y<=816;
 export const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
 export const clone=x=>JSON.parse(JSON.stringify(x));
