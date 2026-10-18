@@ -1,6 +1,6 @@
 import {progress,metrics,award,nextMission,migrateUpgrades,powerLevel,parseChallenge,challengeCode} from './progression.mjs';
 // Temporary character access comes from the build, never a saved purchase or URL flag.
-export const SIZE=70,RADIUS=31.77,CANVAS=81.89,POPULATION=55,MIN_POPULATION=53,MAX_POPULATION=57,BOARD_VERSION=5;
+export const SIZE=70,RADIUS=34.5,CANVAS=81.89,POPULATION=55,MIN_POPULATION=53,MAX_POPULATION=57,BOARD_VERSION=5;
 export const playable=b=>b.y>=205&&b.y<=816;
 export const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
 export const clone=x=>JSON.parse(JSON.stringify(x));
@@ -90,7 +90,8 @@ export class Game{
  }
  spawn(type){const r=this.round,x=60+(r.lane++%7)*70+this.random()*10-5;let y=92;
   for(const b of r.bodies)if(Math.abs(b.x-x)<RADIUS*2)y=Math.min(y,b.y-CANVAS-8);
-  const id=r.nextID++,rest=((id*137)%101/100-.5)*1.3;r.bodies.push({id,type,x,y,vx:0,vy:85,angle:rest*.4,kind:'blast',squash:0});
+  // A gentle inward drift prevents straight towers against the side walls.
+  const id=r.nextID++,rest=((id*137)%101/100-.5)*1.3;r.bodies.push({id,type,x,y,vx:(270-x)*.1,vy:85,angle:rest*.4,kind:'blast',squash:0});
  }
  get canAct(){return !!this.round&&!this.paused&&!this.finished&&this.round.ready<=0&&this.superLeft<=0&&!this.round.finale;}
  has(k){return !this.round?.power?.pending&&(this.round?.power?.timers[k]||0)>0;}
