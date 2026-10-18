@@ -1,10 +1,11 @@
 import {SUPER,POP,SuperPlan,clamp,mix,ease,popPose} from './motion.mjs';
+import {RewardClock} from './reward-clock.mjs';
 import {drawSuper} from './super.mjs';
 export const rating=n=>n>=20?'FANTASTIC!':n>=12?'EXCELLENT!':n>=7?'VERY GOOD!':n>=4?'GOOD!':'POP!';
 export class Effects{
  constructor(art,game){this.art=art;this.game=game;this.reset();}
  target(kind){const [x,y]=({time:[64,65],coin:[230,95],score:[270,49],skill:[72,885],fever:[270,887]})[kind];return{x,y};}
- reset(){this.time=0;this.items=[];this.pending=[];this.badges=[];this.super=null;this.counts={};this.arrivals={};this.sounds=[];}
+ reset(){this.rewards=new RewardClock();this.time=0;this.items=[];this.pending=[];this.badges=[];this.super=null;this.counts={};this.arrivals={};this.sounds=[];}
  count(k){this.counts[k]=(this.counts[k]||0)+1;}
  add(p){this.items.push({start:this.time,duration:.5,...p});
   // Retire decoration before rewards or waiting targets. Delayed explosions live
@@ -41,18 +42,21 @@ export class Effects{
    case'select':this.badges=this.badges.filter(b=>!b.text.startsWith('CONNECT'));this.sparkle(e.body.x,e.body.y,18);if(e.count===g.minimumChain)this.wave(e.body.x,e.body.y,'mint',70);break;
    case'rejected':if(e.body){this.wave(e.body.x,e.body.y,'coral',70);this.badge('CONNECT '+g.minimumChain,'',e.body.x,e.body.y-30,.45);}break;
    case'message':this.badge(e.text);break;
-   case'fever':this.badge('FEVER!','TRIPLE POINTS',270,280,1.1);this.wave(270,490,'gold',420);if(motion)for(let i=0;i<14;i++)this.sparkle(45+i*35,220+i%3*26,28);break;
+   case'fever':this.rewards.hold('feverStart',1,this.rewards.delay('fever'));this.later(this.rewards.delay('feverStart'),()=>{this.badge('FEVER!','TRIPLE POINTS',270,280,1.1);this.wave(270,490,'gold',420);if(motion)for(let i=0;i<14;i++)this.sparkle(45+i*35,220+i%3*26,28);});break;
    case'feverEnd':if(e.score)this.badge('FEVER BONUS',String(e.score),270,280,1);this.sparkle(0,0,44,0,'score');break;
    case'announcement':this.badge(e.text,'',270,350,e.text==='LAST BONUS'?1.1:.65);break;
    case'bubbleBorn':this.wave(e.body.x,e.body.y,'mint',85);break;
    case'bubble':{const b=e.body;this.wave(b.x,b.y,({time:'mint',coin:'gold',score:'lavender',blast:'coral'})[b.kind],234);if(motion)for(let i=0;i<8;i++)this.sparkle(b.x+Math.cos(i*Math.PI/4)*70,b.y+Math.sin(i*Math.PI/4)*70);break;}
    case'bonus':{
+    this.rewards.hold(e.type==='coin'?'coins':e.type,e.amount,motion?.7:0);
     this.badge('+'+e.amount+' '+({time:'SEC',coin:'COINS',score:'POINTS'})[e.type],'',e.x,e.y);
     this.flight(e.type==='time'?'icon_clock':e.type==='coin'?'fx_coin0':'icon_trophy',e.x,e.y,0,0,{size:32,destination:e.type});break;
    }
    case'pop':{
     const count=e.bodies.filter(b=>b.type!=='bubble').length;let lastDelay=0,firstDelay=Infinity;
+    let index=0;
     e.bodies.forEach((b,i)=>{const delay=motion?(e.power?this.impact(b):POP.impact+POP.stagger(i)):0;lastDelay=Math.max(lastDelay,delay);firstDelay=Math.min(firstDelay,delay);
+     if(b.type!=='bubble'){const j=index++,n=Math.max(1,count);this.rewards.hold('score',Math.floor(e.score*(j+1)/n)-Math.floor(e.score*j/n),delay);this.rewards.hold('coins',Math.floor(e.coins*(j+1)/n)-Math.floor(e.coins*j/n),delay+(motion?.89:0));if(!e.power&&b.type===r.hero)this.rewards.hold('skill',1,delay+(motion?.59:0));this.rewards.hold('fever',1,delay+(motion?.59:0));}
      this.add({kind:'ghost',body:b,duration:delay+POP.vanish,impact:delay,power:e.power});
      this.later(delay,()=>{
       this.explosion(b,e.power);
@@ -67,17 +71,17 @@ export class Effects{
     for(let i=0;i<Math.min(20,Math.max(0,e.coins-count));i++){const b=e.bodies[i%e.bodies.length];this.later(lastDelay,()=>this.flight('fx_coin0',b.x,b.y,0,0,{coin:true,destination:'coin'}));}
     if(count){const b=e.bodies.at(-1);this.badge(e.power?'SUPER!':rating(count),'+'+e.score,b.x,b.y-30,.9,lastDelay);}break;
    }
-   case'super':{
+   case'super':{this.rewards.clear('skill');
     const plan=new SuperPlan(e.hero,e.targets);
     this.super={...e,plan,start:this.time,duration:motion?SUPER.duration:SUPER.reduced,cleared:new Set(e.clearIDs),targetIDs:new Set(e.targets.map(b=>b.id)),after:new Map(r.bodies.filter(b=>e.targets.some(a=>a.id===b.id)).map(b=>[b.id,{...b}])),name:g.data.characters.find(c=>c.id===e.hero)?.name||e.hero};
-    if(motion)this.later(SUPER.cast,()=>this.sounds.push('bubble'));break;
+    this.later(motion?SUPER.cast:0,()=>this.sounds.push(e.spec.steps.some(s=>['transform','bubbles'].includes(s.kind))?'super_magic':e.spec.steps.some(s=>s.kind==='clear')?'super_dash':'super_soft'));break;
    }
    case'shuffle':if(motion)for(const sign of [-1,1])this.add({kind:'debris',key:'fx_swoosh',x:270+sign*90,y:560,dx:sign*55,dy:-90,size:160,duration:.35});break;
-   case'results':this.super=null;this.badges=[];if(e.record)this.badge('NEW BEST!','',270,280,1.2);if(motion)for(let i=0;i<30;i++)this.add({kind:'confetti',key:i%2?'vfx_confetti_gold':'vfx_confetti_coral',x:20+i*17,y:120-(i%4)*20,dx:(i%5-2)*20,dy:520,size:17,duration:1.8});break;
+   case'results':this.super=null;this.badges=[];if(motion)for(let i=0;i<30;i++)this.add({kind:'confetti',key:i%2?'vfx_confetti_gold':'vfx_confetti_coral',x:20+i*17,y:120-(i%4)*20,dx:(i%5-2)*20,dy:520,size:17,duration:1.8});break;
   }
  }
  update(dt){
-  this.time+=dt;
+  this.time+=dt;this.rewards.advance(dt);if(!this.game.profile.motion)this.rewards.reset();
   const ready=this.pending.filter(p=>p.at<=this.time);this.pending=this.pending.filter(p=>p.at>this.time);ready.forEach(p=>p.run());
   const expired=this.items.filter(p=>this.time>=p.start+p.duration);
   this.items=this.items.filter(p=>this.time<p.start+p.duration);
@@ -85,6 +89,9 @@ export class Effects{
   this.badges=this.badges.filter(p=>this.time<p.start+p.duration);
   if(this.super&&this.time>=this.super.start+this.super.duration)this.super=null;
  }
+ get fever(){return this.game.round?.feverLeft>0&&!this.rewards.pending('feverStart');}
+ value(key){return this.rewards.value(key,this.game.round?.[key]||0);}
+ get feverCharge(){return this.rewards.value('fever',this.game.round.fever+(this.game.round.feverLeft>0?30:0))/30;}
  displayBody(b){
   const s=this.super;if(!s||!s.targetIDs.has(b.id))return b;
   const before=s.targets.find(a=>a.id===b.id),at=this.game.profile.motion?s.plan.arrival(before):.12;

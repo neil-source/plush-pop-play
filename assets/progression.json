@@ -1,0 +1,22 @@
+{
+  "version":1,
+  "missions":[
+    {"id":"pops","title":"Pop party","detail":"Pop plushies across your rounds","metric":"popped","target":150,"reward":100,"art":"sun","group":null},
+    {"id":"chains","title":"Chain maker","detail":"Make a chain of 7 in one round","metric":"chain","target":7,"reward":120,"art":"medal","group":null},
+    {"id":"supers","title":"Super star","detail":"Use 3 character powers","metric":"supers","target":3,"reward":140,"art":"star","group":null},
+    {"id":"fevers","title":"Golden groove","detail":"Start Fever 4 times","metric":"fevers","target":4,"reward":160,"art":"lamp","group":null},
+    {"id":"bubbles","title":"Bubble picnic","detail":"Tap 5 bubbles","metric":"bubbles","target":5,"reward":120,"art":"gift","group":null},
+    {"id":"score","title":"High flyer","detail":"Score 30000 in one round","metric":"score","target":30000,"reward":150,"art":"garland","group":null},
+    {"id":"friends","title":"Friendship day","detail":"Pop 100 of your leader","metric":"leaders","target":100,"reward":120,"art":"heart","group":null}
+  ],
+  "decorations":[
+    {"id":"flower","name":"Sunny flower","cost":180,"art":"flower"},
+    {"id":"lamp","name":"Star lamp","cost":250,"art":"lamp"},
+    {"id":"gift","name":"Birthday gift","cost":220,"art":"gift"},
+    {"id":"garland","name":"Party bunting","cost":300,"art":"garland"},
+    {"id":"frame","name":"Golden frame","cost":350,"art":"frame"},
+    {"id":"hearts","name":"Heart frame","cost":350,"art":"hearts"}
+  ],
+  "friendship":[0,60,180,400,800],
+  "friendshipNames":["New friend","Playmate","Good friend","Best friend","Forever friend"]
+}
