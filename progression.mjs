@@ -3,10 +3,16 @@ const integer=(n,max=1e9)=>Math.max(0,Math.min(max,Math.trunc(Number(n)||0)));
 export function progress(raw={}){
  const p={mission:'pops',values:{},completed:{},friends:{},decor:[],shelf:[],boosts:[],learned:false,...raw};
  for(const field of ['values','completed'])p[field]=Object.fromEntries(Object.entries(p[field]||{}).slice(0,30).map(([k,v])=>[k,integer(v)]));
- p.friends=Object.fromEntries(Object.entries(p.friends||{}).slice(0,140).map(([k,v])=>[k,{xp:integer(v.xp),best:integer(v.best),rounds:integer(v.rounds),badge:!!v.badge,supers:integer(v.supers),fevers:integer(v.fevers)}]));
+ p.friends=Object.fromEntries(Object.entries(p.friends||{}).slice(0,140).map(([k,v])=>[k,{xp:integer(v.xp),best:integer(v.best),rounds:integer(v.rounds),badge:!!v.badge,supers:integer(v.supers),fevers:integer(v.fevers),powerLevel:Math.max(1,integer(v.powerLevel||1,5))}]));
  for(const k of ['decor','shelf','boosts'])p[k]=[...new Set(Array.isArray(p[k])?p[k].filter(x=>typeof x==='string'):[])].slice(0,k==='shelf'?3:20);
- return p;
+ p.stars=integer(p.stars);return p;
 }
+export function migrateUpgrades(catalog,profile){const p=profile.progress;if(p.upgradeVersion===1)return false;
+ p.stars+=catalog.missions.reduce((n,m)=>n+(p.completed[m.id]||0)*m.stars,0);
+ profile.coins+=catalog.decorations.filter(d=>p.decor.includes(d.id)).reduce((n,d)=>n+d.cost,0);
+ p.decor=[];p.shelf=[];p.upgradeVersion=1;return true;
+}
+export function powerLevel(p,id){return Math.max(1,Math.min(5,p.friends[id]?.powerLevel||1));}
 export function level(catalog,xp){return Math.max(0,catalog.friendship.filter(t=>xp>=t).length-1);}
 // Finish each goal in list order, then begin the next, slightly harder lap.
 // Existing completions and partial progress survive the old selectable-goal save format.
@@ -17,12 +23,12 @@ export function award(catalog,profile,r){
  const p=profile.progress=progress(profile.progress);p.mission=nextMission(catalog,p);
  const m=missionTarget(catalog,p),v=r.metrics||{},before=p.friends[r.hero]||{xp:0,best:0,rounds:0,badge:false};
  const xp=20+Math.min(80,Math.floor(r.popped/5))+Math.min(40,(v.supers||0)*10),oldLevel=level(catalog,before.xp);
- const friend={xp:before.xp+xp,best:Math.max(before.best,r.score),rounds:before.rounds+1,badge:before.badge||r.bestChain>=10,supers:(before.supers||0)+(v.supers||0),fevers:(before.fevers||0)+(v.fevers||0)};p.friends[r.hero]=friend;
- const earned={xp,level:level(catalog,friend.xp),levelUp:false,mission:false,coins:0,decoration:null,record:r.score>before.best,badge:!before.badge&&friend.badge||((before.supers||0)<3&&friend.supers>=3)||((before.fevers||0)<3&&friend.fevers>=3)};earned.levelUp=earned.level>oldLevel;
+ const friend={powerLevel:before.powerLevel||1,xp:before.xp+xp,best:Math.max(before.best,r.score),rounds:before.rounds+1,badge:before.badge||r.bestChain>=10,supers:(before.supers||0)+(v.supers||0),fevers:(before.fevers||0)+(v.fevers||0)};p.friends[r.hero]=friend;
+ const earned={xp,level:level(catalog,friend.xp),levelUp:false,mission:false,coins:0,stars:0,record:r.score>before.best,badge:!before.badge&&friend.badge||((before.supers||0)<3&&friend.supers>=3)||((before.fevers||0)<3&&friend.fevers>=3)};earned.levelUp=earned.level>oldLevel;
  const amount=m.metric==='chain'?r.bestChain:m.metric==='score'?r.score:m.metric==='popped'?r.popped:(v[m.metric]||0);
  p.values[m.id]=['chain','score'].includes(m.metric)?Math.max(p.values[m.id]||0,amount):(p.values[m.id]||0)+amount;
  if(p.values[m.id]>=m.target){earned.mission=true;earned.coins+=m.reward;p.values[m.id]=0;p.completed[m.id]=(p.completed[m.id]||0)+1;
-  const next=catalog.decorations.find(d=>!p.decor.includes(d.id));if(next){p.decor.push(next.id);earned.decoration=next.id;if(p.shelf.length<3)p.shelf.push(next.id);}
+  earned.stars=m.stars;p.stars+=m.stars;
   p.mission=nextMission(catalog,p);
  }
  if(earned.levelUp)earned.coins+=50*earned.level;

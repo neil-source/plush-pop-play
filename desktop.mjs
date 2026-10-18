@@ -21,9 +21,9 @@ export function drawDesktop(api){
   if(r.combo>1&&game.comboActive())label(r.combo+' COMBO',160,536,23,235);
   meter('meter_gold',fx.fever?r.feverLeft/8:fx.feverCharge,160,610,233,46);label(fx.fever?'FEVER x3':'FEVER',160,610,23,215);
   if(fx.fever){label('FEVER BONUS',160,669,17,240);label(fx.rewards.value('score',r.feverScore),160,703,27,240);}
-  label('YOUR LEADER',1040,153,20,245);if(fx.value('skill')>=12)image('fx_rays',1040,260,205,205,{alpha:game.profile.motion?.45+Math.sin(uiTime*3)*.2:.5});image('char_'+r.hero,1040,260,158,158);
-  label(game.powers[r.hero].name,1040,369,24,244);meter('meter_gold',fx.value('skill')/12,1040,414,222,21);
-  button('skill',fx.value('skill')>=12?'Use super':'Charging '+Math.floor(fx.value('skill'))+'/12',1040,476,224,66,()=>game.useSkill(),{color:fx.value('skill')>=12?'gold':'purple',disabled:!game.canAct||fx.value('skill')<12,size:23});
+  label('YOUR LEADER',1040,153,20,245);if(fx.value('skill')>=game.skillGoal)image('fx_rays',1040,260,205,205,{alpha:game.profile.motion?.45+Math.sin(uiTime*3)*.2:.5});image('char_'+r.hero,1040,260,158,158);
+  label(game.powers[r.hero].name,1040,369,24,244);meter('meter_gold',fx.value('skill')/game.skillGoal,1040,414,222,21);
+  button('skill',fx.value('skill')>=game.skillGoal?'Use super':'Charging '+Math.floor(fx.value('skill'))+'/'+game.skillGoal,1040,476,224,66,()=>game.useSkill(),{color:fx.value('skill')>=game.skillGoal?'gold':'purple',disabled:!game.canAct||fx.value('skill')<game.skillGoal,size:23});
   button('hint','Hint',1040,570,224,65,()=>game.hint(),{disabled:!game.canAct,color:'green'});
   button('shuffle',r.shuffleCooldown>0?'Shuffle '+Math.ceil(r.shuffleCooldown):'Shuffle',1040,660,224,65,()=>game.shuffle(),{color:'gold',disabled:!game.canAct||r.shuffleCooldown>0});
   button('pause','Pause',1090,58,160,61,pause,{color:'gold'});

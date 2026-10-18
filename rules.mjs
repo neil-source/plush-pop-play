@@ -1,4 +1,4 @@
-import {progress,metrics,award,nextMission,parseChallenge,challengeCode} from './progression.mjs';
+import {progress,metrics,award,nextMission,migrateUpgrades,powerLevel,parseChallenge,challengeCode} from './progression.mjs';
 // Temporary character access comes from the build, never a saved purchase or URL flag.
 export const SIZE=52,RADIUS=23.6,POPULATION=100;
 export const playable=b=>b.y>=205&&b.y<=816;
@@ -45,7 +45,7 @@ export class Game{
   this.profile={hero:'stitch',coins:0,best:0,sound:true,music:true,motion:true,layout:'auto',boosts:{}};
   this.round=null;this.paused=true;this.finished=false;this.chain=[];this.hints=[];this.feedback=[];this.superLeft=0;this.hintLeft=0;this.newBest=false;this.savingFailed=false;
   this.load();this.profile.progress=progress(this.profile.progress);this.practice=false;this.practiceLesson=0;this.result=null;this.nextChallenge=null;
-  this.syncMission();if(this.round?.metrics)this.round.metrics.mission=this.profile.progress.mission;
+  this.syncMission();if(this.round?.metrics)this.round.metrics.mission=this.profile.progress.mission;if(migrateUpgrades(this.data.progression,this.profile))this.save();
  }
  load(){try{
   const raw=this.storage?.getItem('plush_pop_share_v1');if(!raw||raw.length>1000000)return;
@@ -71,11 +71,12 @@ export class Game{
   this.syncMission();
   const challenge=this.practice?null:this.nextChallenge;this.nextChallenge=null;if(challenge){seed=challenge.seed;this.profile.hero=this.data.characters[challenge.index].id;candidates=this.data.catalog.freeCharacters;}
   const hero=this.allowed.includes(this.profile.hero)?this.profile.hero:this.allowed[0];
-  this.round={metrics:metrics(this.profile.progress.mission),challenge:challenge?.code||null,id:Date.now()+'-'+seed,hero,active:[],bodies:[],timer:60,elapsed:0,ready:2.2,feverLeft:0,feverScore:0,shuffleCooldown:0,lastClear:-99,score:0,coins:0,combo:0,bestChain:0,popped:0,skill:0,fever:0,nextID:1,lane:0,multiplier:1,seed:seed||1,finale:null,power:null};
+  this.round={upgradeLevel:challenge?1:this.characterLevel(hero),metrics:metrics(this.profile.progress.mission),challenge:challenge?.code||null,id:Date.now()+'-'+seed,hero,active:[],bodies:[],timer:60,elapsed:0,ready:2.2,feverLeft:0,feverScore:0,shuffleCooldown:0,lastClear:-99,score:0,coins:0,combo:0,bestChain:0,popped:0,skill:0,fever:0,nextID:1,lane:0,multiplier:1,seed:seed||1,finale:null,power:null};
+  this.round.multiplier=1+(this.round.upgradeLevel-1)*.1;
   const friends=[...new Set([...candidates,...this.data.catalog.freeCharacters])].filter(id=>id!==hero&&this.allowed.includes(id));
   for(let i=friends.length-1;i>0;i--){const j=Math.floor(this.random()*(i+1));[friends[i],friends[j]]=[friends[j],friends[i]];}
   this.round.active=[hero,...friends.slice(0,4)];
-  for(const k of ['time','score','skill'])if(!this.practice&&!challenge&&this.profile.progress.boosts.includes(k)&&this.profile.boosts[k]>0){this.profile.boosts[k]--;if(k==='time')this.round.timer+=5;if(k==='score')this.round.multiplier=1.15;if(k==='skill')this.round.skill=12;}
+  for(const k of ['time','score','skill'])if(!this.practice&&!challenge&&this.profile.progress.boosts.includes(k)&&this.profile.boosts[k]>0){this.profile.boosts[k]--;if(k==='time')this.round.timer+=5;if(k==='score')this.round.multiplier*=1.15;if(k==='skill')this.round.skill=this.skillGoal;}
   for(let i=0;i<100;i++)this.spawn(i>=97?hero:this.choose(this.round.active));
   this.result=null;this.paused=false;this.finished=false;this.newBest=false;this.chain=[];this.hints=[];this.superLeft=0;this.feedback=[];this.emit('sound',{name:'ready'});this.save();
  }
@@ -115,7 +116,7 @@ export class Game{
   if(!power&&!bubble)r.bestChain=Math.max(r.bestChain,n);
   const gain=Math.round((n*100+n*n*15)*(1+Math.min(10,r.combo)*.06)*(r.feverLeft>0?3:1)*r.multiplier*(this.has('score')?2:1));
   const coins=Math.floor(n*.8)*(this.has('coins')?2:1);if(r.metrics)r.metrics.leaders+=removed.filter(b=>b.type===r.hero).length;if(this.practice&&!power&&!bubble){if(this.practiceLesson===0&&n>=3)this.practiceLesson=1;if(this.practiceLesson===1&&n>=7)this.practiceLesson=2;}r.score+=gain;r.coins+=coins;r.popped+=n;r.lastClear=r.elapsed;
-  if(r.feverLeft>0)r.feverScore+=gain;r.skill=Math.min(12,r.skill+removed.filter(b=>b.type===r.hero).length);if(r.feverLeft<=0&&!final)r.fever+=n;
+  if(r.feverLeft>0)r.feverScore+=gain;r.skill=Math.min(this.skillGoal,r.skill+removed.filter(b=>b.type===r.hero).length);if(r.feverLeft<=0&&!final)r.fever+=n;
   r.bodies=r.bodies.filter(b=>!set.has(b.id));
   if(n>=7&&!power&&!bubble&&!final&&r.bodies.filter(b=>b.type==='bubble').length<3){const b={id:r.nextID++,type:'bubble',kind:this.choose(['blast','blast','time','coin','score']),x:last.x,y:last.y,vx:0,vy:0,angle:0,squash:0};r.bodies.push(b);this.emit('bubbleBorn',{body:clone(b)});}
   const remaining=r.bodies.filter(b=>b.type!=='bubble').length,before=remaining+n,drift=before<100?1:before>101?-1:0;
@@ -124,13 +125,13 @@ export class Game{
   this.emit('pop',{bodies:clone(removed),coins,score:gain,power,bubble});this.chain=[];this.hints=[];
   if(!final&&r.fever>=30&&r.feverLeft<=0)this.beginFever();this.save();
  }
- activate(id,final=false){if(!final&&!this.canAct)return;const r=this.round,b=r.bodies.find(b=>b.id===id);if(b?.type!=='bubble')return;if(r.metrics)r.metrics.bubbles++;if(this.practice&&this.practiceLesson===2){this.practiceLesson=3;r.skill=12;}this.emit('bubble',{body:clone(b)});
+ activate(id,final=false){if(!final&&!this.canAct)return;const r=this.round,b=r.bodies.find(b=>b.id===id);if(b?.type!=='bubble')return;if(r.metrics)r.metrics.bubbles++;if(this.practice&&this.practiceLesson===2){this.practiceLesson=3;r.skill=this.skillGoal;}this.emit('bubble',{body:clone(b)});
   if(b.kind==='time'&&!final){r.timer+=3;this.emit('bonus',{type:'time',amount:3,x:b.x,y:b.y});}
   if(b.kind==='coin'){r.coins+=10;this.emit('bonus',{type:'coin',amount:10,x:b.x,y:b.y});}
   if(b.kind==='score'){r.score+=1000;if(r.feverLeft>0)r.feverScore+=1000;this.emit('bonus',{type:'score',amount:1000,x:b.x,y:b.y});}
   this.clear(r.bodies.filter(a=>(a.type!=='bubble'||a.id===id)&&distance(a,b)<117).map(a=>a.id),{bubble:true,final});this.save();
  }
- useSkill(){const r=this.round;if(!this.canAct||r.skill<12)return;const spec=this.powers[r.hero];if(!spec)return;
+ useSkill(){const r=this.round;if(!this.canAct||r.skill<this.skillGoal)return;const spec=this.powers[r.hero];if(!spec)return;
   if(r.metrics)r.metrics.supers++;if(this.practice){this.practiceLesson=4;this.profile.progress.learned=true;}r.skill=0;this.chain=[];this.superLeft=this.profile.motion?5:.3;const before=clone(r.bodies),snapshots=new Map(),clear=new Set(),state={id:r.hero,pending:true,timers:{},taps:5};
   for(const step of spec.steps){if(step.kind==='buff'){if(step.pattern==='time'){r.timer+=step.amount;this.emit('bonus',{type:'time',amount:step.amount,x:270,y:425});}else state.timers[step.pattern]=step.amount;continue;}
    let targets=selectPattern(step,r.bodies.filter(b=>!clear.has(b.id)),r.hero,r.seed);if(step.kind==='bubbles')targets=targets.slice(0,Math.max(0,12-r.bodies.filter(b=>b.type==='bubble').length));
@@ -141,7 +142,7 @@ export class Game{
   while(r.bodies.filter(b=>b.type!=='bubble').length<98)this.spawn(this.choose(r.active));r.skill=0;this.save();
  }
  powerTap(id){if(!this.canAct||!this.has('tap')||this.round.power.taps<=0)return false;const b=this.round.bodies.find(b=>b.id===id);if(!b||b.type==='bubble')return false;this.round.power.taps--;this.clear(this.round.bodies.filter(a=>a.type!=='bubble'&&playable(a)&&distance(a,b)<105).map(a=>a.id),{bubble:true});return true;}
- beginFinale(){const r=this.round;if(r.finale)return;this.endFever();this.chain=[];this.hints=[];r.power=null;r.finale={bubbles:r.bodies.filter(b=>b.type==='bubble').map(b=>b.id),type:r.skill>=12?this.choose(r.active):null,delay:.8,announced:false,settled:false};r.skill=0;this.emit('announcement',{text:'TIME UP'});this.save();}
+ beginFinale(){const r=this.round;if(r.finale)return;this.endFever();this.chain=[];this.hints=[];r.power=null;r.finale={bubbles:r.bodies.filter(b=>b.type==='bubble').map(b=>b.id),type:r.skill>=this.skillGoal?this.choose(r.active):null,delay:.8,announced:false,settled:false};r.skill=0;this.emit('announcement',{text:'TIME UP'});this.save();}
  tickFinale(dt){const r=this.round,f=r.finale;f.delay=Math.max(0,f.delay-dt);if(f.delay)return;
   if(!f.announced){f.announced=true;if(f.bubbles.length||f.type)this.emit('announcement',{text:'LAST BONUS'});}
   if(f.bubbles.length){const id=f.bubbles.shift();f.delay=.24;this.activate(id,true);}
@@ -154,17 +155,22 @@ export class Game{
  selectHero(id){if(this.allowed.includes(id)){this.profile.hero=id;this.save();}}
  syncMission(){this.profile.progress.mission=nextMission(this.data.progression,this.profile.progress);}
  toggleBoost(id){const p=this.profile.progress;if(!['time','score','skill'].includes(id))return;p.boosts=p.boosts.includes(id)?p.boosts.filter(x=>x!==id):[...p.boosts,id];this.save();}
- decorate(id){const p=this.profile.progress,d=this.data.progression.decorations.find(d=>d.id===id);if(!d)return false;if(!p.decor.includes(id)){if(this.profile.coins<d.cost)return false;this.profile.coins-=d.cost;p.decor.push(id);}p.shelf=p.shelf.includes(id)?p.shelf.filter(x=>x!==id):[...p.shelf.slice(-2),id];this.save();return true;}
+ characterLevel(id=this.profile.hero){return powerLevel(this.profile.progress,id);}
+ get skillGoal(){return 13-Math.max(1,Math.min(5,this.round?.upgradeLevel||1));}
+ upgradeCost(id=this.profile.hero){const level=this.characterLevel(id);return this.data.progression.upgrades.find(u=>u.level===level+1)||null;}
+ upgradeCharacter(id=this.profile.hero){const cost=this.upgradeCost(id),p=this.profile.progress;if(!this.allowed.includes(id)||!cost||this.profile.coins<cost.coins||p.stars<cost.stars)return false;
+  this.profile.coins-=cost.coins;p.stars-=cost.stars;p.friends[id]||={xp:0,best:0,rounds:0,badge:false,supers:0,fevers:0};p.friends[id].powerLevel=cost.level;this.save();this.emit('sound',{name:'reward_chime'});return true;
+ }
  prepareChallenge(code){const c=parseChallenge(code,this.data.characters.length);if(!c||!this.allowed.includes(this.data.characters[c.index].id))return false;this.nextChallenge=c;return true;}
  makeChallenge(){return challengeCode((Date.now()>>>0)||1,this.data.characters.findIndex(c=>c.id===this.profile.hero));}
- beginPractice(power=false){if(!this.practice){this.practiceSaved=this.round;this.practiceWasFinished=this.finished;}this.practice=true;this.practiceLesson=power?3:0;this.start(12345);this.round.skill=power?12:0;for(const b of this.round.bodies.slice(-14))b.type=this.round.hero;}
+ beginPractice(power=false){if(!this.practice){this.practiceSaved=this.round;this.practiceWasFinished=this.finished;}this.practice=true;this.practiceLesson=power?3:0;this.start(12345);this.round.skill=power?this.skillGoal:0;for(const b of this.round.bodies.slice(-14))b.type=this.round.hero;}
  endPractice(){if(!this.practice)return;this.round=this.practiceSaved;this.finished=this.practiceWasFinished;this.practice=false;this.paused=true;this.superLeft=0;this.chain=[];this.feedback=[];this.save();}
  get practiceText(){return ['Drag through 3 matching plushies','Now connect 7 to make a bubble','Tap your glowing bubble','Tap your leader to try a super','Well done! Try Fever, or finish'][Math.min(4,this.practiceLesson)];}
  buyBoost(id){const price={time:40,score:60,skill:80}[id];if(!price||this.profile.coins<price)return false;this.profile.coins-=price;this.profile.boosts[id]=(this.profile.boosts[id]||0)+1;this.save();return true;}
  tick(dt){if(this.paused||this.finished||!this.round)return;const r=this.round;this.hintLeft=Math.max(0,this.hintLeft-dt);if(!this.hintLeft)this.hints=[];
   if(this.superLeft>0){this.superLeft=Math.max(0,this.superLeft-dt);if(!this.superLeft){if(r.power)r.power.pending=false;this.save();}return;}
   if(r.finale){this.tickFinale(dt);return;}if(r.ready>0){r.ready=Math.max(0,r.ready-dt);if(!r.ready)this.emit('sound',{name:'go'});return;}
-  if(this.practice){r.timer=60;if(this.practiceLesson>=3)r.skill=12;}
+  if(this.practice){r.timer=60;if(this.practiceLesson>=3)r.skill=this.skillGoal;}
   const stopped=this.has('stop')?Math.min(dt,r.power.timers.stop):0,active=dt-stopped;
   if(r.power){for(const k of Object.keys(r.power.timers))r.power.timers[k]=Math.max(0,r.power.timers[k]-dt);if(!Object.values(r.power.timers).some(v=>v>0))r.power=null;}
   r.elapsed+=active;r.timer=Math.max(0,r.timer-active);r.shuffleCooldown=Math.max(0,r.shuffleCooldown-active);

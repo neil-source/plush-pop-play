@@ -134,10 +134,10 @@ function drawHUD(){const r=game.round;
  button('hint','Hint',480,147,80,51,()=>game.hint(),{disabled:!game.canAct,size:18});
  if(r.power&&!r.power.pending){const seconds=Math.ceil(Math.max(...Object.values(r.power.timers)));label(game.powers[r.hero].name+' '+seconds+'s',250,166,15,320);}
  if(fx.fever){label('FEVER BONUS',270,207,15);label(fx.rewards.value('score',r.feverScore),270,233,27,280);}
- if(fx.value('skill')>=12&&game.profile.motion)image('fx_rays',72,885,108,108,{alpha:.45+Math.sin(uiTime*3)*.2});
- image('skill_frame',72,885,84,84);portrait(r.hero,72,884,60);meter('meter_gold',fx.value('skill')/12,72,932,82,12);
- if(fx.value('skill')>=12)label('READY',72,918,14);
- buttons.push({id:'skill',title:'Use '+game.powers[r.hero].name,x:72,y:885,w:94,h:94,action:()=>game.useSkill(),disabled:!game.canAct||fx.value('skill')<12});
+ if(fx.value('skill')>=game.skillGoal&&game.profile.motion)image('fx_rays',72,885,108,108,{alpha:.45+Math.sin(uiTime*3)*.2});
+ image('skill_frame',72,885,84,84);portrait(r.hero,72,884,60);meter('meter_gold',fx.value('skill')/game.skillGoal,72,932,82,12);
+ if(fx.value('skill')>=game.skillGoal)label('READY',72,918,14);
+ buttons.push({id:'skill',title:'Use '+game.powers[r.hero].name,x:72,y:885,w:94,h:94,action:()=>game.useSkill(),disabled:!game.canAct||fx.value('skill')<game.skillGoal});
  meter('meter_gold',fx.fever?r.feverLeft/8:fx.feverCharge,270,887,250,43);label(fx.fever?'FEVER x3':'FEVER',270,887,22,230);
  button('shuffle','Shuffle',477,887,76,76,()=>game.shuffle(),{icon:'shuffle',color:'gold',disabled:!game.canAct||r.shuffleCooldown>0});
  if(r.shuffleCooldown>0)label(Math.ceil(r.shuffleCooldown),477,887,23);
@@ -176,7 +176,7 @@ function drain(){for(const e of game.feedback.splice(0)){if(['pop','super','shuf
 function frame(now){const dt=lastTime?Math.min(.05,(now-lastTime)/1000):0;lastTime=now;
  if(screen==='play'&&!game.paused){uiTime+=dt;game.tick(dt);if(!game.paused&&!game.superLeft&&!game.has('stop')&&!game.round.finale)world.advance(game.round.bodies,dt*(game.has('slow')?.55:1),game.profile.motion,game.round.feverLeft>0);idle.update(dt,activePointer!==null);fx.update(dt);drain();
   const r=game.round,second=Math.ceil(r.timer);if(second!==lastSecond&&second>0&&second<=5&&!r.finale){fx.badge(String(second),'',160,280,.5);sound('time_warning');}lastSecond=second;
-  if(fx.value('skill')>=12&&!lastSkill&&!r.finale){const target=rewardTarget(layout,'skill');fx.sparkle(target.x,target.y,50);announce('Skill ready.');}lastSkill=fx.value('skill')>=12;
+  if(fx.value('skill')>=game.skillGoal&&!lastSkill&&!r.finale){const target=rewardTarget(layout,'skill');fx.sparkle(target.x,target.y,50);announce('Skill ready.');}lastSkill=fx.value('skill')>=game.skillGoal;
   if(r.combo>=10&&Math.floor(r.combo/10)>Math.floor(lastCombo/10))fx.badge(r.combo+' COMBO!','',350,280,.8);lastCombo=r.combo;
   for(const name of fx.sounds.splice(0))sound(name,name==='pop'?1+Math.min(8,r.combo)*.018:1);
   saveClock+=dt;if(saveClock>3){game.save();saveClock=0;}
@@ -196,7 +196,7 @@ document.addEventListener('keydown',e=>{idle?.reset();
  inputMode='mouse';document.querySelector('#stage').dataset.input=inputMode;
  if(!game||!loading.hidden||document.querySelector('dialog[open]'))return;if(e.key==='Escape'){e.preventDefault();if(game.chain.length)game.chain=[];else if(screen==='play')pause();else if(screen==='paused')resume();else go('menu');return;}
  if(screen!=='play'||!game.canAct||e.target.tagName==='BUTTON'&&[' ','Enter'].includes(e.key))return;
- const shortcut=({h:()=>game.hint(),s:()=>game.shuffle(),b:()=>{if(fx.value('skill')>=12)game.useSkill();}})[e.key.toLowerCase()];
+ const shortcut=({h:()=>game.hint(),s:()=>game.shuffle(),b:()=>{if(fx.value('skill')>=game.skillGoal)game.useSkill();}})[e.key.toLowerCase()];
  if(shortcut){e.preventDefault();shortcut();drain();return;}
  const all=game.round.bodies.filter(playable);if(!all.length)return;let focus=all.find(b=>b.id===focusedID)||all.reduce((a,b)=>b.y>a.y?b:a);focusedID=focus.id;
  if(e.key.startsWith('Arrow')){e.preventDefault();const [dx,dy]=({ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]})[e.key];const next=all.filter(b=>(b.x-focus.x)*dx+(b.y-focus.y)*dy>5).sort((a,b)=>distance(a,focus)+Math.abs((a.x-focus.x)*dy-(a.y-focus.y)*dx)*2-distance(b,focus)-Math.abs((b.x-focus.x)*dy-(b.y-focus.y)*dx)*2)[0];if(next)focusedID=next.id;}
