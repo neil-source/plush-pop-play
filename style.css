@@ -6,7 +6,7 @@
 #stage[data-input="mouse"] #controls button:not(:disabled):hover{background:#fff1;outline:2px solid #fff4;outline-offset:-5px}
 #loading{z-index:2}
 body:has(#stage[data-screen="menu"]){background:#f8d7ac}
-#stage[data-screen="menu"]{box-shadow:0 10px 50px #9e704629}
+#stage[data-screen="menu"]{box-shadow:none}
 #stage[data-screen="menu"] canvas{cursor:default}
 #stage[data-screen="menu"] #controls button{border-radius:50%}
 #stage[data-screen="menu"] #controls button[data-id="play"],#stage[data-screen="menu"] #controls button[data-id="resume"]{border-radius:70px}

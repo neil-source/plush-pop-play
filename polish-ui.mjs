@@ -3,7 +3,6 @@ export function drawPolish(api){
  const {screen,wide,game:g,data:d,image:I,label:L,button:B,go,start,resume,practice,shareResult,enterChallenge,createChallenge,showSettings}=api,p=g.profile.progress,c=d.progression,w=wide?1200:540,h=wide?800:960,hero=g.profile.hero,f=p.friends[hero]||{xp:0,best:0,rounds:0},lv=level(c,f.xp),name=d.characters.find(x=>x.id===hero).name;
  const title=t=>{I('menu_background',w/2,h/2,w,h);L(t,wide?480:270,110,wide?44:36,wide?800:460);B('back','Back',wide?1080:55,54,wide?160:70,60,()=>go('menu'),{color:'purple',icon:wide?null:'back'});L(g.profile.coins+' coins',wide?1080:430,wide?120:54,18,170);};
  if(screen==='menu'){
-  I(wide?'home_playground_wide':'home_playground',w/2,h/2,w,h);
   I('home_counter',126,52,205,52);I('icon_coin',51,51,32,32);L(String(g.profile.coins),147,52,23,140);
   B('learn','Learn to play',286,52,52,52,()=>go('learn'),{artKey:'home_help',artOnly:true});
   B('settings','Settings',364,52,52,52,showSettings,{artKey:'home_settings',artOnly:true});
