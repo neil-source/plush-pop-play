@@ -1,3 +1,4 @@
+import {SIZE} from './rules.mjs';
 import {SUPER,POP,SuperPlan,clamp,mix,ease,popPose} from './motion.mjs';
 import {RewardClock} from './reward-clock.mjs';
 import {drawSuper} from './super.mjs';
@@ -62,7 +63,7 @@ export class Effects{
       this.explosion(b,e.power);
       if(b.type!=='bubble'){
        const destination=!e.power&&b.type===r.hero?'skill':'fever';
-       this.count('copy-flight');this.flight('char_'+b.type,b.x,b.y,0,0,{size:52*.58,character:true,destination});
+       this.count('copy-flight');this.flight('char_'+b.type,b.x,b.y,0,0,{size:SIZE*.58,character:true,destination});
        this.count('coin-flight');this.flight('fx_coin0',b.x,b.y,0,0,{delay:.04,coin:true,destination:'coin'});
       }
      });
@@ -103,7 +104,7 @@ export class Effects{
    if(targetsOnly){if(p.kind!=='ghost'||!p.power)continue;}
    else {if(p.kind==='ghost'&&p.power)continue;const front=p.kind!=='ghost';if(front!==afterShade)continue;}
    if(p.kind==='ghost'){
-    const b=p.body,age=this.time-p.start,key=b.type==='bubble'?'bubble_'+b.kind:'char_'+b.type,diameter=b.type==='bubble'?64.8:52;
+    const b=p.body,age=this.time-p.start,key=b.type==='bubble'?'bubble_'+b.kind:'char_'+b.type,diameter=b.type==='bubble'?64.8:SIZE;
     const pose=motion?popPose(age,p.impact):{x:1,y:1,alpha:1-t};
     ctx.save();ctx.translate(b.x,b.y);ctx.rotate(b.angle);ctx.scale(pose.x,pose.y);ctx.globalAlpha*=pose.alpha;
     a.draw(ctx,key,0,0,diameter,diameter,{bodyDiameter:b.type==='bubble'?undefined:diameter});

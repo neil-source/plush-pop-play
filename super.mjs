@@ -1,3 +1,4 @@
+import {SIZE} from './rules.mjs';
 import {SUPER,clamp,mix,ease,heroPose} from './motion.mjs';
 
 // Uses the native character's four generated power cels. No generic icon shower.
@@ -18,9 +19,9 @@ export function drawSuper(fx,ctx){
    if(age<.13){const u=ease(age/.13);sx=mix(1,.08,u);sy=mix(1,1.12,u);angle+=.15*u;}
    else{shown=after;if(age<.28){const u=ease((age-.13)/.15);sx=mix(.08,1.16,u);sy=mix(1.12,.88,u);angle+=.15*(1-u);}else{const u=ease((age-.28)/.12);sx=mix(1.16,1,u);sy=mix(.88,1,u);}}
   }else if(!motion&&age>=0)shown=after;
-  const bubble=shown.type==='bubble',key=bubble?'bubble_'+shown.kind:'char_'+shown.type,size=bubble?64.8:52;
+  const bubble=shown.type==='bubble',key=bubble?'bubble_'+shown.kind:'char_'+shown.type,size=bubble?64.8:SIZE;
   ctx.save();ctx.translate(b.x,b.y);ctx.rotate(angle);ctx.scale(sx,sy);
-  a.draw(ctx,key,0,0,size,size,{bodyDiameter:bubble?undefined:52});
+  a.draw(ctx,key,0,0,size,size,{bodyDiameter:bubble?undefined:SIZE});
   if(age<0)a.silhouette(ctx,key,0,0,size,0,'white',3);
   ctx.restore();
  }

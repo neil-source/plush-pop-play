@@ -1,6 +1,7 @@
 import {RADIUS} from './rules.mjs';
 import {SoftPose} from './motion.mjs';
 const radius=b=>b.type==='bubble'?24:RADIUS;
+const CELL=Math.max(48,RADIUS*2);
 export class World{
  constructor(geometry){
   this.accumulator=0;this.quiet=0;this.sleeping=false;this.poses=new Map();
@@ -31,7 +32,7 @@ export class World{
   }
   for(let iteration=0;iteration<8;iteration++){
    const grid=new Map();
-   for(const b of bodies){const gx=Math.floor(b.x/55),gy=Math.floor(b.y/55);
+   for(const b of bodies){const gx=Math.floor(b.x/CELL),gy=Math.floor(b.y/CELL);
     for(let x=gx-1;x<=gx+1;x++)for(let y=gy-1;y<=gy+1;y++)for(const a of grid.get(x+y*32)||[]){
      let dx=b.x-a.x,dy=b.y-a.y,d2=dx*dx+dy*dy;const sum=radius(a)+radius(b);if(d2>=sum*sum)continue;
      if(d2<1e-8){dx=.001;dy=.0001;d2=dx*dx+dy*dy;}const d=Math.sqrt(d2),nx=dx/d,ny=dy/d,correction=Math.max(0,sum-d-.08)*.48;

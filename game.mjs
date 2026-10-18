@@ -1,5 +1,5 @@
 import {Art} from './art.mjs';
-import {Game,playable,distance} from './rules.mjs';
+import {Game,playable,distance,SIZE} from './rules.mjs';
 import {World} from './physics.mjs';
 import {Effects} from './effects.mjs';
 import {Idle} from './idle.mjs';
@@ -116,8 +116,8 @@ function drawBodies(){
   const rest=idle.pose(b);
   ctx.save();ctx.translate(b.x,b.y);ctx.rotate(b.angle);
   if(!rest&&!bubble&&game.profile.motion)ctx.scale(soft.xScale,soft.yScale);
-  image(rest?.key||key,0,0,bubble?64.8:52,bubble?64.8:52,{bodyKey:rest?.key||key,bodyDiameter:bubble?undefined:52,gray:matching});
-  if(selected.has(b.id)||game.hints.includes(b.id)||focusedID===b.id)art.silhouette(ctx,key,0,0,bubble?64.8:52,0,selected.has(b.id)?'#7ffbff':focusedID===b.id?'#ffe598':'#b1ffcb',selected.has(b.id)?2:3);
+  image(rest?.key||key,0,0,bubble?64.8:SIZE,bubble?64.8:SIZE,{bodyKey:rest?.key||key,bodyDiameter:bubble?undefined:SIZE,gray:matching});
+  if(selected.has(b.id)||game.hints.includes(b.id)||focusedID===b.id)art.silhouette(ctx,key,0,0,bubble?64.8:SIZE,0,selected.has(b.id)?'#7ffbff':focusedID===b.id?'#ffe598':'#b1ffcb',selected.has(b.id)?2:3);
   ctx.restore();
  }
  const chain=game.chain.map(id=>r.bodies.find(b=>b.id===id)).filter(Boolean);
