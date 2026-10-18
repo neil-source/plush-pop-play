@@ -3,14 +3,21 @@ export function drawPolish(api){
  const {screen,wide,game:g,data:d,image:I,label:L,button:B,go,start,resume,practice,shareResult,enterChallenge,createChallenge,showSettings}=api,p=g.profile.progress,c=d.progression,w=wide?1200:540,h=wide?800:960,hero=g.profile.hero,f=p.friends[hero]||{xp:0,best:0,rounds:0},lv=level(c,f.xp),name=d.characters.find(x=>x.id===hero).name;
  const title=t=>{I('menu_background',w/2,h/2,w,h);L(t,wide?480:270,110,wide?44:36,wide?800:460);B('back','Back',wide?1080:55,54,wide?160:70,60,()=>go('menu'),{color:'purple',icon:wide?null:'back'});L(g.profile.coins+' coins',wide?1080:430,wide?120:54,18,170);};
  if(screen==='menu'){
-  I('menu_background',w/2,h/2,w,h);B('settings','Settings',56,57,66,66,showSettings,{color:'gold',icon:'gear'});L(g.profile.coins+' coins',w-115,50,21,190);L('Plush Pop',wide?330:270,125,66,500);
-  I('char_'+hero,wide?330:270,wide?430:350,wide?430:320,wide?430:320);
-  const x=wide?900:270,y=wide?265:597;
-  [['goals','Goals'],['friends','Characters']].forEach(([id,t],i)=>B(id,t,x+(i-.5)*(wide?252:238),y,wide?238:222,62,()=>go(id),{color:i===0?'gold':'purple',size:24}));
-  const m=missionTarget(c,p);L(m.title+'  '+(p.values[m.id]||0)+'/'+m.target,x,wide?340:649,21,490);
-  const pending=g.round&&!g.finished;B(pending?'resume':'play',pending?'Resume round':'Play',x,wide?445:722,wide?490:472,110,pending?resume:start,{color:'green',size:38});
-  B('collection','Collection',x-119,wide?565:832,222,74,()=>go('collection'),{color:'purple'});B('boosts','Boosts',x+119,wide?565:832,222,74,()=>go('boosts'),{color:'gold'});
-  B('learn','Learn to play',x,wide?675:906,240,44,()=>go('learn'),{color:'blue',size:19});L('All characters unlocked for preview',w/2,h-23,14,w-70);return true;
+  I(wide?'home_playground_wide':'home_playground',w/2,h/2,w,h);
+  I('home_counter',126,52,205,52);I('icon_coin',51,51,32,32);L(String(g.profile.coins),147,52,23,140);
+  B('learn','Learn to play',286,52,52,52,()=>go('learn'),{artKey:'home_help',artOnly:true});
+  B('settings','Settings',364,52,52,52,showSettings,{artKey:'home_settings',artOnly:true});
+  I('home_logo',w/2,wide?132:190,wide?320:340,wide?191:203);
+  const companions=['sunny','mint','luna','ember','stitch'].filter(id=>id!==hero&&g.allowed.includes(id)).slice(0,2);
+  for(const offset of [-1,1,0])api.groundShadow(w/2+offset*(wide?158:139),wide?468:529,offset?(wide?94:78):(wide?150:140));
+  companions.forEach((id,i)=>I('char_'+id,w/2+(i?1:-1)*(wide?158:139),wide?405:478,wide?148:124,wide?148:124));
+  I('char_'+hero,w/2,wide?371:437,wide?236:220,wide?236:220);
+  const pending=g.round&&!g.finished,py=wide?540:622;
+  B(pending?'resume':'play',pending?'Resume round':'Play',w/2,py,336,144,pending?resume:start,{artKey:'home_play',artOnly:true});
+  I('home_arrow',w/2-(pending?115:70),py-4,34,40);L(pending?'Continue':'Play',w/2+20,py+1,pending?34:46,212);
+  const m=missionTarget(c,p);L('Next goal: '+m.title,w/2,wide?620:718,20,450);L((p.values[m.id]||0)+' / '+m.target,w/2,wide?647:748,18,440);
+  [['goals','Goals','home_goals'],['collection','Plushies','home_collection'],['friends','Upgrade','home_upgrade'],['boosts','Boosts','home_shop']].forEach(([id,caption,artKey],i)=>B(id,id==='collection'?'Collection':caption,w/2+(i-1.5)*126,wide?713:829,wide?78:86,wide?78:86,()=>go(id),{artKey,artOnly:true,caption}));
+  return true;
  }
  if(screen==='goals'){
   title('YOUR GOALS');L('Complete each goal to unlock the next',w/2,145,16,w-80);

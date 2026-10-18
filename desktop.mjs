@@ -77,7 +77,7 @@ export function drawDesktop(api){
   header('SETTINGS');api.replaceBack();image('char_'+game.profile.hero,310,385,290,290);label(input==='touch'?'Touch and drag to play':'Click and drag to play',310,581,26,490);
   [['sound','Sound effects'],['music','Music'],['motion','Animations']].forEach(([key,title],i)=>button(key,title+': '+(game.profile[key]?'On':'Off'),865,235+i*111,430,82,()=>api.toggleSetting(key),{color:game.profile[key]?'green':'purple',size:29}));
   button('layout','Layout: '+(game.profile.layout==='classic'?'Original app':'Automatic'),865,568,430,82,api.toggleLayout,{color:'purple',size:25});
-  label('Turning animations off reduces motion.',865,688,20,470);footer();return;
+  label('Turning animations off reduces motion.',865,688,20,470);if(game.previewCharacters)label('All characters unlocked for preview',310,669,17,490);footer();return;
  }
  if(screen==='results'){
   label('TIME UP!',355,105,53,590);image('icon_trophy',355,277,190);label(game.newBest?'NEW BEST!':'NICE PLAY!',355,418,34,530);

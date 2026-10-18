@@ -15,7 +15,7 @@ const getLayout=()=>chooseLayout({width:game?.profile.layout==='classic'?540:inn
 let layout=getLayout(),inputMode=layout.input,collectionPage=0;
 const characterKeys=id=>['char_'+id,...[0,1,2,3].map(i=>'idle_'+id+'_'+i)];
 const roundKeys=()=>[...game.round.active.flatMap(characterKeys),...[0,1,2,3].map(i=>'power_'+game.round.hero+'_'+i)];
-const menuKeys=()=>[game.profile.hero,...game.allowed.filter(id=>id!==game.profile.hero).slice(0,3)].map(id=>'char_'+id);
+const menuKeys=()=>[game.profile.hero,...['sunny','mint','luna','ember','stitch'].filter(id=>id!==game.profile.hero&&game.allowed.includes(id)).slice(0,2)].map(id=>'char_'+id);
 const pageKeys=()=>game.allowed.slice(collectionPage*layout.pageSize,(collectionPage+1)*layout.pageSize).map(id=>'char_'+id);
 const powerText=s=>s.kind==='clear'?'Pops '+(s.pattern==='hero'?'your leader':'a '+s.pattern.replace(/[A-Z]/g,c=>' '+c.toLowerCase())+' area'):s.kind==='transform'?'Changes plushies into your leader':s.kind==='bubbles'?'Makes special bubbles':({time:'Adds time',stop:'Pauses time',slow:'Slows the fall',link:'Connects any type',reach:'Reaches farther',chain:'Connects pairs',blast:'Pops nearby friends',coins:'Extra coins',score:'Extra points',drops:'More leader drops',tap:'Tap to pop'})[s.pattern]||'Gives a bonus';
 const chooseHero=id=>withArtwork([...characterKeys(id),...[0,1,2,3].map(i=>'power_'+id+'_'+i)],()=>{game.selectHero(id);announce('Selected '+data.characters.find(c=>c.id===id).name);});
@@ -32,9 +32,11 @@ function sound(name,rate=1){if(!game?.profile.sound)return;while(voices.length>=
 function musicSync(){const key=screen==='play'&&fx?.fever?'fever_loop':'cozy_loop';if(key!==musicKey){music.pause();musicKey=key;music=new Audio('assets/audio/music/'+key+'.wav');music.loop=true;music.volume=.16;}if(screen==='play'&&!game.paused&&game.profile.music){if(music.paused)music.play().catch(()=>{});}else if(!music.paused)music.pause();}
 function label(text,x,y,size=26,width=490,options={}){art.label(ctx,text,x,y,size,width,options);}
 function image(key,x,y,w,h=w,options={}){art.draw(ctx,key,x,y,w,h,options);}
-function button(id,title,x,y,w,h,action,{disabled=false,color='blue',icon=null,size=25}={}){
- image('button_'+color+'_'+(w/h<1.6?'round':'wide'),x,y,w,h,{alpha:disabled?.45:1});
- if(icon)image('icon_'+icon,x,y,w*.48,h*.48,{alpha:disabled?.45:1});else label(title,x,y,size,w*.85,{alpha:disabled?.55:1});
+function groundShadow(x,y,w){ctx.save();ctx.fillStyle='rgba(97,59,33,.055)';for(let i=0;i<3;i++){ctx.beginPath();ctx.ellipse(x,y,(w-i*9)/2,(14-i*3)/2,0,0,Math.PI*2);ctx.fill();}ctx.restore();}
+function button(id,title,x,y,w,h,action,{disabled=false,color='blue',icon=null,size=25,artKey=null,artOnly=false,caption=null}={}){
+ image(artKey||'button_'+color+'_'+(w/h<1.6?'round':'wide'),x,y,w,h,{alpha:disabled?.45:1});
+ if(!artOnly){if(icon)image('icon_'+icon,x,y,w*.48,h*.48,{alpha:disabled?.45:1});else label(title,x,y,size,w*.85,{alpha:disabled?.55:1});}
+ if(caption){label(caption,x,y+h/2+20,20,120);y+=17;h+=42;w+=16;}
  buttons.push({id,title,x,y,w,h,action:()=>{idle?.reset();action();},disabled});
 }
 function syncControls(){
@@ -91,7 +93,7 @@ function drawSettings(){
  label('SETTINGS',270,170,43);
  [['sound','Sound effects'],['music','Music'],['motion','Animations']].forEach(([key,title],i)=>button(key,title+': '+(game.profile[key]?'On':'Off'),270,300+i*108,380,78,()=>{game.profile[key]=!game.profile[key];game.save();musicSync();},{color:game.profile[key]?'green':'purple',size:27}));
  button('layout','Layout: '+(game.profile.layout==='classic'?'Original app':'Automatic'),270,624,430,78,toggleLayout,{color:'purple',size:24});
- label('Turning animations off reduces motion.',270,735,18,460);button('back','Back',270,835,280,78,()=>go(screenBeforeSettings),{color:'purple'});label('Version 1.0',270,920,15);
+ label('Turning animations off reduces motion.',270,735,18,460);if(game.previewCharacters)label('All characters unlocked for preview',270,770,15,460);button('back','Back',270,835,280,78,()=>go(screenBeforeSettings),{color:'purple'});label('Version 1.0',270,920,15);
 }
 function drawPause(){
  image('panel_blue',270,555,450,690);
@@ -148,7 +150,8 @@ function drawHUD(){const r=game.round;
 function drawFeverLights(){if(game.round.feverLeft<=0)return;const sides=[data.bowl.top,data.bowl.left,data.bowl.right,data.bowl.floor];let n=0;for(const line of sides)for(let i=0;i<line.length;i+=Math.max(1,Math.floor(line.length/10))){const [x,y]=line[i];image('vfx_sparkle',x,y,13,13,{alpha:game.profile.motion?.45+Math.sin(uiTime*2-n++*.45)*.2:.65});}}
 function draw(){buttons=[];ctx.setTransform(canvas.width/layout.width,0,0,canvas.height/layout.height,0,0);ctx.fillStyle='#25575b';ctx.fillRect(0,0,layout.width,layout.height);
  art.fever=(screen==='play'||screen==='paused')&&fx.fever;art.phase=game.profile.motion?uiTime:0;
- if(drawPolish({screen,wide:layout.wide,game,data,image,label,button,go,start,resume,practice,shareResult,enterChallenge,createChallenge,showSettings})){syncControls();return;}
+ const stage=document.querySelector('#stage');if(stage.dataset.screen!==screen)stage.dataset.screen=screen;
+ if(drawPolish({screen,wide:layout.wide,game,data,image,label,button,groundShadow,go,start,resume,practice,shareResult,enterChallenge,createChallenge,showSettings})){syncControls();return;}
  if(layout.wide){
   drawDesktop({ctx,art,game,data,screen,image,label,button,meter,portrait,go,start,resume,pause,showSettings,toggleLayout,drawBodies,drawFeverLights,fx,uiTime,resultAt,collectionPage,turnPage,chooseHero,card,powerText,input:inputMode,
    keepControls:ids=>{buttons=buttons.filter(b=>ids.includes(b.id));},replaceBack:()=>{buttons.find(b=>b.id==='back').action=()=>go(screenBeforeSettings);},

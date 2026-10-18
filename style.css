@@ -5,4 +5,10 @@
 #stage[data-input="mouse"] canvas{cursor:crosshair}
 #stage[data-input="mouse"] #controls button:not(:disabled):hover{background:#fff1;outline:2px solid #fff4;outline-offset:-5px}
 #loading{z-index:2}
+body:has(#stage[data-screen="menu"]){background:#f8d7ac}
+#stage[data-screen="menu"]{box-shadow:0 10px 50px #9e704629}
+#stage[data-screen="menu"] canvas{cursor:default}
+#stage[data-screen="menu"] #controls button{border-radius:50%}
+#stage[data-screen="menu"] #controls button[data-id="play"],#stage[data-screen="menu"] #controls button[data-id="resume"]{border-radius:70px}
+#stage[data-screen="menu"] #controls button:focus-visible{outline-color:#227c82}
 .plush-dialog{width:min(92vw,470px);max-height:90dvh;overflow:auto;background:#7c2838 url('assets/polish/menu.png') center/cover;color:#fff7df;border:3px dashed #f7d88e;border-radius:28px;padding:26px;text-align:center;box-shadow:0 14px 60px #210916aa}.plush-dialog::backdrop{background:#130d23b3}.plush-dialog h2{margin:4px 0 22px}.plush-dialog input,.plush-dialog textarea{display:block;width:100%;padding:14px;margin:15px 0;font:inherit;border:2px solid #ffcf62;border-radius:12px;background:#fff4d9;color:#4f1b2c}.plush-dialog button,.plush-dialog a{display:inline-block;margin:7px;padding:12px 18px;border:2px dashed #fff0bf;border-radius:20px;background:#bd3d47;color:#fff8dd;font:inherit;font-weight:700;cursor:pointer}.plush-dialog img{display:block;width:180px;height:auto;margin:0 auto}.plush-dialog textarea{height:105px;font-size:14px}.plush-dialog button:focus-visible,.plush-dialog a:focus-visible{outline:3px solid #fff}
