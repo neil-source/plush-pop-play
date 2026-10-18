@@ -1,4 +1,4 @@
-import {progress,metrics,award,parseChallenge,challengeCode} from './progression.mjs';
+import {progress,metrics,award,nextMission,parseChallenge,challengeCode} from './progression.mjs';
 // Temporary character access comes from the build, never a saved purchase or URL flag.
 export const SIZE=52,RADIUS=23.6,POPULATION=100;
 export const playable=b=>b.y>=205&&b.y<=816;
@@ -45,6 +45,7 @@ export class Game{
   this.profile={hero:'stitch',coins:0,best:0,sound:true,music:true,motion:true,layout:'auto',boosts:{}};
   this.round=null;this.paused=true;this.finished=false;this.chain=[];this.hints=[];this.feedback=[];this.superLeft=0;this.hintLeft=0;this.newBest=false;this.savingFailed=false;
   this.load();this.profile.progress=progress(this.profile.progress);this.practice=false;this.practiceLesson=0;this.result=null;this.nextChallenge=null;
+  this.syncMission();if(this.round?.metrics)this.round.metrics.mission=this.profile.progress.mission;
  }
  load(){try{
   const raw=this.storage?.getItem('plush_pop_share_v1');if(!raw||raw.length>1000000)return;
@@ -67,6 +68,7 @@ export class Game{
  random(){let x=this.round.seed>>>0;x^=x<<13;x^=x>>>17;x^=x<<5;this.round.seed=x>>>0;return (x>>>0)/4294967296;}
  choose(list){return list[Math.floor(this.random()*list.length)];}
  start(seed=Date.now()>>>0,candidates=this.allowed){
+  this.syncMission();
   const challenge=this.practice?null:this.nextChallenge;this.nextChallenge=null;if(challenge){seed=challenge.seed;this.profile.hero=this.data.characters[challenge.index].id;candidates=this.data.catalog.freeCharacters;}
   const hero=this.allowed.includes(this.profile.hero)?this.profile.hero:this.allowed[0];
   this.round={metrics:metrics(this.profile.progress.mission),challenge:challenge?.code||null,id:Date.now()+'-'+seed,hero,active:[],bodies:[],timer:60,elapsed:0,ready:2.2,feverLeft:0,feverScore:0,shuffleCooldown:0,lastClear:-99,score:0,coins:0,combo:0,bestChain:0,popped:0,skill:0,fever:0,nextID:1,lane:0,multiplier:1,seed:seed||1,finale:null,power:null};
@@ -150,7 +152,7 @@ export class Game{
  pause(){this.paused=true;this.chain=[];this.save();}
  resume(){if(this.round&&!this.finished)this.paused=false;}
  selectHero(id){if(this.allowed.includes(id)){this.profile.hero=id;this.save();}}
- selectMission(id){if(this.data.progression.missions.some(m=>m.id===id)){this.profile.progress.mission=id;this.save();}}
+ syncMission(){this.profile.progress.mission=nextMission(this.data.progression,this.profile.progress);}
  toggleBoost(id){const p=this.profile.progress;if(!['time','score','skill'].includes(id))return;p.boosts=p.boosts.includes(id)?p.boosts.filter(x=>x!==id):[...p.boosts,id];this.save();}
  decorate(id){const p=this.profile.progress,d=this.data.progression.decorations.find(d=>d.id===id);if(!d)return false;if(!p.decor.includes(id)){if(this.profile.coins<d.cost)return false;this.profile.coins-=d.cost;p.decor.push(id);}p.shelf=p.shelf.includes(id)?p.shelf.filter(x=>x!==id):[...p.shelf.slice(-2),id];this.save();return true;}
  prepareChallenge(code){const c=parseChallenge(code,this.data.characters.length);if(!c||!this.allowed.includes(this.data.characters[c.index].id))return false;this.nextChallenge=c;return true;}

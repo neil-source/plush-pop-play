@@ -5,7 +5,7 @@ export function drawPolish(api){
  const shelf=(x,y,size=1)=>{I('polish_shelf',x,y+22*size,400*size,48*size);p.shelf.forEach((id,i)=>I('polish_'+id,x+(i-1)*130*size,y-18*size,80*size,80*size));if(!p.shelf.length)L('Earn decorations by completing goals',x,y,15*size,405*size);};
  if(screen==='menu'){
   I('menu_background',w/2,h/2,w,h);B('settings','Settings',56,57,66,66,showSettings,{color:'gold',icon:'gear'});L(g.profile.coins+' coins',w-115,50,21,190);L('Plush Pop',wide?330:270,125,66,500);
-  I('char_'+hero,wide?330:270,wide?340:288,wide?310:240,wide?310:240);L(c.friendshipNames[lv],wide?330:270,wide?535:446,24,440);shelf(wide?330:270,wide?620:505,wide?1.25:1);
+  I('char_'+hero,wide?330:270,wide?430:350,wide?430:320,wide?430:320);
   const x=wide?900:270,y=wide?265:597;
   [['goals','Goals'],['shelf','My shelf'],['friends','Friends']].forEach(([id,t],i)=>B(id,t,x+(i-1)*(wide?178:169),y,wide?164:154,62,()=>go(id),{color:i===1?'green':i===0?'gold':'purple',size:24}));
   const m=missionTarget(c,p);L(m.title+'  '+(p.values[m.id]||0)+'/'+m.target,x,wide?340:649,21,490);
@@ -14,10 +14,12 @@ export function drawPolish(api){
   B('learn','Learn to play',x,wide?675:906,240,44,()=>go('learn'),{color:'blue',size:19});L('All characters unlocked for preview',w/2,h-23,14,w-70);return true;
  }
  if(screen==='goals'){
-  title('YOUR GOALS');c.missions.forEach((m,i)=>{const x=wide?300+i%2*590:270,y=wide?225+Math.floor(i/2)*126:212+i*87,width=wide?555:500,selected=p.mission===m.id;
-   I('panel_blue',x,y,width,wide?111:80);I('polish_'+m.art,x-width/2+42,y,55,55);L(m.title,x-20,y-21,23,width-190);L(m.detail.replace(String(m.target),String(missionTarget(c,p,m.id).target)),x-20,y+4,15,width-175);L((p.values[m.id]||0)+'/'+missionTarget(c,p,m.id).target+'   +'+m.reward+' coins',x-20,y+25,14,width-180);
-   B('goal-'+m.id,selected?'Chosen':'Choose',x+width/2-57,y,96,52,()=>g.selectMission(m.id),{color:selected?'green':'gold',size:16});});
-  L(c.decorations.find(d=>!p.decor.includes(d.id))?'Next reward: '+c.decorations.find(d=>!p.decor.includes(d.id)).name+' + coins':'Keep earning coins with your favorite goals',w/2,wide?690:807,18,w-80);B('goal-play','Play for my goal',w/2,wide?747:888,380,68,start,{color:'green'});return true;
+  title('YOUR GOALS');L('Complete each goal to unlock the next',w/2,145,16,w-80);
+  const lap=Math.min(...c.missions.map(m=>p.completed[m.id]||0)),current=c.missions.findIndex(m=>m.id===p.mission);
+  c.missions.forEach((m,i)=>{const x=w/2,y=wide?196+i*72:212+i*87,width=wide?1040:500,done=(p.completed[m.id]||0)>lap;
+   I('panel_blue',x,y,width,wide?66:80);I('polish_'+m.art,x-width/2+42,y,55,55);L(m.title,x-20,y-(wide?17:21),wide?21:23,width-190);L(m.detail.replace(String(m.target),String(missionTarget(c,p,m.id).target)),x-20,y+(wide?3:4),wide?14:15,width-175);L((done?'Complete':(p.values[m.id]||0)+'/'+missionTarget(c,p,m.id).target)+'   +'+m.reward+' coins',x-20,y+(wide?21:25),wide?12:14,width-180);
+   L(done?'DONE':i===current?'NOW':i===current+1?'NEXT':'LATER',x+width/2-57,y,16,88);});
+  L(c.decorations.find(d=>!p.decor.includes(d.id))?'Next reward: '+c.decorations.find(d=>!p.decor.includes(d.id)).name+' + coins':'Finish the list to start the next round of goals',w/2,wide?690:807,18,w-80);B('goal-play','Play for my goal',w/2,wide?747:888,380,68,start,{color:'green'});return true;
  }
  if(screen==='shelf'){
   title('MY PLUSH SHELF');shelf(w/2,wide?240:300,wide?1.3:1);L('Choose up to 3. Tap a displayed item to put it away.',w/2,wide?320:372,17,w-70);

@@ -8,10 +8,14 @@ export function progress(raw={}){
  return p;
 }
 export function level(catalog,xp){return Math.max(0,catalog.friendship.filter(t=>xp>=t).length-1);}
+// Finish each goal in list order, then begin the next, slightly harder lap.
+// Existing completions and partial progress survive the old selectable-goal save format.
+export function nextMission(catalog,p){const lap=Math.min(...catalog.missions.map(m=>p.completed[m.id]||0));return catalog.missions.find(m=>(p.completed[m.id]||0)===lap).id;}
 export function missionTarget(catalog,p,id=p.mission){const m=catalog.missions.find(m=>m.id===id)||catalog.missions[0],tier=Math.min(4,p.completed[m.id]||0);return {...m,target:m.target+Math.round(m.target*.25*tier),tier};}
 export function metrics(mission='pops'){return {mission,supers:0,fevers:0,bubbles:0,leaders:0};}
 export function award(catalog,profile,r){
- const p=profile.progress=progress(profile.progress),m=missionTarget(catalog,p,r.metrics?.mission),v=r.metrics||{},before=p.friends[r.hero]||{xp:0,best:0,rounds:0,badge:false};
+ const p=profile.progress=progress(profile.progress);p.mission=nextMission(catalog,p);
+ const m=missionTarget(catalog,p),v=r.metrics||{},before=p.friends[r.hero]||{xp:0,best:0,rounds:0,badge:false};
  const xp=20+Math.min(80,Math.floor(r.popped/5))+Math.min(40,(v.supers||0)*10),oldLevel=level(catalog,before.xp);
  const friend={xp:before.xp+xp,best:Math.max(before.best,r.score),rounds:before.rounds+1,badge:before.badge||r.bestChain>=10,supers:(before.supers||0)+(v.supers||0),fevers:(before.fevers||0)+(v.fevers||0)};p.friends[r.hero]=friend;
  const earned={xp,level:level(catalog,friend.xp),levelUp:false,mission:false,coins:0,decoration:null,record:r.score>before.best,badge:!before.badge&&friend.badge||((before.supers||0)<3&&friend.supers>=3)||((before.fevers||0)<3&&friend.fevers>=3)};earned.levelUp=earned.level>oldLevel;
@@ -19,6 +23,7 @@ export function award(catalog,profile,r){
  p.values[m.id]=['chain','score'].includes(m.metric)?Math.max(p.values[m.id]||0,amount):(p.values[m.id]||0)+amount;
  if(p.values[m.id]>=m.target){earned.mission=true;earned.coins+=m.reward;p.values[m.id]=0;p.completed[m.id]=(p.completed[m.id]||0)+1;
   const next=catalog.decorations.find(d=>!p.decor.includes(d.id));if(next){p.decor.push(next.id);earned.decoration=next.id;if(p.shelf.length<3)p.shelf.push(next.id);}
+  p.mission=nextMission(catalog,p);
  }
  if(earned.levelUp)earned.coins+=50*earned.level;
  profile.coins+=earned.coins;
