@@ -258,7 +258,7 @@ export class Art {
     const sx=[0,cap,source.width-cap,source.width],sy=[0,cap,source.height-cap,source.height],dx=[0,edge,w-edge,w],dy=[0,edge,h-edge,h];c.scale(2,2);
     for(let row=0;row<3;row++)for(let col=0;col<3;col++){
       const sw=sx[col+1]-sx[col],sh=sy[row+1]-sy[row],tw=sw*edge/cap,th=sh*edge/cap;
-      if((row===1&&col===1)||this.images[key].path.startsWith('assets/sky-ui/')){c.drawImage(source,sx[col],sy[row],sw,sh,dx[col],dy[row],dx[col+1]-dx[col],dy[row+1]-dy[row]);continue;}
+      if(row===1&&col===1){c.drawImage(source,sx[col],sy[row],sw,sh,dx[col],dy[row],dx[col+1]-dx[col],dy[row+1]-dy[row]);continue;}
       c.save();c.beginPath();c.rect(dx[col],dy[row],dx[col+1]-dx[col],dy[row+1]-dy[row]);c.clip();
       for(let y=dy[row];y<dy[row+1];y+=th)for(let x=dx[col];x<dx[col+1];x+=tw)c.drawImage(source,sx[col],sy[row],sw,sh,x,y,tw,th);
       c.restore();
@@ -331,15 +331,27 @@ export class Art {
     const key = `${text}|${size}`;
     let word = cached(this._words, key);
     if (!word) {
-      const measure = canvas(1,1).getContext('2d');
-      const font = `bold ${size}px "Arial Rounded MT Bold", "Trebuchet MS", system-ui, sans-serif`;
-      measure.font=font;
-      const width=Math.max(1,measure.measureText(text).width)+10, height=size*1.4+10;
-      const density=Math.min(2,4096/width,1024/height);
-      const tile=canvas(width*density,height*density),c=tile.getContext('2d');
-      c.scale(density,density);c.font=font;c.textAlign='center';c.textBaseline='middle';
-      c.shadowColor='rgba(3,48,96,.9)';c.shadowBlur=2;c.shadowOffsetY=1.5;
-      c.fillStyle='#fff';c.fillText(text,width/2,height/2);
+      const cap = size * 0.74;
+      const glyphs = [...text].map(char => this.font.glyphs[char] || this.font.glyphs['?']);
+      const width = Math.max(1, glyphs.reduce((n, g) => n + (g?.advance || 0), 0) * cap + 4);
+      const height = cap * 1.5 + 4;
+      // Two pixels per logical unit matches the native font renderer; cap allocation.
+      const density = Math.min(2, 4096 / width, 1024 / height);
+      const tile = canvas(width * density, height * density), c = tile.getContext('2d');
+      c.scale(density, density);
+      let gx = 2;
+      const baseline = 2 + cap * 1.1;
+      for (const g of glyphs) {
+        if (!g) continue;
+        const source = g.sheet && this.sources.get(this.url(this.font.paths[g.sheet]));
+        if (g.rect && source) {
+          const [sx, sy, sw, sh] = g.rect;
+          const gh = (g.height ?? 1) * cap;
+          const gy = baseline + ((g.descent ?? 0) - (g.height ?? 1) - (g.raise ?? 0)) * cap;
+          c.drawImage(source, sx, sy, sw, sh, gx, gy, (g.width ?? 1) * cap, gh);
+        }
+        gx += g.advance * cap;
+      }
       word = remember(this._words, key, {tile, width, height}, 96);
     }
     const scale = Math.min(1, maxWidth / word.width);
