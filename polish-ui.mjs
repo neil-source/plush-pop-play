@@ -34,7 +34,7 @@ export function drawPolish(api){
   const x=wide?880:270,y=wide?422:859;
   I('panel_blue',x,y,wide?500:488,wide?390:162);
   L(m.title,x,y-(wide?116:49),wide?38:28,450);
-  if(wide)L(m.detail.replace(String(m.target),String(m.target)),x,y-54,22,440);
+  if(wide)L(m.detail.replace(String(c.missions.find(q=>q.id===m.id).target),String(m.target)),x,y-54,22,440);
   L((p.values[m.id]||0)+' / '+m.target,x,y-(wide?0:14),wide?30:21,440);
   B('goal-play','Continue',x,y+(wide?100:43),318,wide?80:54,()=>go('goal'),{color:'green',size:wide?32:26});
   return true;
