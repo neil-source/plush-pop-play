@@ -1,11 +1,11 @@
 {
   "releaseVersion": "1.0.0",
-  "version": "web-8511e30d724fcbe4",
-  "hash": "8511e30d724fcbe41c3d77c1dc4fb041ec5849695d2226051e6d51ceb4fe63a9",
+  "version": "web-860950d06b48f6f8",
+  "hash": "860950d06b48f6f88c7639910dc671e61d8683c7df3edf0e2e6b15ef9827147a",
   "mode": "production",
   "previewAllCharacters": true,
-  "filecount": 507,
-  "bytes": 124054287,
-  "precacheFiles": 99,
-  "precacheBytes": 27680682
+  "filecount": 514,
+  "bytes": 125458244,
+  "precacheFiles": 106,
+  "precacheBytes": 29084152
 }

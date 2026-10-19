@@ -1,5 +1,5 @@
 import {SIZE} from './rules.mjs';
-import {SUPER,clamp,mix,ease,heroPose} from './motion.mjs';
+import {SUPER,clamp,mix,ease,heroPose,actingFrame} from './motion.mjs';
 
 // Uses the native character's four generated power cels. No generic icon shower.
 export function drawSuper(fx,ctx){
@@ -23,12 +23,12 @@ export function drawSuper(fx,ctx){
   ctx.save();ctx.translate(b.x,b.y);ctx.rotate(angle);ctx.scale(sx,sy);
   a.draw(ctx,key,0,0,size,size,{bodyDiameter:bubble?undefined:SIZE});
   if(age<0)a.silhouette(ctx,key,0,0,size,0,'white',3);
-  ctx.restore();
+  ctx.restore();if(motion&&age>=0&&age<.4)a.draw(ctx,'juice_'+(plan.shape==='petals'?'flower':plan.shape==='spiral'?'spiral':'wrap')+Math.min(3,Math.floor(age/.1)),b.x,b.y,105,105,{alpha:1-age/.4,rainbow:false});
  }
  if(motion){
   const o=plan.origin,cast=t-SUPER.cast;
   if(cast>=0&&cast<.18)a.draw(ctx,'vfx_ring',o.x,o.y,58*(1+cast/.18*.5),58*(1+cast/.18*.5),{alpha:1-cast/.18,rainbow:false});
-  if(plan.shape==='projectiles'){
+  if(plan.traveling){
    for(const b of plan.targets){if(t<plan.launch(b)||t>=plan.arrival(b))continue;const p=plan.projectile(b,t);animated(p.x,p.y,52,{angle:p.u*1.4});}
   }else if(cast>=0&&cast<SUPER.travel+.15){
    const p=plan.front(t),alpha=clamp((SUPER.travel+.15-cast)/.15);
@@ -36,7 +36,7 @@ export function drawSuper(fx,ctx){
    else animated(p.x,p.y,180,{alpha,angle:plan.shape==='vertical'?-Math.PI/2:0});
   }
   for(const b of plan.targets){const age=t-plan.arrival(b);if(age<0||age>.24)continue;
-   const size=86*(age<.12?mix(.45,1,age/.12):mix(1,1.2,(age-.12)/.12));power(3,b.x,b.y,size,{alpha:age<.12?1:1-(age-.12)/.12});
+   const size=86*(age<.12?mix(.45,1,age/.12):mix(1,1.2,(age-.12)/.12));power(3,b.x,b.y,size,{alpha:age<.12?1:1-(age-.12)/.12});a.draw(ctx,'juice_'+plan.accent+Math.min(3,Math.floor(age/.045)),b.x,b.y,105,105,{alpha:1-age/.24,angle:plan.direction(b),rainbow:false});
   }
   // Buff-only powers have a visible delivery to the appropriate meter too.
   if(s.spec.steps.some(step=>step.kind==='buff')&&cast>=0&&cast<.93){
@@ -52,7 +52,7 @@ export function drawSuper(fx,ctx){
  if(pose.alpha>0){
   ctx.save();ctx.translate(pose.x,pose.y);ctx.rotate(pose.angle);ctx.scale(pose.scaleX,pose.scaleY);ctx.globalAlpha*=pose.alpha;
   ctx.save();ctx.globalAlpha*=.65;a.silhouette(ctx,'char_'+s.hero,0,0,240,0,'white',3);ctx.restore();
-  a.draw(ctx,'char_'+s.hero,0,0,240,240,{bodyDiameter:240});power(0,91,-30,122);ctx.restore();
+  a.draw(ctx,motion?'idle_'+s.hero+'_'+actingFrame(t):'char_'+s.hero,0,0,240,240,{bodyDiameter:240});power(t>2.45?2:t>2.2?1:0,91+Math.sin(t*3)*7,-30,122);ctx.restore();
  }
  if(motion&&t>=.25&&t<1.3){const alpha=Math.min(clamp((t-.25)/.2),clamp((1.3-t)/.2)),scale=mix(.7,1,ease((t-.25)/.2));
   a.label(ctx,s.spec.name.toUpperCase(),270,610,36,425,{alpha,scaleX:scale,scaleY:scale});

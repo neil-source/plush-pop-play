@@ -24,7 +24,8 @@ export function drawDesktop(api){
   label('YOUR LEADER',1040,153,20,245);if(fx.value('skill')>=game.skillGoal)image('fx_rays',1040,260,205,205,{alpha:game.profile.motion?.45+Math.sin(uiTime*3)*.2:.5});image('char_'+r.hero,1040,260,158,158);
   label(game.powers[r.hero].name,1040,369,24,244);meter('meter_gold',fx.value('skill')/game.skillGoal,1040,414,222,21);
   button('skill',fx.value('skill')>=game.skillGoal?'Use super':'Charging '+Math.floor(fx.value('skill'))+'/'+game.skillGoal,1040,476,224,66,()=>game.useSkill(),{color:fx.value('skill')>=game.skillGoal?'gold':'purple',disabled:!game.canAct||fx.value('skill')<game.skillGoal,size:23});
-  button('hint','Hint',1040,570,224,65,()=>game.hint(),{disabled:!game.canAct,color:'green'});
+  if(game.pairTargets.length){button('buddy','TAG buddy',1040,531,224,42,()=>game.useBuddy(),{color:'gold',disabled:!game.canAct,size:20});image('char_'+r.pair.hero,1140,531,28,28);}
+  button('hint','Hint',1040,590,224,50,()=>game.hint(),{disabled:!game.canAct,color:'green'});
   button('shuffle',r.shuffleCooldown>0?'Shuffle '+Math.ceil(r.shuffleCooldown):'Shuffle',1040,660,224,65,()=>game.shuffle(),{color:'gold',disabled:!game.canAct||r.shuffleCooldown>0});
   button('pause','Pause',1090,58,160,61,pause,{color:'gold'});
   if(r.power&&!r.power.pending){const seconds=Math.ceil(Math.max(...Object.values(r.power.timers)));label(game.powers[r.hero].name+' '+seconds+'s',600,45,21,530);}

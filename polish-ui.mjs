@@ -41,7 +41,7 @@ export function drawPolish(api){
  }
  if(screen==='learn'){
   title("LET'S PLAY");I('polish_sun',wide?300:270,wide?360:262,wide?260:152,wide?260:152);
-  ['Drag through 3 matching plushies.','Connect 7 to make a special bubble.','Pop your leader to charge its super.','Pop 30 to start triple-score Fever.'].forEach((line,i)=>L(line,wide?850:270,(wide?256:398)+i*60,23,wide?540:480));
+  ['Drag through 3 matching plushies.','Connect 7 to make a special bubble.','Pop your leader to charge its super.','Pop 30 to start triple-score Fever.','Hold a bubble to preview. Drag away to cancel.','Drag onto another bubble to combine them.','After a super, TAG hits the star-marked group.'].forEach((line,i)=>L(line,wide?850:270,(wide?220:378)+i*42,20,wide?540:480));
   B('lesson','Try the lesson',wide?850:270,wide?565:712,404,80,()=>practice(false),{color:'green'});B('skip','Skip and play',wide?850:270,wide?670:814,300,66,()=>{p.learned=true;g.save();start();},{color:'gold'});L('Practice keeps your coins and saved round safe.',w/2,h-60,17,w-70);return true;
  }
  if(screen==='challenge'){
@@ -50,11 +50,14 @@ export function drawPolish(api){
   B('create-challenge','Create challenge',wide?850:270,wide?565:698,430,76,createChallenge,{color:'green'});B('enter-challenge','Enter a code',wide?850:270,wide?665:794,430,76,enterChallenge,{color:'gold'});return true;
  }
  if(screen==='results'){
-  const r=g.round,a=g.result||{coins:0,xp:0},rf=p.friends[r.hero],m=missionTarget(c,p);I('menu_background',w/2,h/2,w,h);
-  L(g.newBest?'NEW BEST!':'NICE PLAY!',wide?330:270,104,42,wide?570:490);I('polish_medal',wide?330:270,wide?265:223,142,142);L(r.score,wide?330:270,wide?438:340,58,500);L('POINTS',wide?330:270,wide?496:385,18,450);
+  const t=g.profile.motion?Math.max(0,api.resultAge):99,appear=at=>({alpha:Math.max(0,Math.min(1,(t-at)/.18))}),r=g.round,a=g.result||{coins:0,xp:0},rf=p.friends[r.hero],m=missionTarget(c,p);I('menu_background',w/2,h/2,w,h);
+  L(g.newBest?'NEW BEST!':'NICE PLAY!',wide?330:270,104,42,wide?570:490);I('polish_medal',wide?330:270,wide?265:223,142,142);L(Math.round(r.score*Math.min(1,t/.85)),wide?330:270,wide?438:340,58,500);L('POINTS',wide?330:270,wide?496:385,18,450);
   const x=wide?860:270;L('+'+r.coins+' round coins  +'+a.coins+' rewards',x,wide?196:437,23,wide?570:485);L('Chain '+r.bestChain+'   Popped '+r.popped,x,wide?245:482,20,480);
-  L('+'+a.xp+' friendship - '+c.friendshipNames[level(c,rf?.xp||0)],x,wide?313:536,23,wide?580:485);L(a.mission?'GOAL COMPLETE!':'Goal: '+missionTarget(c,p,r.metrics?.mission).title,x,wide?370:581,24,480);
-  L(a.stars?'+'+a.stars+' Power Stars - upgrade a character!':a.badge?'New character badge!':a.levelUp?'Friendship level up!':'Complete goals to earn Power Stars',x,wide?421:623,20,wide?570:475);L('Next: '+(p.values[m.id]||0)+'/'+m.target+'  '+m.title,x,wide?469:661,18,480);
+  L('+'+a.xp+' friendship - '+c.friendshipNames[level(c,rf?.xp||0)],x,wide?313:536,23,wide?580:485,appear(.9));L(a.mission?'GOAL COMPLETE!':'Goal: '+missionTarget(c,p,r.metrics?.mission).title,x,wide?370:581,24,480,appear(1.15));
+  L(a.stars?'+'+a.stars+' Power Stars - upgrade a character!':a.badge?'New character badge!':a.levelUp?'Friendship level up!':'Complete goals to earn Power Stars',x,wide?421:623,20,wide?570:475,appear(1.4));L('Next: '+(p.values[m.id]||0)+'/'+m.target+'  '+m.title,x,wide?469:661,18,480,appear(1.65));
+  const lv=level(c,rf?.xp||0),low=c.friendship[lv],high=c.friendship[Math.min(lv+1,c.friendship.length-1)],amount=high>low?Math.min(1,((rf?.xp||0)-low)/(high-low)):1;
+  I('meter_navy',x,wide?338:555,390,10,appear(.9));const filled=390*amount*Math.max(0,Math.min(1,(t-.9)/.65));if(filled>0)I('meter_gold',x-195+filled/2,wide?338:555,filled,10,appear(.9));
+  if(g.profile.motion&&(a.stars||a.mission||a.levelUp)&&t>=1.1&&t<1.82){const u=Math.min(1,(t-1.1)/.55),fromX=wide?330:270,fromY=wide?265:223,toY=wide?421:623;I(a.stars?'polish_upgrade_star':'icon_coin',(1-u)**2*fromX+2*(1-u)*u*(x+200)+u*u*x,(1-u)**2*fromY+2*(1-u)*u*370+u*u*toY,40,40,{alpha:Math.min(1,(1.82-t)/.16),rainbow:false});}
   if(r.challenge)L(r.challenge,w/2,wide?545:700,18,w-70);
   B('again','Play again',wide?850:270,wide?619:773,416,76,()=>{if(r.challenge)g.prepareChallenge(r.challenge);start();},{color:'green'});
   B('share-result','Share result',wide?332:147,wide?619:863,230,62,shareResult,{color:'gold'});B('home','Home',wide?850:395,wide?718:863,226,62,()=>go('menu'),{color:'purple'});return true;

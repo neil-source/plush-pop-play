@@ -70,6 +70,7 @@ export class Game{
   if(r.bodies.some(b=>!(this.allowed.includes(b.type)||b.type==='bubble')||!['id','x','y','vx','vy','angle'].every(k=>Number.isFinite(b[k]))||b.id<1||b.id>=r.nextID||b.x< -100||b.x>650||b.y< -2500||b.y>1000||Math.abs(b.vx)>5000||Math.abs(b.vy)>5000))return;
   if(r.finale){const f=r.finale;if(r.timer!==0||!Number.isFinite(f.delay)||f.delay<0||f.delay>2||!Array.isArray(f.bubbles)||f.bubbles.length>12||f.bubbles.some(id=>!Number.isInteger(id)||id<1||id>=r.nextID)||(f.type&&!r.active.includes(f.type)))return;}else if(r.timer===0)return;
   if(r.power){if(!this.powers[r.power.id]||!r.power.timers||typeof r.power.timers!=='object'||Object.entries(r.power.timers).some(([k,v])=>!['stop','slow','link','reach','chain','blast','coins','score','drops','tap'].includes(k)||!Number.isFinite(v)||v<0||v>20))r.power=null;else r.power.pending=false;}
+  if(r.pair&&(!this.allowed.includes(r.pair.hero)||r.pair.hero===r.hero||!Array.isArray(r.pair.targets)||r.pair.targets.length>6||new Set(r.pair.targets).size!==r.pair.targets.length||r.pair.targets.some(id=>!Number.isInteger(id)||id<1||id>=r.nextID)))r.pair=null;
   r.feverScore=clamp(Number(r.feverScore)||0,0,1e9);this.round=r;
  }catch{this.round=null;}}
  save(){try{this.storage?.setItem('plush_pop_share_v1',JSON.stringify({version:1,profile:this.profile,round:this.practice?(this.practiceWasFinished?null:this.practiceSaved):(this.finished?null:this.round)}));this.savingFailed=false;}catch{this.savingFailed=true;}}
@@ -135,11 +136,21 @@ export class Game{
   this.emit('pop',{bodies:clone(removed),coins,score:gain,power,bubble});this.chain=[];this.hints=[];
   if(!final&&r.fever>=30&&r.feverLeft<=0)this.beginFever();this.save();
  }
- activate(id,final=false){if(!final&&!this.canAct)return;const r=this.round,b=r.bodies.find(b=>b.id===id);if(b?.type!=='bubble')return;if(r.metrics)r.metrics.bubbles++;if(this.practice&&this.practiceLesson===2){this.practiceLesson=3;r.skill=this.skillGoal;}this.emit('bubble',{body:clone(b)});
-  if(b.kind==='time'&&!final){r.timer+=3;this.emit('bonus',{type:'time',amount:3,x:b.x,y:b.y});}
-  if(b.kind==='coin'){r.coins+=10;this.emit('bonus',{type:'coin',amount:10,x:b.x,y:b.y});}
-  if(b.kind==='score'){r.score+=1000;if(r.feverLeft>0)r.feverScore+=1000;this.emit('bonus',{type:'score',amount:1000,x:b.x,y:b.y});}
-  this.clear(r.bodies.filter(a=>(a.type!=='bubble'||a.id===id)&&distance(a,b)<117).map(a=>a.id),{bubble:true,final});this.save();
+ bubbleTargets(id,partner=null){const r=this.round,b=r?.bodies.find(b=>b.id===id&&b.type==='bubble');if(!b)return [];
+  const o=r.bodies.find(a=>a.id===partner&&a.id!==id&&a.type==='bubble'&&distance(a,b)<=180);
+  return r.bodies.filter(a=>{if(a.type==='bubble'&&a.id!==id&&a.id!==o?.id)return false;if(!o)return distance(a,b)<117;if(a.id===id||a.id===o.id)return true;if(!playable(a))return false;const x=(b.x+o.x)/2,y=(b.y+o.y)/2;return b.kind===o.kind?Math.hypot(a.x-x,a.y-y)<185:distance(a,b)<117||distance(a,o)<117||Math.abs(a.x-x)<46||Math.abs(a.y-y)<46;}).map(a=>a.id);
+ }
+ bubbleBonus(b,final){const r=this.round;if(b.kind==='time'&&!final){r.timer+=3;this.emit('bonus',{type:'time',amount:3,x:b.x,y:b.y});}if(b.kind==='coin'){r.coins+=10;this.emit('bonus',{type:'coin',amount:10,x:b.x,y:b.y});}if(b.kind==='score'){r.score+=1000;if(r.feverLeft>0)r.feverScore+=1000;this.emit('bonus',{type:'score',amount:1000,x:b.x,y:b.y});}}
+ activate(id,final=false,partner=null){if(!final&&!this.canAct)return;const r=this.round,b=r.bodies.find(b=>b.id===id);if(b?.type!=='bubble')return;
+  const o=!final&&r.bodies.find(a=>a.id===partner&&a.id!==id&&a.type==='bubble'&&distance(a,b)<=180),targets=this.bubbleTargets(id,o?.id);
+  if(r.metrics)r.metrics.bubbles+=o?2:1;if(this.practice&&this.practiceLesson===2){this.practiceLesson=3;r.skill=this.skillGoal;}
+  for(const item of o?[b,o]:[b]){this.emit('bubble',{body:clone(item)});this.bubbleBonus(item,final);}
+  if(o){this.emit('bubbleCombo',{a:clone(b),b:clone(o)});this.emit('message',{text:b.kind===o.kind?'DOUBLE BURST!':'CROSS BURST!'});this.emit('sound',{name:'chain_bloom'});}
+  this.clear(targets,{bubble:true,final});this.save();
+ }
+ get pairTargets(){const r=this.round;return r?.pair?r.bodies.filter(b=>b.type!=='bubble'&&playable(b)&&r.pair.targets.includes(b.id)):[];}
+ useBuddy(){const r=this.round;if(!this.canAct||!r.pair||!this.pairTargets.length)return;const targets=clone(this.pairTargets),hero=r.pair.hero;r.pair=null;this.chain=[];this.superLeft=this.profile.motion?5:.3;
+  this.emit('super',{hero,spec:{...this.powers[hero],name:'Buddy '+this.powers[hero].name,steps:[{kind:'clear',pattern:'hero',amount:6}]},targets,clearIDs:targets.map(b=>b.id)});this.clear(targets.map(b=>b.id),{power:true});this.save();
  }
  useSkill(){const r=this.round;if(!this.canAct||r.skill<this.skillGoal)return;const spec=this.powers[r.hero];if(!spec)return;
   if(r.metrics)r.metrics.supers++;if(this.practice){this.practiceLesson=4;this.profile.progress.learned=true;}r.skill=0;this.chain=[];this.superLeft=this.profile.motion?5:.3;const before=clone(r.bodies),snapshots=new Map(),clear=new Set(),state={id:r.hero,pending:true,timers:{},taps:5};
@@ -149,10 +160,11 @@ export class Game{
   }
   r.power=Object.keys(state.timers).length?state:null;
   this.emit('super',{hero:r.hero,spec,targets:[...snapshots.values()],clearIDs:[...clear]});if(clear.size)this.clear([...clear],{power:true});
-  while(r.bodies.filter(b=>b.type!=='bubble').length<MIN_POPULATION)this.spawn(this.choose(r.active));r.skill=0;this.save();
+  while(r.bodies.filter(b=>b.type!=='bubble').length<MIN_POPULATION)this.spawn(this.choose(r.active));r.skill=0;
+  if(!r.challenge){const hero=r.active.find(id=>id!==r.hero),targets=r.bodies.filter(b=>b.type!=='bubble'&&playable(b)).sort((a,b)=>(a.type===hero?0:1)-(b.type===hero?0:1)||a.id-b.id).slice(0,6).map(b=>b.id);r.pair=targets.length?{hero,targets}:null;}this.save();
  }
  powerTap(id){if(!this.canAct||!this.has('tap')||this.round.power.taps<=0)return false;const b=this.round.bodies.find(b=>b.id===id);if(!b||b.type==='bubble')return false;this.round.power.taps--;this.clear(this.round.bodies.filter(a=>a.type!=='bubble'&&playable(a)&&distance(a,b)<105).map(a=>a.id),{bubble:true});return true;}
- beginFinale(){const r=this.round;if(r.finale)return;this.endFever();this.chain=[];this.hints=[];r.power=null;r.finale={bubbles:r.bodies.filter(b=>b.type==='bubble').map(b=>b.id),type:r.skill>=this.skillGoal?this.choose(r.active):null,delay:.8,announced:false,settled:false};r.skill=0;this.emit('announcement',{text:'TIME UP'});this.save();}
+ beginFinale(){const r=this.round;if(r.finale)return;this.endFever();this.chain=[];this.hints=[];r.power=null;r.pair=null;r.finale={bubbles:r.bodies.filter(b=>b.type==='bubble').map(b=>b.id),type:r.skill>=this.skillGoal?this.choose(r.active):null,delay:.8,announced:false,settled:false};r.skill=0;this.emit('announcement',{text:'TIME UP'});this.save();}
  tickFinale(dt){const r=this.round,f=r.finale;f.delay=Math.max(0,f.delay-dt);if(f.delay)return;
   if(!f.announced){f.announced=true;if(f.bubbles.length||f.type)this.emit('announcement',{text:'LAST BONUS'});}
   if(f.bubbles.length){const id=f.bubbles.shift();f.delay=.24;this.activate(id,true);}
