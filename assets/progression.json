@@ -152,5 +152,9 @@
       "coins": 900,
       "stars": 4
     }
-  ]
+  ],
+  "chapterReward": {
+    "coins": 400,
+    "stars": 3
+  }
 }

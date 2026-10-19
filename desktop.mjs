@@ -29,7 +29,7 @@ export function drawDesktop(api){
   button('shuffle',r.shuffleCooldown>0?'Shuffle '+Math.ceil(r.shuffleCooldown):'Shuffle',1040,660,224,65,()=>game.shuffle(),{color:'gold',disabled:!game.canAct||r.shuffleCooldown>0});
   button('pause','Pause',1090,58,160,61,pause,{color:'gold'});
   if(r.power&&!r.power.pending){const seconds=Math.ceil(Math.max(...Object.values(r.power.timers)));label(game.powers[r.hero].name+' '+seconds+'s',600,45,21,530);}
-  else label(input==='touch'?'Connect 3+ matching plushies':'Click, hold and connect matching plushies',600,45,20,550);
+  else if(!game.practice){const m=game.liveGoal();label(m.title+'  '+m.value+'/'+m.target,600,45,20,550);}
   footer();
   ctx.save();ctx.translate(330,-74);fx.draw(ctx);ctx.restore();
   if(screen==='paused'){

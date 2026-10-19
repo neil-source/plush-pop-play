@@ -176,6 +176,7 @@ export class Game{
  resume(){if(this.round&&!this.finished)this.paused=false;}
  selectHero(id){if(this.allowed.includes(id)){this.profile.hero=id;this.save();}}
  syncMission(){this.profile.progress.mission=nextMission(this.data.progression,this.profile.progress);}
+ liveGoal(){const p=this.profile.progress,r=this.round,m=this.data.progression.missions.find(m=>m.id===(r?.metrics?.mission||p.mission));if(!m)return null;const target=m.target+Math.round(m.target*.25*Math.min(4,p.completed[m.id]||0)),v=r?.metrics||{},amount=({chain:r?.bestChain,score:r?.score,popped:r?.popped})[m.metric]??v[m.metric]??0,old=p.values[m.id]||0;return {...m,target,value:Math.min(target,['chain','score'].includes(m.metric)?Math.max(old,amount):old+amount)};}
  toggleBoost(id){const p=this.profile.progress;if(!['time','score','skill'].includes(id))return;p.boosts=p.boosts.includes(id)?p.boosts.filter(x=>x!==id):[...p.boosts,id];this.save();}
  characterLevel(id=this.profile.hero){return powerLevel(this.profile.progress,id);}
  get skillGoal(){return 13-Math.max(1,Math.min(5,this.round?.upgradeLevel||1));}

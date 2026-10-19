@@ -21,15 +21,18 @@ export function missionTarget(catalog,p,id=p.mission){const m=catalog.missions.f
 export function metrics(mission='pops'){return {mission,supers:0,fevers:0,bubbles:0,leaders:0};}
 export function award(catalog,profile,r){
  const p=profile.progress=progress(profile.progress);p.mission=nextMission(catalog,p);
+ const previousLap=Math.min(...catalog.missions.map(m=>p.completed[m.id]||0));
  const m=missionTarget(catalog,p),v=r.metrics||{},before=p.friends[r.hero]||{xp:0,best:0,rounds:0,badge:false};
  const xp=20+Math.min(80,Math.floor(r.popped/5))+Math.min(40,(v.supers||0)*10),oldLevel=level(catalog,before.xp);
  const friend={powerLevel:before.powerLevel||1,xp:before.xp+xp,best:Math.max(before.best,r.score),rounds:before.rounds+1,badge:before.badge||r.bestChain>=10,supers:(before.supers||0)+(v.supers||0),fevers:(before.fevers||0)+(v.fevers||0)};p.friends[r.hero]=friend;
- const earned={xp,level:level(catalog,friend.xp),levelUp:false,mission:false,coins:0,stars:0,record:r.score>before.best,badge:!before.badge&&friend.badge||((before.supers||0)<3&&friend.supers>=3)||((before.fevers||0)<3&&friend.fevers>=3)};earned.levelUp=earned.level>oldLevel;
+ const earned={xp,chapter:0,level:level(catalog,friend.xp),levelUp:false,mission:false,coins:0,stars:0,record:r.score>before.best,badge:!before.badge&&friend.badge||((before.supers||0)<3&&friend.supers>=3)||((before.fevers||0)<3&&friend.fevers>=3)};earned.levelUp=earned.level>oldLevel;
  const amount=m.metric==='chain'?r.bestChain:m.metric==='score'?r.score:m.metric==='popped'?r.popped:(v[m.metric]||0);
  p.values[m.id]=['chain','score'].includes(m.metric)?Math.max(p.values[m.id]||0,amount):(p.values[m.id]||0)+amount;
  if(p.values[m.id]>=m.target){earned.mission=true;earned.coins+=m.reward;p.values[m.id]=0;p.completed[m.id]=(p.completed[m.id]||0)+1;
   earned.stars=m.stars;p.stars+=m.stars;
   p.mission=nextMission(catalog,p);
+  const lap=Math.min(...catalog.missions.map(m=>p.completed[m.id]||0));
+  if(lap>previousLap){earned.chapter=lap;earned.coins+=catalog.chapterReward.coins;earned.stars+=catalog.chapterReward.stars;p.stars+=catalog.chapterReward.stars;}
  }
  if(earned.levelUp)earned.coins+=50*earned.level;
  profile.coins+=earned.coins;

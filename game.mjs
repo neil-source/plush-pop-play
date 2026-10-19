@@ -31,7 +31,7 @@ const voices=[];let musicKey='cozy_loop',music=new Audio('assets/audio/music/coz
 function sound(name,rate=1){if(!game?.profile.sound)return;if(name==='collect'){if(uiTime-collectAt<.085)return;collectAt=uiTime;}while(voices.length>=8)voices.shift().pause();const audio=new Audio('assets/audio/sfx/'+name+'.wav');audio.volume=name==='idle_chirp'?.1:name==='collect'?.18:.3;audio.playbackRate=rate;voices.push(audio);audio.play().catch(()=>{});}
 function musicSync(){music.volume=game?.superLeft>0?.055:.16;const key=screen==='play'&&fx?.fever?'fever_loop':'cozy_loop';if(key!==musicKey){music.pause();musicKey=key;music=new Audio('assets/audio/music/'+key+'.wav');music.loop=true;music.volume=.16;}if(screen==='play'&&!game.paused&&game.profile.music){if(music.paused)music.play().catch(()=>{});}else if(!music.paused)music.pause();}
 function label(text,x,y,size=26,width=490,options={}){art.label(ctx,text,x,y,size,width,options);}
-function image(key,x,y,w,h=w,options={}){art.draw(ctx,key,x,y,w,h,options);}
+function image(key,x,y,w,h=w,options={}){if(key==='menu_background')return;art.draw(ctx,key,x,y,w,h,options);}
 function groundShadow(x,y,w){ctx.save();ctx.fillStyle='rgba(97,59,33,.055)';for(let i=0;i<3;i++){ctx.beginPath();ctx.ellipse(x,y,(w-i*9)/2,(14-i*3)/2,0,0,Math.PI*2);ctx.fill();}ctx.restore();}
 function button(id,title,x,y,w,h,action,{disabled=false,color='blue',icon=null,size=25,artKey=null,artOnly=false,caption=null}={}){
  image(artKey||'button_'+color+'_'+(w/h<1.6?'round':'wide'),x,y,w,h,{alpha:disabled?.45:1});
@@ -138,7 +138,7 @@ function drawHUD(){const r=game.round;
  if(r.combo>1&&game.comboActive())label(r.combo+' COMBO',275,139,17,130);
  button('hint','Hint',480,147,80,51,()=>game.hint(),{disabled:!game.canAct,size:18});
  if(game.pairTargets.length){button('buddy','TAG',387,147,67,55,()=>game.useBuddy(),{disabled:!game.canAct,color:'gold',size:17});image('char_'+r.pair.hero,387,108,28,28);}
- if(r.power&&!r.power.pending){const seconds=Math.ceil(Math.max(...Object.values(r.power.timers)));label(game.powers[r.hero].name+' '+seconds+'s',220,166,15,245);}
+ if(r.power&&!r.power.pending){const seconds=Math.ceil(Math.max(...Object.values(r.power.timers)));label(game.powers[r.hero].name+' '+seconds+'s',220,166,15,245);}else if(!game.practice){const m=game.liveGoal();label(m.title+'  '+m.value+'/'+m.target,220,166,15,245);}
  if(fx.fever){label('FEVER BONUS',270,207,15);label(fx.rewards.value('score',r.feverScore),270,233,27,280);}
  if(fx.value('skill')>=game.skillGoal&&game.profile.motion)image('fx_rays',72,885,108,108,{alpha:.45+Math.sin(uiTime*3)*.2});
  image('skill_frame',72,885,84,84);portrait(r.hero,72,884,60);meter('meter_gold',fx.value('skill')/game.skillGoal,72,932,82,12);
@@ -152,10 +152,10 @@ function drawHUD(){const r=game.round;
  else if(r.elapsed<.65&&!r.popped&&game.superLeft<=0)label('GO!',270,366,58);
 }
 function drawFeverLights(){if(!fx.fever)return;const sides=[data.bowl.top,data.bowl.left,data.bowl.right,data.bowl.floor];let n=0;for(const line of sides)for(let i=0;i<line.length;i+=Math.max(1,Math.floor(line.length/10))){const [x,y]=line[i];image('vfx_sparkle',x,y,13,13,{alpha:game.profile.motion?.45+Math.sin(uiTime*2-n++*.45)*.2:.65});}}
-function draw(){buttons=[];ctx.setTransform(canvas.width/layout.width,0,0,canvas.height/layout.height,0,0);ctx.fillStyle=screen==='menu'?'#f8d7ac':'#25575b';ctx.fillRect(0,0,layout.width,layout.height);
+function draw(){buttons=[];ctx.setTransform(canvas.width/layout.width,0,0,canvas.height/layout.height,0,0);ctx.fillStyle='#f8d7ac';ctx.fillRect(0,0,layout.width,layout.height);
  art.fever=(screen==='play'||screen==='paused')&&fx.fever;art.phase=game.profile.motion?uiTime:0;
  const stage=document.querySelector('#stage');if(stage.dataset.screen!==screen)stage.dataset.screen=screen;
- if(drawPolish({screen,wide:layout.wide,game,data,image,label,button,groundShadow,go,start,resume,practice,shareResult,enterChallenge,createChallenge,showSettings,resultAge:fx.time-resultAt,fx})){if(screen==='results')fx.draw(ctx,{afterShade:true});syncControls();return;}
+ if(drawPolish({ctx,screen,wide:layout.wide,game,data,image,label,button,groundShadow,go,start,resume,practice,shareResult,enterChallenge,createChallenge,showSettings,resultAge:fx.time-resultAt,fx,purchaseFeedback:()=>{sound('purchase');announce('Added to your bag. Choose Use next to equip it.');}})){if(screen==='results')fx.draw(ctx,{afterShade:true});syncControls();return;}
  if(layout.wide){
   drawDesktop({ctx,art,game,data,screen,image,label,button,meter,portrait,go,start,resume,pause,showSettings,toggleLayout,drawBodies,drawFeverLights,fx,uiTime,resultAt,collectionPage,turnPage,chooseHero,card,powerText,input:inputMode,
    keepControls:ids=>{buttons=buttons.filter(b=>ids.includes(b.id));},replaceBack:()=>{buttons.find(b=>b.id==='back').action=()=>go(screenBeforeSettings);},
@@ -254,7 +254,7 @@ function enterChallenge(){const el=dialog('Enter your friend’s code'),field=do
 function createChallenge(){game.prepareChallenge(game.makeChallenge());game.profile.progress.learned=true;start();}
 async function shareResult(){
  const r=game.round,name=data.characters.find(c=>c.id===r.hero).name,url='https://neil-source.github.io/plush-pop-play/'+(r.challenge?'?challenge='+r.challenge:''),text=`Plush Pop: ${r.score} points with ${name}! Best chain ${r.bestChain}.`+(r.challenge?' Challenge: '+r.challenge:'');
- const card=document.createElement('canvas');card.width=1080;card.height=1520;const c=card.getContext('2d');c.scale(2,2);art.draw(c,'menu_background',270,380,540,760,{rainbow:false});art.label(c,'Plush Pop',270,80,48);art.draw(c,'char_'+r.hero,270,238,200,200,{rainbow:false});art.label(c,name,270,390,29);art.label(c,r.score+' points',270,464,44);art.label(c,'Best chain '+r.bestChain,270,530,24);art.label(c,r.challenge||'Come play!',270,609,21);art.label(c,'neil-source.github.io/plush-pop-play',270,686,14);
+ const card=document.createElement('canvas');card.width=1080;card.height=1520;const c=card.getContext('2d');c.scale(2,2);c.fillStyle='#f8d7ac';c.fillRect(0,0,540,760);art.label(c,'Plush Pop',270,80,48);art.draw(c,'char_'+r.hero,270,238,200,200,{rainbow:false});art.label(c,name,270,390,29);art.label(c,r.score+' points',270,464,44);art.label(c,'Best chain '+r.bestChain,270,530,24);art.label(c,r.challenge||'Come play!',270,609,21);art.label(c,'neil-source.github.io/plush-pop-play',270,686,14);
  const blob=await new Promise(resolve=>card.toBlob(resolve,'image/png')),file=new File([blob],'plush-pop-score.png',{type:'image/png'});
  if(navigator.canShare?.({files:[file]})){try{await navigator.share({title:'Plush Pop',text,url,files:[file]});return;}catch(e){if(e.name==='AbortError')return;}}
  const el=dialog('Share your round'),img=new Image();const objectURL=URL.createObjectURL(blob);img.src=objectURL;img.alt=text;el.append(img);const a=document.createElement('a');a.href=objectURL;a.download='plush-pop-score.png';a.textContent='Save score card';el.append(a);const input=document.createElement('textarea');input.value=text+'\n'+url;input.readOnly=true;input.setAttribute('aria-label','Share text and game link');el.append(input);dialogButton(el,'Copy text and link',async()=>{try{await navigator.clipboard.writeText(input.value);announce('Copied.');}catch{input.select();}});dialogButton(el,'Done',()=>el.close());el.addEventListener('close',()=>URL.revokeObjectURL(objectURL),{once:true});
