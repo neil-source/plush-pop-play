@@ -127,13 +127,15 @@ export class Game{
   if(!power&&!bubble)r.bestChain=Math.max(r.bestChain,n);
   const gain=Math.round((n*100+n*n*15)*(1+Math.min(10,r.combo)*.06)*(r.feverLeft>0?3:1)*r.multiplier*(this.has('score')?2:1));
   const coins=Math.floor(n*.8)*(this.has('coins')?2:1);if(r.metrics)r.metrics.leaders+=removed.filter(b=>b.type===r.hero).length;if(this.practice&&!power&&!bubble){if(this.practiceLesson===0&&n>=3)this.practiceLesson=1;if(this.practiceLesson===1&&n>=7)this.practiceLesson=2;}r.score+=gain;r.coins+=coins;r.popped+=n;r.lastClear=r.elapsed;
+  const skillBefore=r.skill;
   if(r.feverLeft>0)r.feverScore+=gain;r.skill=Math.min(this.skillGoal,r.skill+removed.filter(b=>b.type===r.hero).length);if(r.feverLeft<=0&&!final)r.fever+=n;
+  const skillGain=Math.max(0,r.skill-skillBefore);
   r.bodies=r.bodies.filter(b=>!set.has(b.id));
   if(n>=7&&!power&&!bubble&&!final&&r.bodies.filter(b=>b.type==='bubble').length<3){const b={id:r.nextID++,type:'bubble',kind:this.choose(['blast','blast','time','coin','score']),x:last.x,y:last.y,vx:0,vy:0,angle:0,squash:0};r.bodies.push(b);this.emit('bubbleBorn',{body:clone(b)});}
   const remaining=r.bodies.filter(b=>b.type!=='bubble').length,before=remaining+n,drift=before<POPULATION?1:before>POPULATION+1?-1:0;
   const offset=[-2,-1,-1,0,0,0,1,1,2,3][Math.floor(this.random()*10)]+drift;
   const refill=final||!n?0:Math.max(1,MIN_POPULATION-remaining,Math.min(MAX_POPULATION-remaining,n+offset));for(let i=0;i<refill;i++)this.spawn(this.has('drops')&&this.random()<.7?r.hero:this.choose(r.active));
-  this.emit('pop',{bodies:clone(removed),coins,score:gain,power,bubble});this.chain=[];this.hints=[];
+  this.emit('pop',{bodies:clone(removed),coins,score:gain,power,bubble,skillGain});this.chain=[];this.hints=[];
   if(!final&&r.fever>=30&&r.feverLeft<=0)this.beginFever();this.save();
  }
  bubbleTargets(id,partner=null){const r=this.round,b=r?.bodies.find(b=>b.id===id&&b.type==='bubble');if(!b)return [];

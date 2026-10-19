@@ -59,9 +59,11 @@ export class Effects{
    }
    case'pop':{
     const count=e.bodies.filter(b=>b.type!=='bubble').length;let lastDelay=0,firstDelay=Infinity;
-    let index=0;
+    // Delay only the charge this clear actually earned; overflow cannot lower
+    // a full meter, including when several pop events arrive in one frame.
+    let index=0,skillRemaining=e.skillGain;
     e.bodies.forEach((b,i)=>{const delay=motion?(e.power?this.impact(b):POP.impact+POP.stagger(i)):0;lastDelay=Math.max(lastDelay,delay);firstDelay=Math.min(firstDelay,delay);
-     if(b.type!=='bubble'){const j=index++,n=Math.max(1,count);this.rewards.hold('score',Math.floor(e.score*(j+1)/n)-Math.floor(e.score*j/n),delay);this.rewards.hold('coins',Math.floor(e.coins*(j+1)/n)-Math.floor(e.coins*j/n),delay+(motion?.89:0));if(!e.power&&b.type===r.hero)this.rewards.hold('skill',1,delay+(motion?.59:0));this.rewards.hold('fever',1,delay+(motion?.59:0));}
+     if(b.type!=='bubble'){const j=index++,n=Math.max(1,count);this.rewards.hold('score',Math.floor(e.score*(j+1)/n)-Math.floor(e.score*j/n),delay);this.rewards.hold('coins',Math.floor(e.coins*(j+1)/n)-Math.floor(e.coins*j/n),delay+(motion?.89:0));if(!e.power&&b.type===r.hero&&skillRemaining>0){this.rewards.hold('skill',1,delay+(motion?.59:0));skillRemaining--;}this.rewards.hold('fever',1,delay+(motion?.59:0));}
      this.add({kind:'ghost',body:b,duration:delay+POP.vanish,impact:delay,power:e.power});
      this.later(delay,()=>{
       this.explosion(b,e.power);
