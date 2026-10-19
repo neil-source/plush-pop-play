@@ -71,6 +71,7 @@ export class Art {
     this._rims = new Map();
     this._words = new Map();
     this._panels = new Map();
+    this._cloths = new Map();
     this._fabrics = new Map();
     this._fabricPixels = 0;
     this.fever = false;
@@ -221,6 +222,7 @@ export class Art {
     }
     w = finite(w, source.width);
     h = finite(h, w * source.height / source.width);
+    if(this.images[key]?.fit){const aspect=this.images[key].aspect||source.width/source.height;w=Math.min(w,h*aspect);h=w/aspect;}
     return {x: -w / 2, y: -h / 2, w, h};
   }
 
@@ -239,10 +241,10 @@ export class Art {
   }
 
   draw(ctx, key, cx, cy, w, h, options = {}) {
-    key = this.resolve(key);
+    key = this.resolve(this.buttonKey(key,w,h));
     const source = this.get(key);
     if (!source) return false;
-    const picture = this.images[key]?.slice ? this._panel(key,source,w,h) : options.gray ? this._gray(key, source) : source;
+    const picture = this.images[key]?.tile ? this._cloth(key,source,w,h) : this.images[key]?.slice ? this._panel(key,source,w,h) : options.gray ? this._gray(key, source) : source;
     const placement=this._placement(options.bodyKey||key, source, w, h, options.bodyDiameter);
     if(this.preparingFever && options.rainbow!==false && !/^(char_|skin_|idle_)/.test(key))this._fabric(key+':'+picture.width+':'+picture.height,picture);
     if(this.fever && options.rainbow!==false && !/^(char_|skin_|idle_)/.test(key)) {
@@ -251,6 +253,18 @@ export class Art {
       return this._paint(ctx,frames[(index+1)%3],cx,cy,placement,{...options,alpha:(options.alpha??1)*blend});
     }
     return this._paint(ctx, picture, cx, cy, placement, options);
+  }
+  buttonKey(key,w,h){
+    let tone;if(key==='home_play')tone='coral';else if(key?.startsWith('button_')){const color=key.split('_')[1];tone=color==='gold'?'gold':['green','pink'].includes(color)?'coral':'teal';}else return key;
+    const shapes=w/h<1.65?['round']:['compact','medium','long','slim'];
+    return shapes.map(s=>'fabric_button_'+tone+'_'+s).filter(k=>this.images[k]).sort((a,b)=>Math.abs(Math.log(w/h/this.images[a].aspect))-Math.abs(Math.log(w/h/this.images[b].aspect)))[0]||key;
+  }
+  buttonFrame(key,w,h){key=this.buttonKey(key,w,h);const aspect=this.images[key]?.aspect;if(this.images[key]?.fit&&aspect){w=Math.min(w,h*aspect);h=w/aspect;}return {key,w,h};}
+  _cloth(key,source,w,h){
+    const id=key+':'+w+':'+h,old=cached(this._cloths,id);if(old)return old;
+    const result=canvas(w*2,h*2),c=result.getContext('2d'),tile=this.images[key].tile;c.scale(2,2);
+    for(let y=0;y<h;y+=tile)for(let x=0;x<w;x+=tile)c.drawImage(source,x,y,tile,tile);
+    return remember(this._cloths,id,result,6);
   }
   _panel(key,source,w,h){
     const id=key+':'+w+':'+h,old=cached(this._panels,id);if(old)return old;
