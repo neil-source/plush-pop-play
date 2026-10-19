@@ -1,5 +1,5 @@
 {
-  "floor" : [
+  "floor": [
     [
       16,
       683
@@ -345,7 +345,7 @@
       684
     ]
   ],
-  "left" : [
+  "left": [
     [
       16,
       236
@@ -503,10 +503,10 @@
       683
     ]
   ],
-  "master" : "source-art\/polish\/stage.png",
-  "masterSHA256" : "c1df57b1afbfc4d95d1ee913a660d8de408f72a044f826f37536fcb8aa306392",
-  "path" : "assets\/polish\/stage.png",
-  "right" : [
+  "master": "source-art/polish/stage.png",
+  "masterSHA256": "c1df57b1afbfc4d95d1ee913a660d8de408f72a044f826f37536fcb8aa306392",
+  "path": "assets/polish/stage.png",
+  "right": [
     [
       523,
       236
@@ -664,8 +664,8 @@
       683
     ]
   ],
-  "sha256" : "893ae983695c4d9b965f35931e2fd6983f2aad886221ae7b644145b7b74225bf",
-  "top" : [
+  "sha256": "893ae983695c4d9b965f35931e2fd6983f2aad886221ae7b644145b7b74225bf",
+  "top": [
     [
       16,
       234
@@ -1010,5 +1010,12 @@
       523,
       233
     ]
-  ]
+  ],
+  "presentation": {
+    "path": "assets/sky-ui/stage.jpg",
+    "sha256": "5977adae3d20a86771fb9d9d2e7cd94d365b3b6e9585171d4c181735da297499",
+    "master": "source-art/sky-ui/stage.png",
+    "masterSHA256": "dd79cb6cc35b4a3828df815b0d88564a97ede1d5eda4073cbb049fbb5502afeb",
+    "note": "New artwork follows the existing collision contour. Medial scans: side delta 0\u20131 logical units; floor delta -2 to +4. The narrow bright upper corner bevel is excluded from top-edge comparisons."
+  }
 }

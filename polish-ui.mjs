@@ -1,30 +1,64 @@
 import {level,missionTarget} from './progression.mjs';
 export function drawPolish(api){
  const {screen,wide,game:g,data:d,image:I,label:L,button:B,go,start,resume,practice,shareResult,enterChallenge,createChallenge,showSettings}=api,p=g.profile.progress,c=d.progression,w=wide?1200:540,h=wide?800:960,hero=g.profile.hero,f=p.friends[hero]||{xp:0,best:0,rounds:0},lv=level(c,f.xp),name=d.characters.find(x=>x.id===hero).name;
- const title=t=>{I('menu_background',w/2,h/2,w,h);L(t,wide?480:270,110,wide?44:36,wide?800:460);B('back','Back',wide?1080:55,54,wide?160:70,60,()=>go('menu'),{color:'purple',icon:wide?null:'back'});L(g.profile.coins+' coins',wide?1080:430,wide?120:54,18,170);};
+ const title=t=>{I('menu_background',w/2,h/2,w,h);I('panel_blue',w/2,wide?460:548,w-24,wide?650:800);L(t,wide?480:270,110,wide?44:36,wide?800:460);B('back','Back',wide?1080:55,54,wide?160:70,60,()=>go('menu'),{color:'purple',icon:wide?null:'back'});L(g.profile.coins+' coins',wide?1080:430,wide?120:54,18,170);};
+ const m=missionTarget(c,p),lap=Math.min(...c.missions.map(m=>p.completed[m.id]||0)),current=c.missions.findIndex(m=>m.id===p.mission),number=lap*c.missions.length+current+1;
  if(screen==='menu'){
-  I('home_counter',126,52,205,52);I('icon_coin',51,51,32,32);L(String(g.profile.coins),147,52,23,140);
-  B('learn','Learn to play',286,52,52,52,()=>go('learn'),{artKey:'home_help',artOnly:true});
-  B('settings','Settings',364,52,52,52,showSettings,{artKey:'home_settings',artOnly:true});
-  I('home_logo',w/2,wide?132:190,wide?320:340,wide?191:203);
-  const companions=['sunny','mint','luna','ember','stitch'].filter(id=>id!==hero&&g.allowed.includes(id)).slice(0,2);
-  for(const offset of [-1,1,0])api.groundShadow(w/2+offset*(wide?158:139),wide?468:529,offset?(wide?94:78):(wide?150:140));
-  companions.forEach((id,i)=>I('char_'+id,w/2+(i?1:-1)*(wide?158:139),wide?405:478,wide?148:124,wide?148:124));
-  I('char_'+hero,w/2,wide?371:437,wide?236:220,wide?236:220);
-  const pending=g.round&&!g.finished,py=wide?540:622;
-  B(pending?'resume':'play',pending?'Resume round':'Play',w/2,py,336,144,pending?resume:start,{artKey:'home_play',artOnly:true});
-  I('home_arrow',w/2-(pending?115:70),py-4,34,40);L(pending?'Continue':'Play',w/2+20,py+1,pending?34:46,212);
-  const m=missionTarget(c,p);L('Next goal: '+m.title,w/2,wide?620:718,20,450);L((p.values[m.id]||0)+' / '+m.target,w/2,wide?647:748,18,440);
-  [['goals','Goals','home_goals'],['collection','Plushies','home_collection'],['friends','Upgrade','home_upgrade'],['boosts','Boosts','home_shop']].forEach(([id,caption,artKey],i)=>B(id,id==='collection'?'Collection':caption,w/2+(i-1.5)*126,wide?713:829,wide?78:86,wide?78:86,()=>go(id),{artKey,artOnly:true,caption}));
+  I('menu_background',w/2,h/2,w,h);
+  I('coin_pill',127,53,210,54);I('icon_coin',51,53,36);L(g.profile.coins,151,53,25,144);
+  B('learn','Learn to play',wide?1050:387,56,66,66,()=>go('learn'),{color:'blue',artOnly:true});L('?',wide?1050:387,56,30,45);
+  B('settings','Settings',wide?1142:479,56,66,66,showSettings,{color:'blue',icon:'gear'});
+  I('home_logo',wide?320:270,wide?280:246,wide?470:426,wide?262:237);
+  const others=['sunny','mint','luna','ember','stitch'].filter(id=>id!==hero),cx=wide?872:270,cy=wide?310:443;
+  const spots=[[-174,0,140],[169,3,142],[-110,107,170],[116,112,170],[0,-2,150]];
+  others.slice(0,5).forEach((id,i)=>{const [dx,dy,size]=spots[i];I('char_'+id,cx+dx,cy+dy,size,size);});
+  I('char_'+hero,cx,cy+122,204,204);
+  const pending=g.round&&!g.finished;
+  B(pending?'resume':'play',pending?'Continue':'Start',wide?320:270,wide?514:733,340,100,pending?resume:()=>go('goals'),{color:'gold',size:40});
+  const entries=[['goals','Map'],['collection','Plushies'],['friends','Upgrade'],['boosts','Boosts']];
+  entries.forEach(([id,caption],i)=>B(id,caption,wide?330+i*180:72+i*132,wide?700:876,wide?152:108,72,()=>go(id),{color:'blue',size:wide?23:19}));
   return true;
  }
  if(screen==='goals'){
-  title('YOUR GOALS');L('Complete each goal to unlock the next',w/2,145,16,w-80);
-  const lap=Math.min(...c.missions.map(m=>p.completed[m.id]||0)),current=c.missions.findIndex(m=>m.id===p.mission);
-  c.missions.forEach((m,i)=>{const x=w/2,y=wide?196+i*72:212+i*87,width=wide?1040:500,done=(p.completed[m.id]||0)>lap;
-   I('panel_blue',x,y,width,wide?66:80);I('polish_'+m.art,x-width/2+42,y,55,55);L(m.title,x-20,y-(wide?17:21),wide?21:23,width-190);L(m.detail.replace(String(m.target),String(missionTarget(c,p,m.id).target)),x-20,y+(wide?3:4),wide?14:15,width-175);L((done?'Complete':(p.values[m.id]||0)+'/'+missionTarget(c,p,m.id).target)+'   +'+m.reward+' coins +'+m.stars+' star',x-20,y+(wide?21:25),wide?12:14,width-180);
-   L(done?'DONE':i===current?'NOW':i===current+1?'NEXT':'LATER',x+width/2-57,y,16,88);});
-  L('Earn coins and Power Stars to upgrade characters',w/2,wide?690:807,18,w-80);B('goal-play','Play for my goal',w/2,wide?747:888,380,68,start,{color:'green'});return true;
+  I('menu_background',w/2,h/2,w,h);
+  // The same seven real goals form each trail; only the current stop is playable.
+  const scale=wide?800/960:1,mx=wide?100:0,X=x=>mx+x*scale,Y=y=>y*scale;
+  I('sky_map',X(270),Y(480),540*scale,960*scale);
+  B('back','Back',wide?60:54,56,64,64,()=>go('menu'),{color:'blue',icon:'back'});
+  L('PLUSH TRAIL',wide?880:270,wide?135:65,wide?44:34,wide?500:300);
+  const points=[[286,692],[358,620],[174,516],[343,404],[220,306],[340,242],[351,175]];
+  c.missions.forEach((mission,i)=>{const [x,y]=points[i],done=(p.completed[mission.id]||0)>lap;
+   if(i===current){B('current-goal','Goal '+number,X(x),Y(y),88*scale,72*scale,()=>go('goal'),{color:'gold',artOnly:true});L(number,X(x),Y(y),33*scale,70*scale);L('PLAY',X(x),Y(y+51),17*scale,110*scale);}
+   else{I(done?'icon_star':'sky_star_empty',X(x),Y(y),56*scale,54*scale,{alpha:done?1:.62});if(!done)L(lap*c.missions.length+i+1,X(x),Y(y),22*scale,48*scale);}
+  });
+  const x=wide?880:270,y=wide?422:859;
+  I('panel_blue',x,y,wide?500:488,wide?390:162);
+  L(m.title,x,y-(wide?116:49),wide?38:28,450);
+  if(wide)L(m.detail.replace(String(m.target),String(m.target)),x,y-54,22,440);
+  L((p.values[m.id]||0)+' / '+m.target,x,y-(wide?0:14),wide?30:21,440);
+  B('goal-play','Continue',x,y+(wide?100:43),318,wide?80:54,()=>go('goal'),{color:'green',size:wide?32:26});
+  return true;
+ }
+ if(screen==='goal'){
+  I('menu_background',w/2,h/2,w,h);
+  B('back','Back to map',54,56,64,64,()=>go('goals'),{color:'blue',icon:'back'});
+  const x=wide?350:270,y=wide?362:370,ratio=(p.values[m.id]||0)/Math.max(1,m.target);
+  I('panel_blue',x,y,wide?530:470,465);
+  L('GOAL '+number,x,y-184,37,420);
+  for(let i=0;i<3;i++)I(ratio>=(i+1)/3?'icon_star':'sky_star_empty',x+(i-1)*112,y-94,94,94);
+  L(m.title,x,y-7,31,410);L(m.detail.replace(String(c.missions.find(q=>q.id===m.id).target),String(m.target)),x,y+37,19,418);
+  L((p.values[m.id]||0)+' / '+m.target,x,y+79,25,400);
+  I('icon_coin',x-121,y+140,34);L('+'+m.reward,x-63,y+140,24,100);I('icon_star',x+49,y+140,34);L('+'+m.stars,x+103,y+140,24,70);
+  L('Rewards when this goal is complete',x,y+184,16,415);
+  const bx=wide?910:270,by=wide?340:644;
+  if(wide){I('char_'+hero,bx,184,150,150);L(name,bx,282,28,450);}
+  I('panel_blue',bx,by+75,470,198);L('BOOSTS FOR THIS ROUND',bx,by,22,440);
+  [['time','+5 sec'],['score','Score'],['skill','Super']].forEach(([id,title],i)=>{const x=bx+(i-1)*151,owned=g.profile.boosts[id]||0,selected=p.boosts.includes(id);
+   B('boost-'+id,title,x,by+79,120,80,()=>g.toggleBoost(id),{color:selected?'gold':'blue',disabled:!owned,size:23});L(selected&&owned?'ON - '+owned:owned+' owned',x,by+142,17,132);
+  });
+  const pending=g.round&&!g.finished;
+  B('begin-goal',pending?'Resume':'Play',bx,wide?610:886,340,88,pending?resume:start,{color:'green',size:38});
+  return true;
  }
  if(screen==='friends'){
   title('CHARACTER UPGRADES');const x=wide?330:270,tx=wide?875:270,power=g.characterLevel(),cost=g.upgradeCost(),ready=cost&&g.profile.coins>=cost.coins&&p.stars>=cost.stars;
@@ -50,14 +84,24 @@ export function drawPolish(api){
   B('create-challenge','Create challenge',wide?850:270,wide?565:698,430,76,createChallenge,{color:'green'});B('enter-challenge','Enter a code',wide?850:270,wide?665:794,430,76,enterChallenge,{color:'gold'});return true;
  }
  if(screen==='results'){
-  const r=g.round,a=g.result||{coins:0,xp:0},rf=p.friends[r.hero],m=missionTarget(c,p);I('menu_background',w/2,h/2,w,h);
-  L(g.newBest?'NEW BEST!':'NICE PLAY!',wide?330:270,104,42,wide?570:490);I('polish_medal',wide?330:270,wide?265:223,142,142);L(r.score,wide?330:270,wide?438:340,58,500);L('POINTS',wide?330:270,wide?496:385,18,450);
-  const x=wide?860:270;L('+'+r.coins+' round coins  +'+a.coins+' rewards',x,wide?196:437,23,wide?570:485);L('Chain '+r.bestChain+'   Popped '+r.popped,x,wide?245:482,20,480);
-  L('+'+a.xp+' friendship - '+c.friendshipNames[level(c,rf?.xp||0)],x,wide?313:536,23,wide?580:485);L(a.mission?'GOAL COMPLETE!':'Goal: '+missionTarget(c,p,r.metrics?.mission).title,x,wide?370:581,24,480);
-  L(a.stars?'+'+a.stars+' Power Stars - upgrade a character!':a.badge?'New character badge!':a.levelUp?'Friendship level up!':'Complete goals to earn Power Stars',x,wide?421:623,20,wide?570:475);L('Next: '+(p.values[m.id]||0)+'/'+m.target+'  '+m.title,x,wide?469:661,18,480);
-  if(r.challenge)L(r.challenge,w/2,wide?545:700,18,w-70);
-  B('again','Play again',wide?850:270,wide?619:773,416,76,()=>{if(r.challenge)g.prepareChallenge(r.challenge);start();},{color:'green'});
-  B('share-result','Share result',wide?332:147,wide?619:863,230,62,shareResult,{color:'gold'});B('home','Home',wide?850:395,wide?718:863,226,62,()=>go('menu'),{color:'purple'});return true;
+  const r=g.round,a=g.result||{coins:0,xp:0};I('menu_background',w/2,h/2,w,h);
+  const x=wide?353:270,cy=wide?368:445;
+  I('panel_blue',x,cy,wide?562:480,wide?650:690);
+  L(g.newBest?'NEW BEST!':'RESULT',x,cy-(wide?267:295),39,450);
+  [10000,25000,50000].forEach((target,i)=>I(r.score>=target?'icon_star':'sky_star_empty',x+(i-1)*114,cy-200,100,100));
+  L('10,000 / 25,000 / 50,000 points',x,cy-128,15,430);
+  L('SCORE',x,cy-76,22,400);I('score_pill',x,cy-5,392,83);L(r.score,x,cy-5,56,360);
+  I('icon_coin',x-121,cy+81,36);L('+'+(r.coins+a.coins)+' coins',x+23,cy+81,28,270);
+  L('Best chain '+r.bestChain+'   Popped '+r.popped,x,cy+136,21,420);
+  const tx=wide?925:x,ty=wide?294:631;
+  if(wide){I('panel_blue',tx,390,450,580);I('char_'+r.hero,tx,190,140,140);}
+  L(a.mission?'GOAL COMPLETE!':missionTarget(c,p,r.metrics?.mission).title,tx,ty,28,410);
+  L(a.stars?'+'+a.stars+' Power Stars':(p.values[m.id]||0)+' / '+m.target+' toward your goal',tx,ty+41,21,420);
+  L('+'+a.xp+' friendship',tx,ty+81,19,420);if(r.challenge)L(r.challenge,tx,ty+120,16,420);
+  B('home','Home',wide?810:109,wide?570:858,132,82,()=>go('menu'),{color:'gold',size:26});
+  B('again',a.mission?'Next goal':'Play again',wide?1015:346,wide?570:858,wide?250:302,82,()=>{if(r.challenge){g.prepareChallenge(r.challenge);start();}else go('goal');},{color:'green',size:30});
+  B('share-result','Share result',wide?925:270,wide?700:938,226,44,shareResult,{color:'blue',size:19});return true;
  }
+
  return false;
 }
