@@ -1,84 +1,5 @@
 {
-  "version": 2,
-  "missions": [
-    {
-      "id": "pops",
-      "title": "Pop party",
-      "detail": "Pop plushies across your rounds",
-      "metric": "popped",
-      "target": 150,
-      "reward": 200,
-      "art": "upgrade_star",
-      "group": null,
-      "stars": 1
-    },
-    {
-      "id": "chains",
-      "title": "Chain maker",
-      "detail": "Make a chain of 7 in one round",
-      "metric": "chain",
-      "target": 7,
-      "reward": 250,
-      "art": "upgrade_star",
-      "group": null,
-      "stars": 1
-    },
-    {
-      "id": "supers",
-      "title": "Super star",
-      "detail": "Use 3 character powers",
-      "metric": "supers",
-      "target": 3,
-      "reward": 300,
-      "art": "upgrade_star",
-      "group": null,
-      "stars": 2
-    },
-    {
-      "id": "fevers",
-      "title": "Golden groove",
-      "detail": "Start Fever 4 times",
-      "metric": "fevers",
-      "target": 4,
-      "reward": 350,
-      "art": "upgrade_star",
-      "group": null,
-      "stars": 2
-    },
-    {
-      "id": "bubbles",
-      "title": "Bubble picnic",
-      "detail": "Tap 5 bubbles",
-      "metric": "bubbles",
-      "target": 5,
-      "reward": 250,
-      "art": "upgrade_star",
-      "group": null,
-      "stars": 1
-    },
-    {
-      "id": "score",
-      "title": "High flyer",
-      "detail": "Score 30000 in one round",
-      "metric": "score",
-      "target": 30000,
-      "reward": 300,
-      "art": "upgrade_star",
-      "group": null,
-      "stars": 2
-    },
-    {
-      "id": "friends",
-      "title": "Friendship day",
-      "detail": "Pop 100 of your leader",
-      "metric": "leaders",
-      "target": 100,
-      "reward": 250,
-      "art": "upgrade_star",
-      "group": null,
-      "stars": 1
-    }
-  ],
+  "version": 3,
   "decorations": [
     {
       "id": "flower",
@@ -153,8 +74,14 @@
       "stars": 4
     }
   ],
-  "chapterReward": {
-    "coins": 400,
-    "stars": 3
-  }
+  "legacyRewardStars": {
+    "pops": 1,
+    "chains": 1,
+    "supers": 2,
+    "fevers": 2,
+    "bubbles": 1,
+    "score": 2,
+    "friends": 1
+  },
+  "roundStars": 1
 }

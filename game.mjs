@@ -139,7 +139,7 @@ function drawHUD(){const r=game.round;
  if(r.combo>1&&game.comboActive())label(r.combo+' COMBO',275,139,17,130);
  button('hint','Hint',480,147,80,51,()=>game.hint(),{disabled:!game.canAct,size:18});
  if(game.pairTargets.length){button('buddy','TAG',387,147,67,55,()=>game.useBuddy(),{disabled:!game.canAct,color:'gold',size:17});image('char_'+r.pair.hero,387,108,28,28);}
- if(r.power&&!r.power.pending){const seconds=Math.ceil(Math.max(...Object.values(r.power.timers)));label(game.powers[r.hero].name+' '+seconds+'s',220,166,15,245);}else if(!game.practice){const m=game.liveGoal();label(m.title+'  '+m.value+'/'+m.target,220,166,15,245);}
+ if(r.power&&!r.power.pending){const seconds=Math.ceil(Math.max(...Object.values(r.power.timers)));label(game.powers[r.hero].name+' '+seconds+'s',220,166,15,245);}
  if(fx.fever){label('FEVER BONUS',270,207,15);label(fx.rewards.value('score',r.feverScore),270,233,27,280);}
  if(fx.value('skill')>=game.skillGoal&&game.profile.motion)image('fx_rays',72,885,108,108,{alpha:.45+Math.sin(uiTime*3)*.2});
  image('skill_frame',72,885,84,84);portrait(r.hero,72,884,60);meter('meter_gold',fx.value('skill')/game.skillGoal,72,932,82,12);
@@ -180,7 +180,7 @@ function drain(){for(const e of game.feedback.splice(0)){if(['pop','super','shuf
  if(['pop','shuffle','bubbleBorn','super'].includes(e.kind))world.wake();
  if(e.kind==='sound')sound(e.name);else if(e.kind==='select'){world.bump(e.body,2.5);sound('select',Math.min(1.45,1+e.count*.025));if(e.count===7)sound('chain_bloom');}else if(e.kind==='shuffle')sound('shuffle');else if(e.kind==='fever')sound('fever_start');else if(e.kind==='feverEnd')sound('fever_end');
  else if(e.kind==='announcement'){announce(e.text);if(e.text==='TIME UP')sound('time_up');}
- else if(e.kind==='results'){screen='results';resultAt=fx.time;sound(game.result?.mission||game.result?.levelUp?'reward_chime':'result');musicSync();announce('Time up. '+game.round.score+' points.');}
+ else if(e.kind==='results'){screen='results';resultAt=fx.time;sound(game.result?.stars||game.result?.levelUp?'reward_chime':'result');musicSync();announce('Time up. '+game.round.score+' points.');}
 }}
 function frame(now){const dt=lastTime?Math.min(.05,(now-lastTime)/1000):0;lastTime=now;
  if(screen==='play'&&!game.paused){uiTime+=dt;game.tick(dt);if(!game.paused&&!game.superLeft&&!game.has('stop')&&!game.round.finale)world.advance(game.round.bodies,dt*(game.has('slow')?.55:1),game.profile.motion,game.round.feverLeft>0);idle.update(dt,activePointer!==null);fx.update(dt);drain();
@@ -191,7 +191,7 @@ function frame(now){const dt=lastTime?Math.min(.05,(now-lastTime)/1000):0;lastTi
   if(r.combo>=10&&Math.floor(r.combo/10)>Math.floor(lastCombo/10))fx.badge(r.combo+' COMBO!','',350,280,.8);lastCombo=r.combo;
   for(const name of fx.sounds.splice(0))sound(name,name==='pop'?1+Math.min(8,r.combo)*.018:1);
   saveClock+=dt;if(saveClock>3){game.save();saveClock=0;}
- }else if(screen==='results'){const age=fx.time-resultAt;fx.update(dt);uiTime+=dt;if(age<1.65&&fx.time-resultAt>=1.65&&(game.result?.stars||game.result?.mission||game.result?.levelUp))sound('reward_chime');for(const name of fx.sounds.splice(0))sound(name);}else if(screen!=='paused')uiTime+=dt;
+ }else if(screen==='results'){const age=fx.time-resultAt;fx.update(dt);uiTime+=dt;if(age<1.65&&fx.time-resultAt>=1.65&&(game.result?.stars||game.result?.levelUp))sound('reward_chime');for(const name of fx.sounds.splice(0))sound(name);}else if(screen!=='paused')uiTime+=dt;
  musicSync();draw();requestAnimationFrame(frame);
 }
 function point(e){const r=canvas.getBoundingClientRect();return boardPoint(layout,{x:(e.clientX-r.left)*layout.width/r.width,y:(e.clientY-r.top)*layout.height/r.height});}

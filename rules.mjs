@@ -1,4 +1,4 @@
-import {progress,metrics,award,nextMission,migrateUpgrades,powerLevel,parseChallenge,challengeCode} from './progression.mjs';
+import {progress,metrics,award,migrateUpgrades,powerLevel,parseChallenge,challengeCode} from './progression.mjs';
 // Temporary character access comes from the build, never a saved purchase or URL flag.
 // Approximate reference body size; the wider circle leaves breathing room between bodies.
 export const SIZE=72,RADIUS=38,CANVAS=84.23,POPULATION=38,MIN_POPULATION=36,MAX_POPULATION=40,BOARD_VERSION=7;
@@ -46,7 +46,7 @@ export class Game{
   this.profile={hero:'stitch',coins:0,best:0,sound:true,music:true,motion:true,layout:'auto',boosts:{}};
   this.round=null;this.paused=true;this.finished=false;this.chain=[];this.hints=[];this.feedback=[];this.superLeft=0;this.hintLeft=0;this.newBest=false;this.savingFailed=false;
   this.load();this.profile.progress=progress(this.profile.progress);this.practice=false;this.practiceLesson=0;this.result=null;this.nextChallenge=null;
-  this.syncMission();if(this.round?.metrics)this.round.metrics.mission=this.profile.progress.mission;if(migrateUpgrades(this.data.progression,this.profile))this.save();
+  if(this.round?.metrics)delete this.round.metrics.mission;if(migrateUpgrades(this.data.progression,this.profile))this.save();
   if(this.round&&(this.round.boardVersion||4)<BOARD_VERSION){
    const r=this.round,plushies=r.bodies.filter(b=>b.type!=='bubble');
    if(!r.finale){
@@ -78,10 +78,9 @@ export class Game{
  random(){let x=this.round.seed>>>0;x^=x<<13;x^=x>>>17;x^=x<<5;this.round.seed=x>>>0;return (x>>>0)/4294967296;}
  choose(list){return list[Math.floor(this.random()*list.length)];}
  start(seed=Date.now()>>>0,candidates=this.allowed){
-  this.syncMission();
   const challenge=this.practice?null:this.nextChallenge;this.nextChallenge=null;if(challenge){seed=challenge.seed;this.profile.hero=this.data.characters[challenge.index].id;candidates=this.data.catalog.freeCharacters;}
   const hero=this.allowed.includes(this.profile.hero)?this.profile.hero:this.allowed[0];
-  this.round={boardVersion:BOARD_VERSION,upgradeLevel:challenge?1:this.characterLevel(hero),metrics:metrics(this.profile.progress.mission),challenge:challenge?.code||null,id:Date.now()+'-'+seed,hero,active:[],bodies:[],timer:60,elapsed:0,ready:2.2,feverLeft:0,feverScore:0,shuffleCooldown:0,lastClear:-99,score:0,coins:0,combo:0,bestChain:0,popped:0,skill:0,fever:0,nextID:1,lane:0,multiplier:1,seed:seed||1,finale:null,power:null};
+  this.round={boardVersion:BOARD_VERSION,upgradeLevel:challenge?1:this.characterLevel(hero),metrics:metrics(),challenge:challenge?.code||null,id:Date.now()+'-'+seed,hero,active:[],bodies:[],timer:60,elapsed:0,ready:2.2,feverLeft:0,feverScore:0,shuffleCooldown:0,lastClear:-99,score:0,coins:0,combo:0,bestChain:0,popped:0,skill:0,fever:0,nextID:1,lane:0,multiplier:1,seed:seed||1,finale:null,power:null};
   this.round.multiplier=1+(this.round.upgradeLevel-1)*.1;
   const friends=[...new Set([...candidates,...this.data.catalog.freeCharacters])].filter(id=>id!==hero&&this.allowed.includes(id));
   for(let i=friends.length-1;i>0;i--){const j=Math.floor(this.random()*(i+1));[friends[i],friends[j]]=[friends[j],friends[i]];}
@@ -177,8 +176,6 @@ export class Game{
  pause(){this.paused=true;this.chain=[];this.save();}
  resume(){if(this.round&&!this.finished)this.paused=false;}
  selectHero(id){if(this.allowed.includes(id)){this.profile.hero=id;this.save();}}
- syncMission(){this.profile.progress.mission=nextMission(this.data.progression,this.profile.progress);}
- liveGoal(){const p=this.profile.progress,r=this.round,m=this.data.progression.missions.find(m=>m.id===(r?.metrics?.mission||p.mission));if(!m)return null;const target=m.target+Math.round(m.target*.25*Math.min(4,p.completed[m.id]||0)),v=r?.metrics||{},amount=({chain:r?.bestChain,score:r?.score,popped:r?.popped})[m.metric]??v[m.metric]??0,old=p.values[m.id]||0;return {...m,target,value:Math.min(target,['chain','score'].includes(m.metric)?Math.max(old,amount):old+amount)};}
  toggleBoost(id){const p=this.profile.progress;if(!['time','score','skill'].includes(id))return;p.boosts=p.boosts.includes(id)?p.boosts.filter(x=>x!==id):[...p.boosts,id];this.save();}
  characterLevel(id=this.profile.hero){return powerLevel(this.profile.progress,id);}
  get skillGoal(){return 13-Math.max(1,Math.min(5,this.round?.upgradeLevel||1));}
