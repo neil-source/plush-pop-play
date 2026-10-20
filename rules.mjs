@@ -59,13 +59,14 @@ export class Game{
  load(){try{
   const raw=this.storage?.getItem('plush_pop_share_v1');if(!raw||raw.length>1000000)return;
   const s=JSON.parse(raw);if(s.version!==1)return;
-  const p=s.profile||{};this.profile={hero:this.allowed.includes(p.hero)?p.hero:'stitch',coins:clamp(Number(p.coins)||0,0,1e9),best:clamp(Number(p.best)||0,0,1e9),sound:p.sound!==false,music:p.music!==false,motion:p.motion!==false,layout:p.layout==='classic'?'classic':'auto',boosts:{}};
+  const p=s.profile||{};this.profile={easy:p.easy!==false,hero:this.allowed.includes(p.hero)?p.hero:'stitch',coins:clamp(Number(p.coins)||0,0,1e9),best:clamp(Number(p.best)||0,0,1e9),sound:p.sound!==false,music:p.music!==false,motion:p.motion!==false,layout:p.layout==='classic'?'classic':'auto',boosts:{}};
   for(const k of ['time','score','skill'])this.profile.boosts[k]=clamp(Math.trunc(Number(p.boosts?.[k])||0),0,999);
   this.profile.progress=progress(p.progress);
   const r=s.round;if(!r)return;
   const nums=['timer','elapsed','ready','feverLeft','shuffleCooldown','lastClear','score','coins','combo','bestChain','popped','skill','fever','nextID','lane','multiplier','seed'];
   if(nums.some(k=>!Number.isFinite(r[k]))||r.timer<0||r.timer>1000||r.score<0||r.coins<0||r.coins>1e6||r.score>1e9||r.skill<0||r.skill>12||r.feverLeft<0||r.feverLeft>8)return;
-  if(!this.allowed.includes(r.hero)||!Array.isArray(r.active)||r.active.length!==5||r.active.some(t=>!this.allowed.includes(t))||new Set(r.active).size!==5)return;
+  const count=r.easy===true?3:5;
+  if(!this.allowed.includes(r.hero)||!Array.isArray(r.active)||r.active.length!==count||r.active.some(t=>!this.allowed.includes(t))||new Set(r.active).size!==count)return;
   if(!Array.isArray(r.bodies)||r.bodies.length>114||(!r.finale&&!r.bodies.length)||new Set(r.bodies.map(b=>b.id)).size!==r.bodies.length)return;
   if(r.bodies.some(b=>!(this.allowed.includes(b.type)||b.type==='bubble')||!['id','x','y','vx','vy','angle'].every(k=>Number.isFinite(b[k]))||b.id<1||b.id>=r.nextID||b.x< -100||b.x>650||b.y< -2500||b.y>1000||Math.abs(b.vx)>5000||Math.abs(b.vy)>5000))return;
   if(r.finale){const f=r.finale;if(r.timer!==0||!Number.isFinite(f.delay)||f.delay<0||f.delay>2||!Array.isArray(f.bubbles)||f.bubbles.length>12||f.bubbles.some(id=>!Number.isInteger(id)||id<1||id>=r.nextID)||(f.type&&!r.active.includes(f.type)))return;}else if(r.timer===0)return;
@@ -77,15 +78,16 @@ export class Game{
  emit(kind,fields={}){this.feedback.push({kind,...fields});}
  random(){let x=this.round.seed>>>0;x^=x<<13;x^=x>>>17;x^=x<<5;this.round.seed=x>>>0;return (x>>>0)/4294967296;}
  choose(list){return list[Math.floor(this.random()*list.length)];}
- start(seed=Date.now()>>>0,candidates=this.allowed){
+ start(seed=Date.now()>>>0,candidates=this.allowed,easy=false){
   const challenge=this.practice?null:this.nextChallenge;this.nextChallenge=null;if(challenge){seed=challenge.seed;this.profile.hero=this.data.characters[challenge.index].id;candidates=this.data.catalog.freeCharacters;}
   const hero=this.allowed.includes(this.profile.hero)?this.profile.hero:this.allowed[0];
   this.round={boardVersion:BOARD_VERSION,upgradeLevel:challenge?1:this.characterLevel(hero),metrics:metrics(),challenge:challenge?.code||null,id:Date.now()+'-'+seed,hero,active:[],bodies:[],timer:60,elapsed:0,ready:2.2,feverLeft:0,feverScore:0,shuffleCooldown:0,lastClear:-99,score:0,coins:0,combo:0,bestChain:0,popped:0,skill:0,fever:0,nextID:1,lane:0,multiplier:1,seed:seed||1,finale:null,power:null};
   this.round.multiplier=1+(this.round.upgradeLevel-1)*.1;
+  this.round.easy=easy&&!this.practice&&!challenge;
   const friends=[...new Set([...candidates,...this.data.catalog.freeCharacters])].filter(id=>id!==hero&&this.allowed.includes(id));
   for(let i=friends.length-1;i>0;i--){const j=Math.floor(this.random()*(i+1));[friends[i],friends[j]]=[friends[j],friends[i]];}
-  this.round.active=[hero,...friends.slice(0,4)];
-  for(const k of ['time','score','skill'])if(!this.practice&&!challenge&&this.profile.progress.boosts.includes(k)&&this.profile.boosts[k]>0){this.profile.boosts[k]--;if(k==='time')this.round.timer+=5;if(k==='score')this.round.multiplier*=1.15;if(k==='skill')this.round.skill=this.skillGoal;}
+  this.round.active=[hero,...friends.slice(0,this.round.easy?2:4)];
+  for(const k of ['time','score','skill'])if(!(this.round.easy&&k==='time')&&!this.practice&&!challenge&&this.profile.progress.boosts.includes(k)&&this.profile.boosts[k]>0){this.profile.boosts[k]--;if(k==='time')this.round.timer+=5;if(k==='score')this.round.multiplier*=1.15;if(k==='skill')this.round.skill=this.skillGoal;}
   for(let i=0;i<POPULATION;i++)this.spawn(i>=POPULATION-3?hero:this.choose(this.round.active));
   this.result=null;this.paused=false;this.finished=false;this.newBest=false;this.chain=[];this.hints=[];this.superLeft=0;this.feedback=[];this.emit('sound',{name:'ready'});this.save();
  }
@@ -96,7 +98,7 @@ export class Game{
  }
  get canAct(){return !!this.round&&!this.paused&&!this.finished&&this.round.ready<=0&&this.superLeft<=0&&!this.round.finale;}
  has(k){return !this.round?.power?.pending&&(this.round?.power?.timers[k]||0)>0;}
- get minimumChain(){return this.has('chain')?2:3;}
+ get minimumChain(){return this.round?.easy||this.has('chain')?2:3;}
  comboActive(){const r=this.round;return r.combo>0&&(r.feverLeft>0||r.elapsed-r.lastClear<2.3);}
  matches(a,b){return a.type!=='bubble'&&b.type!=='bubble'&&(a.type===b.type||this.has('link'));}
  adjacent(a,b){return distance(a,b)<RADIUS*2+24+(this.has('reach')?65:0);}
@@ -105,7 +107,8 @@ export class Game{
   const last=this.round.bodies.find(b=>b.id===this.chain.at(-1));if(this.chain.includes(id)||(last&&!(this.matches(last,b)&&this.adjacent(last,b))))return;
   this.chain.push(id);this.emit('select',{body:clone(b),count:this.chain.length});
  }
- release(){if(!this.canAct){this.chain=[];return;}if(this.chain.length<this.minimumChain){if(this.chain.length)this.emit('rejected',{body:clone(this.round.bodies.find(b=>b.id===this.chain.at(-1)))});this.chain=[];return;}
+ easyGroup(id){const first=this.round?.bodies.find(b=>b.id===id&&b.type!=='bubble'&&playable(b));if(!first)return [];const group=[first];for(let i=0;i<group.length&&group.length<24;i++)for(const b of this.round.bodies)if(!group.includes(b)&&playable(b)&&this.matches(group[i],b)&&this.adjacent(group[i],b)){group.push(b);if(group.length===24)break;}return group.map(b=>b.id);}
+ release(){if(!this.canAct){this.chain=[];return;}if(this.round.easy&&this.chain.length===1){const group=this.easyGroup(this.chain[0]);this.chain=[];if(group.length>=2)this.clear(group);else this.hint();return;}if(this.chain.length<this.minimumChain){if(this.chain.length)this.emit('rejected',{body:clone(this.round.bodies.find(b=>b.id===this.chain.at(-1)))});this.chain=[];return;}
   let ids=[...this.chain];if(this.has('blast')){const chosen=this.round.bodies.filter(b=>ids.includes(b.id));ids.push(...this.round.bodies.filter(b=>b.type!=='bubble'&&!ids.includes(b.id)&&chosen.some(a=>distance(a,b)<100)).slice(0,8).map(b=>b.id));}
   this.clear(ids);this.chain=[];
  }
@@ -195,7 +198,8 @@ export class Game{
   if(this.practice){r.timer=60;if(this.practiceLesson>=3)r.skill=this.skillGoal;}
   const stopped=this.has('stop')?Math.min(dt,r.power.timers.stop):0,active=dt-stopped;
   if(r.power){for(const k of Object.keys(r.power.timers))r.power.timers[k]=Math.max(0,r.power.timers[k]-dt);if(!Object.values(r.power.timers).some(v=>v>0))r.power=null;}
-  r.elapsed+=active;r.timer=Math.max(0,r.timer-active);r.shuffleCooldown=Math.max(0,r.shuffleCooldown-active);
+  r.elapsed+=active;if(!r.easy)r.timer=Math.max(0,r.timer-active);r.shuffleCooldown=Math.max(0,r.shuffleCooldown-active);
+  if(r.easy){if(r.popped>=30&&r.elapsed-r.lastClear>1.4){this.finish();return;}if(!this.chain.length&&!this.hintLeft&&r.elapsed-Math.max(0,r.lastClear)>4){this.hint();if(!this.hints.length&&r.shuffleCooldown<=0)this.shuffle();}}
   if(r.timer<=0){this.beginFinale();return;}if(r.feverLeft>0){r.feverLeft=Math.max(0,r.feverLeft-active);if(!r.feverLeft){r.lastClear=r.elapsed;this.emit('feverEnd',{score:r.feverScore});this.save();}}
  }
 }

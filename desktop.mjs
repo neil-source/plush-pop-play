@@ -14,21 +14,21 @@ export function drawDesktop(api){
   if(game.has('stop')){ctx.fillStyle='#00000024';ctx.fillRect(0,0,1200,800);}
   label('Plush Pop',160,65,34,260);
   image('panel_blue',160,425,278,628);image('panel_blue',1040,425,278,628);
-  label('TIME',160,145,19,240);image('timer_face',160,216,109);label(Math.max(0,Math.ceil(r.timer)),160,216,45,180);
+  label(r.easy?'POPS':'TIME',160,145,19,240);image('timer_face',160,216,109);label(r.easy?Math.min(30,r.popped)+'/30':Math.max(0,Math.ceil(r.timer)),160,216,r.easy?32:45,180);
   ctx.save();ctx.beginPath();ctx.moveTo(160,216);ctx.arc(160,216,64,-Math.PI/2,-Math.PI/2+Math.PI*2*Math.min(1,r.timer/60));ctx.closePath();ctx.clip();image('fx_wave_gold',160,216,120);ctx.restore();
   label('SCORE',160,314,19);image('score_pill',160,365,245,68);label(fx.value('score'),160,365,33,220);
   label('COINS',160,426,18);image('coin_pill',160,469,218,54);image('icon_coin',132,469,31);label(fx.value('coins'),182,469,27,116,{scaleX:fx.pulse('coin'),scaleY:fx.pulse('coin')});
-  if(r.combo>1&&game.comboActive())label(r.combo+' COMBO',160,536,23,235);
+  if(!r.easy&&r.combo>1&&game.comboActive())label(r.combo+' COMBO',160,536,23,235);
   meter('meter_gold',fx.fever?r.feverLeft/8:fx.feverCharge,160,610,233,46);label(fx.fever?'FEVER x3':'FEVER',160,610,23,215);
   if(fx.fever){label('FEVER BONUS',160,669,17,240);label(fx.rewards.value('score',r.feverScore),160,703,27,240);}
   label('YOUR LEADER',1040,153,20,245);if(fx.value('skill')>=game.skillGoal)image('fx_rays',1040,260,205,205,{alpha:game.profile.motion?.45+Math.sin(uiTime*3)*.2:.5});image('char_'+r.hero,1040,260,158,158);
   label(game.powers[r.hero].name,1040,369,24,244);meter('meter_gold',fx.value('skill')/game.skillGoal,1040,414,222,21);
   button('skill',fx.value('skill')>=game.skillGoal?'Use super':'Charging '+Math.floor(fx.value('skill'))+'/'+game.skillGoal,1040,476,224,66,()=>game.useSkill(),{color:fx.value('skill')>=game.skillGoal?'gold':'purple',disabled:!game.canAct||fx.value('skill')<game.skillGoal,size:23});
-  if(game.pairTargets.length){button('buddy','TAG buddy',1040,531,224,42,()=>game.useBuddy(),{color:'gold',disabled:!game.canAct,size:20});image('char_'+r.pair.hero,1140,531,28,28);}
-  button('hint','Hint',1040,590,224,50,()=>game.hint(),{disabled:!game.canAct,color:'green'});
+  if(!r.easy&&game.pairTargets.length){button('buddy','TAG buddy',1040,531,224,42,()=>game.useBuddy(),{color:'gold',disabled:!game.canAct,size:20});image('char_'+r.pair.hero,1140,531,28,28);}
+  if(!r.easy)button('hint','Hint',1040,590,224,50,()=>game.hint(),{disabled:!game.canAct,color:'green'});
   button('shuffle',r.shuffleCooldown>0?'Shuffle '+Math.ceil(r.shuffleCooldown):'Shuffle',1040,660,224,65,()=>game.shuffle(),{color:'gold',disabled:!game.canAct||r.shuffleCooldown>0});
   button('pause','Pause',1090,58,160,61,pause,{color:'gold'});
-  if(r.power&&!r.power.pending){const seconds=Math.ceil(Math.max(...Object.values(r.power.timers)));label(game.powers[r.hero].name+' '+seconds+'s',600,45,21,530);}
+  if(!r.easy&&r.power&&!r.power.pending){const seconds=Math.ceil(Math.max(...Object.values(r.power.timers)));label(game.powers[r.hero].name+' '+seconds+'s',600,45,21,530);}
   footer();
   ctx.save();ctx.translate(330,-74);fx.draw(ctx);ctx.restore();
   if(screen==='paused'){
@@ -38,7 +38,7 @@ export function drawDesktop(api){
    // Only overlay controls should receive clicks while paused.
    api.keepControls(['resume','new','settings','home']);return;
   }
-  if(r.ready>0){label('READY',600,290,45);label('Connect '+game.minimumChain+' matching plushies',600,338,21,490);}
+  if(r.ready>0){label('READY',600,290,45);label(r.easy?'Tap matching friends':'Connect '+game.minimumChain+' matching plushies',600,338,24,490);}
   else if(r.elapsed<.65&&!r.popped&&game.superLeft<=0)label('GO!',600,310,58);
   if(fx.super){const t=fx.time-fx.super.start,fade=Math.min(1,t/.3,(fx.super.duration-t)/.15);ctx.fillStyle='rgba(0,0,0,'+Math.max(0,.32*fade)+')';ctx.fillRect(0,0,1200,800);ctx.save();ctx.translate(330,-74);fx.drawSuper(ctx);ctx.restore();}
   ctx.save();ctx.translate(330,-74);fx.draw(ctx,{afterShade:true});ctx.restore();

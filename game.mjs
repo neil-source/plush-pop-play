@@ -5,6 +5,8 @@ import {Effects} from './effects.mjs';
 import {Idle} from './idle.mjs';
 import {chooseLayout,boardPoint,rewardTarget,inputHint} from './layout.mjs';
 import {drawPolish} from './polish-ui.mjs';
+import {drawSimple} from './simple-ui.mjs';
+import {AdultGate} from './adult-gate.mjs';
 import {drawDesktop} from './desktop.mjs';
 const TESTING=false;
 const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d',{alpha:false}),controls=document.querySelector('#controls'),progress=document.querySelector('#progress'),loading=document.querySelector('#loading');
@@ -45,10 +47,17 @@ function syncControls(){
  if(signature!==controlSignature){controlSignature=signature;controls.replaceChildren();for(const b of buttons){const n=document.createElement('button');n.type='button';n.dataset.id=b.id;n.style.left=b.x/layout.width*100+'%';n.style.top=b.y/layout.height*100+'%';n.style.width=b.w/layout.width*100+'%';n.style.height=b.h/layout.height*100+'%';n.onclick=()=>{const current=buttons.find(c=>c.id===b.id);if(current&&!current.disabled){sound('tap');current.action();}};controls.append(n);}}
  for(const b of buttons){const n=controls.querySelector(`[data-id="${b.id}"]`);n.disabled=b.disabled;n.setAttribute('aria-label',b.title);n.title=b.title;}
 }
-function go(next){cancelBubble();if(game.practice&&next==='menu'){game.endPractice();world.reset();fx.reset();}idle?.reset();if(screen==='play'&&next!=='play')game.pause();activePointer=null;lastPointer=null;game.chain=[];controlSignature='';musicSync();const show=()=>{screen=next;};if(next==='collection')return withArtwork(pageKeys(),show);if(next==='menu')return withArtwork(menuKeys(),show);show();}
+let adultSession=false,adultGate=null,adultAction=null,gateReturn='menu';
+const adultScreens=['parents','boosts','friends','settings','challenge'];
+function speak(line){if(!game.profile.sound||!window.speechSynthesis)return;speechSynthesis.cancel();const message=new SpeechSynthesisUtterance(line);message.lang='en-US';message.rate=.85;speechSynthesis.speak(message);}
+function askAdult(action){gateReturn=screen==='adult'?'menu':screen;adultAction=action;adultGate=new AdultGate();adultSession=false;if(screen==='play'){game.pause();gateReturn='paused';}screen='adult';speak('Please ask a grown-up to help.');}
+function gateSubmit(){if(adultGate?.correct){const action=adultAction;adultAction=null;adultGate=null;adultSession=true;screen=gateReturn;action?.();}else adultGate=new AdultGate();}
+function gateCancel(){adultAction=null;adultGate=null;go(adultScreens.includes(gateReturn)?'menu':gateReturn);}
+function revokeAdult(){adultSession=false;adultAction=null;adultGate=null;window.speechSynthesis?.cancel();if(screen==='adult'||adultScreens.includes(screen))go('menu');}
+function go(next){if(adultScreens.includes(next)&&!adultSession){askAdult(()=>go(next));return;}if(['menu','play','collection','learn','results'].includes(next))adultSession=false;cancelBubble();if(game.practice&&next==='menu'){game.endPractice();world.reset();fx.reset();}idle?.reset();if(screen==='play'&&next!=='play')game.pause();activePointer=null;lastPointer=null;game.chain=[];controlSignature='';musicSync();const show=()=>{screen=next;};if(next==='collection')return withArtwork(pageKeys(),show);if(next==='menu')return withArtwork(menuKeys(),show);show();}
 function prepareFever(){art.preparingFever=true;try{draw();}finally{art.preparingFever=false;}}
-function start(){if(!game.profile.progress.learned&&!game.nextChallenge){go("learn");return;}idle?.reset();const candidates=navigator.onLine?game.allowed:game.allowed.filter(id=>characterKeys(id).every(k=>art.get(k)));game.start(undefined,candidates);game.pause();return withArtwork(roundKeys(),()=>{world.reset();fx.reset();lastSecond=60;lastSkill=false;lastCombo=0;screen='play';activePointer=null;focusedID=null;saveClock=0;game.resume();prepareFever();if(document.hidden)pause();musicSync();announce('Connect three matching plushies.');});}
-function resume(){idle?.reset();return withArtwork(roundKeys(),()=>{game.resume();screen='play';activePointer=null;lastPointer=null;world.wake();prepareFever();if(document.hidden)pause();musicSync();});}
+function start(){adultSession=false;idle?.reset();const candidates=navigator.onLine?game.allowed:game.allowed.filter(id=>characterKeys(id).every(k=>art.get(k)));game.start(undefined,candidates,game.profile.easy!==false);game.pause();return withArtwork(roundKeys(),()=>{world.reset();fx.reset();lastSecond=60;lastSkill=false;lastCombo=0;screen='play';activePointer=null;focusedID=null;saveClock=0;game.resume();prepareFever();if(document.hidden)pause();musicSync();announce(game.round.easy?'Tap matching friends.':'Connect three matching plushies.');if(game.round.easy)speak('Tap matching friends to pop them!');});}
+function resume(){adultSession=false;idle?.reset();return withArtwork(roundKeys(),()=>{game.resume();screen='play';activePointer=null;lastPointer=null;world.wake();prepareFever();if(document.hidden)pause();musicSync();});}
 function pause(){cancelBubble();idle?.reset();if(screen==='play'){game.pause();screen='paused';activePointer=null;lastPointer=null;musicSync();announce('Paused.');}}
 function showSettings(){screenBeforeSettings=screen;go('settings');}
 function toggleLayout(){game.profile.layout=game.profile.layout==='classic'?'auto':'classic';game.save();resize();}
@@ -132,14 +141,14 @@ function drawBodies(){
  ctx.restore();
 }
 function drawHUD(){const r=game.round;
- label('TIME',64,15,12);image('timer_face',64,65,80);label(Math.max(0,Math.ceil(r.timer)),64,65,34);
+ label(r.easy?'POPS':'TIME',64,15,12);image('timer_face',64,65,80);label(r.easy?Math.min(30,r.popped)+'/30':Math.max(0,Math.ceil(r.timer)),64,65,r.easy?18:32);
  ctx.save();const fraction=Math.min(1,r.timer/60);ctx.beginPath();ctx.moveTo(64,65);ctx.arc(64,65,47,-Math.PI/2,-Math.PI/2+Math.PI*2*fraction);ctx.closePath();ctx.clip();image('fx_wave_gold',64,65,88);ctx.restore();
  image('score_pill',270,49,310,64);label(fx.value('score'),270,49,33,270);image('coin_pill',270,95,190,38);image('icon_coin',230,95,30);label(fx.value('coins'),280,95,22,110,{scaleX:fx.pulse('coin'),scaleY:fx.pulse('coin')});
  button('pause','Pause',478,64,76,76,pause,{color:'gold',icon:'pause'});
- if(r.combo>1&&game.comboActive())label(r.combo+' COMBO',275,139,17,130);
- button('hint','Hint',480,147,80,51,()=>game.hint(),{disabled:!game.canAct,size:18});
- if(game.pairTargets.length){button('buddy','TAG',387,147,67,55,()=>game.useBuddy(),{disabled:!game.canAct,color:'gold',size:17});image('char_'+r.pair.hero,387,108,28,28);}
- if(r.power&&!r.power.pending){const seconds=Math.ceil(Math.max(...Object.values(r.power.timers)));label(game.powers[r.hero].name+' '+seconds+'s',220,166,15,245);}
+ if(!r.easy&&r.combo>1&&game.comboActive())label(r.combo+' COMBO',275,139,17,130);
+ if(!r.easy)button('hint','Hint',480,147,80,51,()=>game.hint(),{disabled:!game.canAct,size:18});
+ if(!r.easy&&game.pairTargets.length){button('buddy','TAG',387,147,67,55,()=>game.useBuddy(),{disabled:!game.canAct,color:'gold',size:17});image('char_'+r.pair.hero,387,108,28,28);}
+ if(!r.easy&&r.power&&!r.power.pending){const seconds=Math.ceil(Math.max(...Object.values(r.power.timers)));label(game.powers[r.hero].name+' '+seconds+'s',220,166,15,245);}
  if(fx.fever){label('FEVER BONUS',270,207,15);label(fx.rewards.value('score',r.feverScore),270,233,27,280);}
  if(fx.value('skill')>=game.skillGoal&&game.profile.motion)image('fx_rays',72,885,108,108,{alpha:.45+Math.sin(uiTime*3)*.2});
  image('skill_frame',72,885,84,84);portrait(r.hero,72,884,60);meter('meter_gold',fx.value('skill')/game.skillGoal,72,932,82,12);
@@ -149,7 +158,7 @@ function drawHUD(){const r=game.round;
  button('shuffle','Shuffle',477,887,76,76,()=>game.shuffle(),{icon:'shuffle',color:'gold',disabled:!game.canAct||r.shuffleCooldown>0});
  if(r.shuffleCooldown>0)label(Math.ceil(r.shuffleCooldown),477,887,23);
  if(r.power&&!r.power.pending){const keys=Object.keys(r.power.timers).filter(k=>r.power.timers[k]>0);keys.slice(0,4).forEach((k,i)=>image('icon_'+(({stop:'clock',slow:'clock',coins:'coin',score:'trophy',link:'star',reach:'shuffle'})[k]||'star'),215+i*38,828,27));}
- if(r.ready>0){label('READY',270,342,46);label('Connect '+game.minimumChain+' matching plushies',270,389,17);}
+ if(r.ready>0){label('READY',270,342,46);label(r.easy?'Tap matching friends':'Connect '+game.minimumChain+' matching plushies',270,389,22);}
  else if(r.elapsed<.65&&!r.popped&&game.superLeft<=0)label('GO!',270,366,58);
 }
 function drawFeverLights(){if(!fx.fever)return;const sides=[data.bowl.top,data.bowl.left,data.bowl.right,data.bowl.floor];let n=0;for(const line of sides)for(let i=0;i<line.length;i+=Math.max(1,Math.floor(line.length/10))){const [x,y]=line[i];image('vfx_sparkle',x,y,13,13,{alpha:game.profile.motion?.45+Math.sin(uiTime*2-n++*.45)*.2:.65});}}
@@ -157,6 +166,7 @@ function draw(){buttons=[];ctx.setTransform(canvas.width/layout.width,0,0,canvas
  art.draw(ctx,'fabric_background',layout.width/2,layout.height/2,layout.width,layout.height,{rainbow:false});
  art.fever=(screen==='play'||screen==='paused')&&fx.fever;art.phase=game.profile.motion?uiTime:0;
  const stage=document.querySelector('#stage');if(stage.dataset.screen!==screen)stage.dataset.screen=screen;
+ if(drawSimple({screen,wide:layout.wide,game,data,image,label,button,go,start,resume,uiTime,collectionPage,turnPage,chooseHero,gate:adultGate,gateDigit:n=>adultGate?.digit(n),gateClear:()=>{if(adultGate)adultGate.input='';},gateSubmit,gateCancel,toggleEasy:()=>{game.profile.easy=game.profile.easy===false;game.save();}})){syncControls();return;}
  if(drawPolish({ctx,screen,wide:layout.wide,game,data,image,label,button,groundShadow,go,start,resume,practice,shareResult,enterChallenge,createChallenge,showSettings,resultAge:fx.time-resultAt,fx,purchaseFeedback:()=>{sound('purchase');announce('Added to your bag. Choose Use next to equip it.');}})){if(screen==='results')fx.draw(ctx,{afterShade:true});syncControls();return;}
  if(layout.wide){
   drawDesktop({ctx,art,game,data,screen,image,label,button,meter,portrait,go,start,resume,pause,showSettings,toggleLayout,drawBodies,drawFeverLights,fx,uiTime,resultAt,collectionPage,turnPage,chooseHero,card,powerText,input:inputMode,
@@ -180,12 +190,12 @@ function drain(){for(const e of game.feedback.splice(0)){if(['pop','super','shuf
  if(['pop','shuffle','bubbleBorn','super'].includes(e.kind))world.wake();
  if(e.kind==='sound')sound(e.name);else if(e.kind==='select'){world.bump(e.body,2.5);sound('select',Math.min(1.45,1+e.count*.025));if(e.count===7)sound('chain_bloom');}else if(e.kind==='shuffle')sound('shuffle');else if(e.kind==='fever')sound('fever_start');else if(e.kind==='feverEnd')sound('fever_end');
  else if(e.kind==='announcement'){announce(e.text);if(e.text==='TIME UP')sound('time_up');}
- else if(e.kind==='results'){screen='results';resultAt=fx.time;sound(game.result?.stars||game.result?.levelUp?'reward_chime':'result');musicSync();announce('Time up. '+game.round.score+' points.');}
+ else if(e.kind==='results'){screen='results';resultAt=fx.time;sound(game.result?.stars||game.result?.levelUp?'reward_chime':'result');musicSync();announce(game.round.easy?'Hooray!':'Time up. '+game.round.score+' points.');}
 }}
 function frame(now){const dt=lastTime?Math.min(.05,(now-lastTime)/1000):0;lastTime=now;
  if(screen==='play'&&!game.paused){uiTime+=dt;game.tick(dt);if(!game.paused&&!game.superLeft&&!game.has('stop')&&!game.round.finale)world.advance(game.round.bodies,dt*(game.has('slow')?.55:1),game.profile.motion,game.round.feverLeft>0);idle.update(dt,activePointer!==null);fx.update(dt);drain();
   if(bubbleAnchor!==null&&lastPointer)updateBubblePreview(lastPointer);
-  if(game.pairTargets.length&&game.superLeft<=0&&!buddyAnnounced){buddyAnnounced=true;sound('buddy_ready');fx.badge('BUDDY READY','Tap TAG for a second attack',270,290);}if(!game.pairTargets.length)buddyAnnounced=false;
+  if(!game.round.easy&&game.pairTargets.length&&game.superLeft<=0&&!buddyAnnounced){buddyAnnounced=true;sound('buddy_ready');fx.badge('BUDDY READY','Tap TAG for a second attack',270,290);}if(!game.pairTargets.length)buddyAnnounced=false;
   const r=game.round,second=Math.ceil(r.timer);if(second!==lastSecond&&second>0&&second<=5&&!r.finale){fx.badge(String(second),'',160,280,.5);sound('time_warning');}lastSecond=second;
   if(fx.value('skill')>=game.skillGoal&&!lastSkill&&!r.finale){const target=rewardTarget(layout,'skill');fx.sparkle(target.x,target.y,50);announce('Skill ready.');}lastSkill=fx.value('skill')>=game.skillGoal;
   if(r.combo>=10&&Math.floor(r.combo/10)>Math.floor(lastCombo/10))fx.badge(r.combo+' COMBO!','',350,280,.8);lastCombo=r.combo;
@@ -235,7 +245,7 @@ async function boot(){
  const uiKeys=Object.keys(art.images).filter(k=>!/^(char_|skin_|power_|idle_)/.test(k));
  await art.preload([...uiKeys,...menuKeys(),...catalog.freeCharacters.flatMap(characterKeys),...characterKeys(game.profile.hero),...[0,1,2,3].map(i=>'power_'+game.profile.hero+'_'+i),...(game.round?roundKeys():[]),...['blast','time','coin','score'].map(k=>'bubble_'+k)]);
  if(art.failed.size)throw Error('Some artwork did not load. Check your connection and try again.');
- world=new World(bowl);fx=new Effects(art,game);fx.target=kind=>rewardTarget(layout,kind);idle=new Idle(game,art,()=>sound('idle_chirp'));loading.hidden=true;resize();const incoming=new URLSearchParams(location.search).get('challenge');if(incoming){screen='challenge';pendingCode=incoming;enterChallenge();}requestAnimationFrame(frame);
+ world=new World(bowl);fx=new Effects(art,game);fx.target=kind=>rewardTarget(layout,kind);idle=new Idle(game,art,()=>sound('idle_chirp'));loading.hidden=true;resize();const incoming=new URLSearchParams(location.search).get('challenge');if(incoming){pendingCode=incoming;askAdult(()=>{go('challenge');enterChallenge();});}requestAnimationFrame(frame);
  if(TESTING)window.__plushQA={game,world,fx,idle,art,data,start,resume,pause,go,get layout(){return layout;},get screen(){return screen;},get previewIDs(){return [...previewIDs];},get bubbleAnchor(){return bubbleAnchor;},get buttons(){return buttons.map(({action,...b})=>b);}};
  if('serviceWorker'in navigator&&!TESTING)navigator.serviceWorker.register('./sw.js',{scope:'./'}).then(async()=>{
   await navigator.serviceWorker.ready;if(!navigator.serviceWorker.controller)await new Promise(resolve=>navigator.serviceWorker.addEventListener('controllerchange',resolve,{once:true}));
@@ -252,12 +262,15 @@ function practice(power){game.beginPractice(power);game.pause();withArtwork(roun
 function drawPractice(){if(screen!=='play'||!game.practice)return;label(game.practiceText,layout.wide?600:270,layout.wide?125:250,21,470);button('finish-practice','Finish practice',layout.wide?600:270,layout.wide?770:821,216,42,()=>go('menu'),{color:'green',size:18});}
 function dialog(title){const el=document.createElement('dialog');el.className='plush-dialog';const heading=document.createElement('h2');heading.textContent=title;el.append(heading);document.body.append(el);el.addEventListener('close',()=>el.remove());el.showModal();return el;}
 function dialogButton(el,text,fn){const b=document.createElement('button');b.textContent=text;b.onclick=fn;el.append(b);return b;}
-function enterChallenge(){const el=dialog('Enter your friend’s code'),field=document.createElement('input');field.placeholder='PP1-12345-0-454';field.autocomplete='off';field.spellcheck=false;field.value=pendingCode;field.setAttribute('aria-label','Challenge code');el.append(field);const status=document.createElement('p');status.setAttribute('role','status');el.append(status);dialogButton(el,'Play challenge',()=>{if(!game.prepareChallenge(field.value)){status.textContent='That code is invalid or its leader is unavailable.';return;}el.close();game.profile.progress.learned=true;start();});dialogButton(el,'Cancel',()=>el.close());field.focus();}
+function enterChallenge(){if(!adultSession){askAdult(()=>enterChallenge());return;}const el=dialog('Enter your friend’s code'),field=document.createElement('input');field.placeholder='PP1-12345-0-454';field.autocomplete='off';field.spellcheck=false;field.value=pendingCode;field.setAttribute('aria-label','Challenge code');el.append(field);const status=document.createElement('p');status.setAttribute('role','status');el.append(status);dialogButton(el,'Play challenge',()=>{if(!game.prepareChallenge(field.value)){status.textContent='That code is invalid or its leader is unavailable.';return;}el.close();game.profile.progress.learned=true;start();});dialogButton(el,'Cancel',()=>el.close());field.focus();}
 function createChallenge(){game.prepareChallenge(game.makeChallenge());game.profile.progress.learned=true;start();}
-async function shareResult(){
+function shareResult(){askAdult(()=>performShareResult());}
+async function performShareResult(){
  const r=game.round,name=data.characters.find(c=>c.id===r.hero).name,url='https://neil-source.github.io/plush-pop-play/'+(r.challenge?'?challenge='+r.challenge:''),text=`Plush Pop: ${r.score} points with ${name}! Best chain ${r.bestChain}.`+(r.challenge?' Challenge: '+r.challenge:'');
  const card=document.createElement('canvas');card.width=1080;card.height=1520;const c=card.getContext('2d');c.scale(2,2);art.draw(c,'fabric_background',270,380,540,760,{rainbow:false});art.label(c,'Plush Pop',270,80,48);art.draw(c,'char_'+r.hero,270,238,200,200,{rainbow:false});art.label(c,name,270,390,29);art.label(c,r.score+' points',270,464,44);art.label(c,'Best chain '+r.bestChain,270,530,24);art.label(c,r.challenge||'Come play!',270,609,21);art.label(c,'neil-source.github.io/plush-pop-play',270,686,14);
  const blob=await new Promise(resolve=>card.toBlob(resolve,'image/png')),file=new File([blob],'plush-pop-score.png',{type:'image/png'});
  if(navigator.canShare?.({files:[file]})){try{await navigator.share({title:'Plush Pop',text,url,files:[file]});return;}catch(e){if(e.name==='AbortError')return;}}
  const el=dialog('Share your round'),img=new Image();const objectURL=URL.createObjectURL(blob);img.src=objectURL;img.alt=text;el.append(img);const a=document.createElement('a');a.href=objectURL;a.download='plush-pop-score.png';a.textContent='Save score card';el.append(a);const input=document.createElement('textarea');input.value=text+'\n'+url;input.readOnly=true;input.setAttribute('aria-label','Share text and game link');el.append(input);dialogButton(el,'Copy text and link',async()=>{try{await navigator.clipboard.writeText(input.value);announce('Copied.');}catch{input.select();}});dialogButton(el,'Done',()=>el.close());el.addEventListener('close',()=>URL.revokeObjectURL(objectURL),{once:true});
 }
+
+window.addEventListener('blur',revokeAdult);document.addEventListener('visibilitychange',()=>{if(document.hidden)revokeAdult();});

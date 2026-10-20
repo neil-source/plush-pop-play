@@ -4,8 +4,8 @@ export function drawPolish(api){
  const title=t=>{L(t,wide?480:270,110,wide?44:36,wide?800:460);B('back','Back',wide?1080:55,54,wide?160:70,60,()=>go('menu'),{color:'purple',icon:wide?null:'back'});L(g.profile.coins+' coins',wide?1080:430,wide?120:54,18,170);};
  if(screen==='menu'){
   I('home_counter',126,52,205,52);I('icon_coin',51,51,32,32);L(String(g.profile.coins),147,52,23,140);
-  B('learn','Learn to play',286,52,52,52,()=>go('learn'),{artKey:'home_help',artOnly:true});
-  B('settings','Settings',364,52,52,52,showSettings,{artKey:'home_settings',artOnly:true});
+  B('learn','Learn to play',wide?w-170:350,52,58,58,()=>go('learn'),{artKey:'home_help',artOnly:true});
+  B('parents','Grown-ups',wide?w-65:461,52,58,58,()=>go('parents'),{artKey:'home_settings',artOnly:true});
   I('home_logo',w/2,wide?118:167,280,167);
   const companions=['sunny','mint','luna','ember','stitch'].filter(id=>id!==hero&&g.allowed.includes(id)).slice(0,2);
   for(const offset of [-1,1,0])api.groundShadow(w/2+offset*(wide?158:139),wide?356:434,offset?(wide?94:78):(wide?150:140));
@@ -14,8 +14,7 @@ export function drawPolish(api){
   const pending=g.round&&!g.finished,py=wide?480:570;
   B(pending?'resume':'play',pending?'Resume round':'Play',w/2,py,336,116,pending?resume:start,{artKey:'home_play',artOnly:true});
   I('home_arrow',w/2-(pending?115:70),py-4,34,40);L(pending?'Continue':'Play',w/2+20,py+1,pending?34:46,212);
-  L('Play. Earn stars. Grow your favorite plushie.',w/2,wide?748:845,16,w-60);
-  [['collection','Plushies','home_collection'],['friends','Upgrade','home_upgrade'],['boosts','Shop','home_shop']].forEach(([id,caption,artKey],i)=>B(id,id==='collection'?'Collection':caption,w/2+(i-1)*150,wide?650:749,wide?78:86,wide?78:86,()=>go(id),{artKey,artOnly:true,caption}));
+  B('collection','Collection',w/2,wide?650:749,110,110,()=>go('collection'),{artKey:'home_collection',artOnly:true,caption:'Plushies'});
   return true;
  }
  if(screen==='boosts'){
