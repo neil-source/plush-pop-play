@@ -51,17 +51,31 @@ export function drawPolish(api){
   L('Coins come from playing. Boosts are optional.',w/2,h-16,14,w-60);return true;
  }
  if(screen==='friends'){
-  title('GROW YOUR PLUSHIE');if(!wide){I('welcome_card',270,487,492,214);I('welcome_card',270,735,492,189);}else{I('welcome_card',875,410,570,465);}const x=wide?330:270,tx=wide?875:270,power=g.characterLevel(),cost=g.upgradeCost(),ready=cost&&g.profile.coins>=cost.coins&&p.stars>=cost.stars;
-  I('char_'+hero,x,wide?340:260,wide?300:180,wide?300:180);L(name,x,wide?550:374,30,450);L('LEVEL '+power+' / 5',x,wide?600:411,25,450);
-  L('Points +'+((power-1)*10)+'%',tx,wide?220:447,22,475);L('Super charges in '+(13-power)+' leader pops',tx,wide?260:478,19,475);L(power<5?'Next: +'+(power*10)+'% points / '+(12-power)+' pops':'Maximum character level!',tx,wide?320:514,19,475);
-  L(c.friendshipNames[lv]+' - '+f.xp+' friendship',x,wide?650:551,17,475);L('Best '+f.best+'   Rounds '+f.rounds,x,wide?690:578,15,475);
-  const badges=[['medal',f.badge?'Chain 10 earned':'Chain 10',f.badge],['star','Powers '+Math.min(3,f.supers||0)+'/3',(f.supers||0)>=3],['sun','Fevers '+Math.min(3,f.fevers||0)+'/3',(f.fevers||0)>=3]];
-  badges.forEach(([art,title,earned],i)=>{const x=tx+(i-1)*160;I('polish_'+art,x,wide?375:613,34,34,{alpha:earned?1:.45});L(title,x,wide?410:644,14,150);});
-  I('polish_upgrade_star',tx-124,wide?460:672,32,32);L(p.stars+' Power Stars',tx+28,wide?460:672,21,300);L(cost?'Cost: '+cost.coins+' coins + '+cost.stars+' Power Stars':'All upgrades complete',tx,wide?510:706,18,475);
-  B('upgrade-character',cost?'Upgrade to level '+cost.level:'MAX LEVEL',tx,wide?590:759,440,66,()=>g.upgradeCharacter(),{color:'green',disabled:!ready,size:25});
+  const power=g.characterLevel(),cost=g.upgradeCost(),ready=cost&&g.profile.coins>=cost.coins&&p.stars>=cost.stars;
+  I(wide?'upgrade_room_wide':'upgrade_room',w/2,h/2,wide?1200:640,h);
+  B('back','Back',46,44,54,54,()=>go('menu'),{artKey:'upgrade_back',artOnly:true});
+  const coinX=wide?844:188,starX=wide?1064:409;
+  I('upgrade_wallet',coinX,44,200,55);I('upgrade_score',coinX-72,44,44,32);L(String(g.profile.coins),coinX+16,44,23,132);
+  I('upgrade_wallet',starX,44,210,55);I('upgrade_power_star',starX-79,44,33,32);L(p.stars+' stars',starX+14,44,22,153);
+  I('upgrade_title',w/2,145,464,146);
+  const hx=wide?290:270,hy=wide?313:286;
+  I('upgrade_hero_panel',hx,hy,496,152);I('char_'+hero,hx-162,hy-1,130,130);
+  L(name,hx+65,hy-34,25,300);L('LEVEL '+power+' / 5',hx+65,hy-6,21,270);
+  for(let i=0;i<5;i++)I('upgrade_power_star',hx+5+i*30,hy+20,24,24,{alpha:i<power?1:.22});
+  L(c.friendshipNames[lv]+' - '+(f.xp||0)+' friendship',hx,hy+79,13,450);
+  L('Best '+(f.best||0)+'    Rounds '+(f.rounds||0),hx,hy+97,11,450);
+  const xs=wide?[735,1001]:[141,399],cy=wide?366:510,size=wide?250:238;
+  [['super','Faster super',(13-power)+' leader pops',power<5?'Next: '+(12-power)+' pops':'MAX POWER','Charge your super'],['score','Bonus score','+'+((power-1)*10)+'% points',power<5?'Next: +'+(power*10)+'%':'MAX POWER','Every pop counts']].forEach(([key,title,value,next,detail],i)=>{
+   const x=xs[i];I('upgrade_card',x,cy,size,size);I('upgrade_'+key,x,cy-66,116,94);L(title,x,cy-16,21,198);L(value,x,cy+21,21,200);L(next,x,cy+56,18,198);L(detail,x,cy+87,14,198);
+  });
+  L('Chain 10: '+(f.badge?'earned':'0/1')+'    Powers '+Math.min(3,f.supers||0)+'/3    Fevers '+Math.min(3,f.fevers||0)+'/3',wide?868:270,wide?514:647,12,490);
+  const bx=wide?290:270,by=wide?545:734.5;
+  I('upgrade_hero_panel',bx,by,496,155);L(cost?cost.coins+' coins + '+cost.stars+' Power '+(cost.stars===1?'Star':'Stars'):'All upgrades complete!',bx,by-30.5,18,430);
+  B('upgrade-character',cost?'Upgrade to level '+cost.level:'MAX LEVEL',bx,by+18.5,320,72,()=>g.upgradeCharacter(),{artKey:'upgrade_upgrade_button',disabled:!ready,size:22});
   const need=[];if(cost){if(g.profile.coins<cost.coins)need.push((cost.coins-g.profile.coins)+' coins');if(p.stars<cost.stars)need.push((cost.stars-p.stars)+' stars');}
-  L(!cost?'Try your fully upgraded power!':need.length?'Need '+need.join(' + ')+' - complete goals':'Applies from your next round',tx,wide?650:809,14,480);
-  B('practice','Practice power',tx-(wide?140:121),wide?720:864,wide?250:226,60,()=>practice(true),{color:'gold',size:20});B('challenge','Friend challenge',tx+(wide?140:121),wide?720:864,wide?250:226,60,()=>go('challenge'),{color:'purple',size:20});L('Choose another character in Collection to upgrade it.',w/2,h-33,15,w-70);return true;
+  L(!cost?'Try your fully upgraded power!':need.length?'Need '+need.join(' + ')+' - complete goals':'Applies from your next round',bx,by+80.5,14,490);
+  B('practice','Practice power',bx-125,wide?690:865,230,62,()=>practice(true),{artKey:'upgrade_gold_button',size:20});B('challenge','Friend challenge',bx+125,wide?690:865,230,62,()=>go('challenge'),{artKey:'upgrade_teal_button',size:19});
+  B('upgrade-goals','Earn stars',wide?735:145,wide?592:927,230,48,()=>go('goals'),{artKey:'upgrade_teal_button',size:18});B('choose-plushie','Choose plushie',wide?1001:395,wide?592:927,230,48,()=>go('collection'),{artKey:'upgrade_gold_button',size:18});return true;
  }
  if(screen==='learn'){
   title("LET'S PLAY");I('welcome_card',wide?850:270,wide?346:499,wide?590:500,wide?289:314);I('polish_sun',wide?300:270,wide?360:262,wide?260:152,wide?260:152);
