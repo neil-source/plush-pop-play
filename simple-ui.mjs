@@ -1,15 +1,18 @@
 // Picture-led child flow. All artwork comes from the same sewn game asset set.
 export function drawSimple(a){
- const {screen,wide,game:g,image:I,label:L,button:B,go,start,resume,gate,gateDigit,gateClear,gateSubmit,gateCancel,toggleEasy,chooseHero,turnPage,collectionPage}=a;
+ const {screen,wide,game:g,image:I,label:L,button:B,go,start,resume,gate,gateSelect,gateSubmit,gateCancel,toggleEasy,chooseHero,turnPage,collectionPage}=a;
  const w=wide?1200:540,h=wide?800:960,c=w/2;
  const back=()=>B('back','Back',wide?90:55,54,76,76,()=>go('menu'),{color:'purple',icon:'back'});
  if(screen==='adult'){
-  L('GROWN-UPS',c,70,36,w-50);L('Please solve this to continue',c,124,20,w-60);L(gate.question,c,wide?184:217,36,w-60);
-  I('home_counter',c,wide?249:302,200,70);L(gate.input||'?',c,wide?249:302,32,150);
-  const top=wide?329:413,step=wide?81:87;
-  for(let i=1;i<=9;i++)B('gate-'+i,String(i),c+((i-1)%3-1)*112,top+Math.floor((i-1)/3)*step,106,76,()=>gateDigit(i),{color:'gold',size:30});
-  B('gate-clear','Clear',c-112,top+3*step,106,76,gateClear,{size:19});B('gate-0','0',c,top+3*step,106,76,()=>gateDigit(0),{size:30});
-  B('gate-submit','Check answer: '+gate.question,c+112,top+3*step,106,76,gateSubmit,{icon:'play',color:'green'});
+  L('GROWN-UPS',c,90,36,w-50);L('Read the words. Tap the pictures in order.',c,155,18,w-50);L(gate.question,c,220,22,w-50);
+  const top=wide?328:410,step=wide?140:152;
+  ['sun','heart','star','flower','gift','clock'].forEach((key,i)=>{
+   const x=c+(i%3-1)*146,y=top+Math.floor(i/3)*step;
+   B('gate-'+key,'Picture '+key,x,y,132,132,()=>gateSelect(key),{artOnly:true});
+   I(key==='clock'?'icon_clock':'polish_'+key,x,y,76,76);
+  });
+  for(let i=0;i<3;i++)I('icon_check',c+(i-1)*44,wide?570:679,32,32,{alpha:i<gate.input.length?1:.18});
+  B('gate-submit','Continue. '+gate.question,c,wide?647:759,280,70,gateSubmit,{color:'green',disabled:!gate.correct,artOnly:true});L('Continue',c,wide?647:759,25,210,{alpha:gate.correct?1:.5});
   B('gate-cancel','Cancel',c,h-78,280,76,gateCancel,{color:'purple'});return true;
  }
  if(screen==='parents'){
