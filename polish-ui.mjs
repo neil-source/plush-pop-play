@@ -14,7 +14,8 @@ export function drawPolish(api){
   const pending=g.round&&!g.finished,py=wide?480:570;
   B(pending?'resume':'play',pending?'Resume round':'Play',w/2,py,336,116,pending?resume:start,{artKey:'home_play',artOnly:true});
   I('home_arrow',w/2-(pending?115:70),py-4,34,40);L(pending?'Continue':'Play',w/2+20,py+1,pending?34:46,212);
-  B('collection','Collection',w/2,wide?650:749,110,110,()=>go('collection'),{artKey:'home_collection',artOnly:true,caption:'Plushies'});
+  B('collection','Collection',w/2-90,wide?650:749,110,110,()=>go('collection'),{artKey:'home_collection',artOnly:true,caption:'Plushies'});
+  B('shop','Shop',w/2+90,wide?650:749,110,110,()=>go('outfits'),{artKey:'home_shop',artOnly:true,caption:'Shop'});
   return true;
  }
  if(screen==='boosts'){
