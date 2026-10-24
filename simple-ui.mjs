@@ -1,27 +1,15 @@
 // Picture-led child flow. All artwork comes from the same sewn game asset set.
 export function drawSimple(a){
- const {screen,wide,game:g,image:I,label:L,button:B,go,start,resume,gate,gateSelect,gateSubmit,gateCancel,toggleEasy,chooseHero,turnPage,collectionPage}=a;
+ const {screen,wide,game:g,image:I,label:L,button:B,go,start,resume,toggleEasy,chooseHero,turnPage,collectionPage}=a;
  const w=wide?1200:540,h=wide?800:960,c=w/2;
  const back=()=>B('back','Back',wide?90:55,54,76,76,()=>go('menu'),{color:'purple',icon:'back'});
- if(screen==='adult'){
-  L('GROWN-UPS',c,90,36,w-50);L('Read the words. Tap the pictures in order.',c,155,18,w-50);L(gate.question,c,220,22,w-50);
-  const top=wide?328:410,step=wide?140:152;
-  ['sun','heart','star','flower','gift','clock'].forEach((key,i)=>{
-   const x=c+(i%3-1)*146,y=top+Math.floor(i/3)*step;
-   B('gate-'+key,'Picture '+key,x,y,132,132,()=>gateSelect(key),{artOnly:true});
-   I(key==='clock'?'icon_clock':'polish_'+key,x,y,76,76);
-  });
-  for(let i=0;i<3;i++)I('icon_check',c+(i-1)*44,wide?570:679,32,32,{alpha:i<gate.input.length?1:.18});
-  B('gate-submit','Continue. '+gate.question,c,wide?647:759,280,70,gateSubmit,{color:'green',disabled:!gate.correct,artOnly:true});L('Continue',c,wide?647:759,25,210,{alpha:gate.correct?1:.5});
-  B('gate-cancel','Cancel',c,h-78,280,76,gateCancel,{color:'purple'});return true;
- }
- if(screen==='parents'){
-  back();L('GROWN-UPS',c,119,36,w-70);
+ if(screen==='options'){
+  back();L('SETTINGS',c,119,36,w-70);
   B('play-style',g.profile.easy!==false?'Easy: tap, no timer':'Classic: drag, timed',c,215,440,80,toggleEasy,{color:'gold',size:24});
   L('Changes apply to the next new round.',c,282,17,w-50);
   const rows=wide?[[c-195,386],[c+195,386],[c-195,501],[c+195,501]]:[[c,365],[c,470],[c,575],[c,680]];
-  [['friends','Upgrades'],['boosts','Shop'],['settings','Settings'],['challenge','Friend challenge']].forEach(([id,name],i)=>B(id,name,...rows[i],wide?340:360,80,()=>go(id),{color:i%2?'gold':'green',size:25}));
-  B('parent-home','Back to play',c,h-85,290,78,()=>go('menu'),{icon:'back',color:'purple'});return true;
+  [['friends','Upgrades'],['boosts','Shop'],['settings','Sound and motion'],['challenge','Friend challenge']].forEach(([id,name],i)=>B(id,name,...rows[i],wide?340:360,80,()=>go(id),{color:i%2?'gold':'green',size:25}));
+  B('options-home','Back to play',c,h-85,290,78,()=>go('menu'),{icon:'back',color:'purple'});return true;
  }
  if(screen==='collection'){
   back();L('PICK A FRIEND',c,120,36,w-60);L(g.earnedAccess.length+' / 140 friends earned',c,161,18,w-60);L(g.nextFriend?'Next: '+a.data.characters.find(k=>k.id===g.nextFriend).name+' - finish 30 pops':'You have every friend!',c,190,15,w-60);

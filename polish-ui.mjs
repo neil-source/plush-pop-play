@@ -5,7 +5,7 @@ export function drawPolish(api){
  if(screen==='menu'){
   I('home_counter',126,52,205,52);I('icon_coin',51,51,32,32);L(String(g.profile.coins),147,52,23,140);
   B('learn','Learn to play',wide?w-170:350,52,58,58,()=>go('learn'),{artKey:'home_help',artOnly:true});
-  B('parents','Grown-ups',wide?w-65:461,52,58,58,()=>go('parents'),{artKey:'home_settings',artOnly:true});
+  B('options','Settings',wide?w-65:461,52,58,58,()=>go('options'),{artKey:'home_settings',artOnly:true});
   I('home_logo',w/2,wide?118:167,280,167);
   const companions=['sunny','mint','luna','ember','stitch'].filter(id=>id!==hero&&g.allowed.includes(id)).slice(0,2);
   for(const offset of [-1,1,0])api.groundShadow(w/2+offset*(wide?158:139),wide?356:434,offset?(wide?94:78):(wide?150:140));
