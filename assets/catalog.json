@@ -8,6 +8,430 @@
   ],
   "products": [
     {
+      "id": "plush_stargazer_skin",
+      "name": "Stargazer Chitaky",
+      "kind": "skin",
+      "skin": "stargazer",
+      "character": "stitch",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_sailor_skin",
+      "name": "Sailor Sunny",
+      "kind": "skin",
+      "skin": "sunny_sailor",
+      "character": "sunny",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_stitch_royal_skin",
+      "name": "Royal Chitaky",
+      "kind": "skin",
+      "skin": "stitch_royal",
+      "character": "stitch",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_stitch_pirate_skin",
+      "name": "Pirate Chitaky",
+      "kind": "skin",
+      "skin": "stitch_pirate",
+      "character": "stitch",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_stitch_knight_skin",
+      "name": "Knight Chitaky",
+      "kind": "skin",
+      "skin": "stitch_knight",
+      "character": "stitch",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_stitch_detective_skin",
+      "name": "Detective Chitaky",
+      "kind": "skin",
+      "skin": "stitch_detective",
+      "character": "stitch",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_stitch_snow_skin",
+      "name": "Snow Day Chitaky",
+      "kind": "skin",
+      "skin": "stitch_snow",
+      "character": "stitch",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_sunny_gardener_skin",
+      "name": "Gardener Sunny",
+      "kind": "skin",
+      "skin": "sunny_gardener",
+      "character": "sunny",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_sunny_chef_skin",
+      "name": "Chef Sunny",
+      "kind": "skin",
+      "skin": "sunny_chef",
+      "character": "sunny",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_sunny_bee_skin",
+      "name": "Bumblebee Sunny",
+      "kind": "skin",
+      "skin": "sunny_bee",
+      "character": "sunny",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_sunny_rain_skin",
+      "name": "Rainy Day Sunny",
+      "kind": "skin",
+      "skin": "sunny_rain",
+      "character": "sunny",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_sunny_party_skin",
+      "name": "Party Sunny",
+      "kind": "skin",
+      "skin": "sunny_party",
+      "character": "sunny",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_mint_astronaut_skin",
+      "name": "Astronaut Mint",
+      "kind": "skin",
+      "skin": "mint_astronaut",
+      "character": "mint",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_mint_frog_skin",
+      "name": "Froggy Mint",
+      "kind": "skin",
+      "skin": "mint_frog",
+      "character": "mint",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_mint_baker_skin",
+      "name": "Baker Mint",
+      "kind": "skin",
+      "skin": "mint_baker",
+      "character": "mint",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_mint_explorer_skin",
+      "name": "Explorer Mint",
+      "kind": "skin",
+      "skin": "mint_explorer",
+      "character": "mint",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_mint_pajamas_skin",
+      "name": "Sleepy Mint",
+      "kind": "skin",
+      "skin": "mint_pajamas",
+      "character": "mint",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_mint_festive_skin",
+      "name": "Festive Mint",
+      "kind": "skin",
+      "skin": "mint_festive",
+      "character": "mint",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_ember_dragon_skin",
+      "name": "Dragon Ember",
+      "kind": "skin",
+      "skin": "ember_dragon",
+      "character": "ember",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_ember_racer_skin",
+      "name": "Racer Ember",
+      "kind": "skin",
+      "skin": "ember_racer",
+      "character": "ember",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_ember_firefighter_skin",
+      "name": "Firefighter Ember",
+      "kind": "skin",
+      "skin": "ember_firefighter",
+      "character": "ember",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_ember_wizard_skin",
+      "name": "Wizard Ember",
+      "kind": "skin",
+      "skin": "ember_wizard",
+      "character": "ember",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_ember_pumpkin_skin",
+      "name": "Pumpkin Ember",
+      "kind": "skin",
+      "skin": "ember_pumpkin",
+      "character": "ember",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_ember_captain_skin",
+      "name": "Captain Ember",
+      "kind": "skin",
+      "skin": "ember_captain",
+      "character": "ember",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_luna_princess_skin",
+      "name": "Princess Luna",
+      "kind": "skin",
+      "skin": "luna_princess",
+      "character": "luna",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_luna_bunny_skin",
+      "name": "Bunny Luna",
+      "kind": "skin",
+      "skin": "luna_bunny",
+      "character": "luna",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_luna_fairy_skin",
+      "name": "Fairy Luna",
+      "kind": "skin",
+      "skin": "luna_fairy",
+      "character": "luna",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_luna_painter_skin",
+      "name": "Painter Luna",
+      "kind": "skin",
+      "skin": "luna_painter",
+      "character": "luna",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_luna_mermaid_skin",
+      "name": "Mermaid Luna",
+      "kind": "skin",
+      "skin": "luna_mermaid",
+      "character": "luna",
+      "suggestedUSD": "1.99"
+    },
+    {
+      "id": "plush_luna_reindeer_skin",
+      "name": "Reindeer Luna",
+      "kind": "skin",
+      "skin": "luna_reindeer",
+      "character": "luna",
+      "suggestedUSD": "1.99"
+    }
+  ],
+  "skins": [
+    {
+      "id": "stargazer",
+      "character": "stitch",
+      "sprite": "assets/skins/stargazer.png",
+      "name": "Stargazer"
+    },
+    {
+      "id": "sunny_sailor",
+      "character": "sunny",
+      "sprite": "assets/skins/sunny-sailor.png",
+      "name": "Sailor"
+    },
+    {
+      "id": "stitch_royal",
+      "character": "stitch",
+      "sprite": "assets/skins/stitch_royal.png",
+      "name": "Royal"
+    },
+    {
+      "id": "stitch_pirate",
+      "character": "stitch",
+      "sprite": "assets/skins/stitch_pirate.png",
+      "name": "Pirate"
+    },
+    {
+      "id": "stitch_knight",
+      "character": "stitch",
+      "sprite": "assets/skins/stitch_knight.png",
+      "name": "Knight"
+    },
+    {
+      "id": "stitch_detective",
+      "character": "stitch",
+      "sprite": "assets/skins/stitch_detective.png",
+      "name": "Detective"
+    },
+    {
+      "id": "stitch_snow",
+      "character": "stitch",
+      "sprite": "assets/skins/stitch_snow.png",
+      "name": "Snow Day"
+    },
+    {
+      "id": "sunny_gardener",
+      "character": "sunny",
+      "sprite": "assets/skins/sunny_gardener.png",
+      "name": "Gardener"
+    },
+    {
+      "id": "sunny_chef",
+      "character": "sunny",
+      "sprite": "assets/skins/sunny_chef.png",
+      "name": "Chef"
+    },
+    {
+      "id": "sunny_bee",
+      "character": "sunny",
+      "sprite": "assets/skins/sunny_bee.png",
+      "name": "Bumblebee"
+    },
+    {
+      "id": "sunny_rain",
+      "character": "sunny",
+      "sprite": "assets/skins/sunny_rain.png",
+      "name": "Rainy Day"
+    },
+    {
+      "id": "sunny_party",
+      "character": "sunny",
+      "sprite": "assets/skins/sunny_party.png",
+      "name": "Party"
+    },
+    {
+      "id": "mint_astronaut",
+      "character": "mint",
+      "sprite": "assets/skins/mint_astronaut.png",
+      "name": "Astronaut"
+    },
+    {
+      "id": "mint_frog",
+      "character": "mint",
+      "sprite": "assets/skins/mint_frog.png",
+      "name": "Froggy"
+    },
+    {
+      "id": "mint_baker",
+      "character": "mint",
+      "sprite": "assets/skins/mint_baker.png",
+      "name": "Baker"
+    },
+    {
+      "id": "mint_explorer",
+      "character": "mint",
+      "sprite": "assets/skins/mint_explorer.png",
+      "name": "Explorer"
+    },
+    {
+      "id": "mint_pajamas",
+      "character": "mint",
+      "sprite": "assets/skins/mint_pajamas.png",
+      "name": "Sleepy"
+    },
+    {
+      "id": "mint_festive",
+      "character": "mint",
+      "sprite": "assets/skins/mint_festive.png",
+      "name": "Festive"
+    },
+    {
+      "id": "ember_dragon",
+      "character": "ember",
+      "sprite": "assets/skins/ember_dragon.png",
+      "name": "Dragon"
+    },
+    {
+      "id": "ember_racer",
+      "character": "ember",
+      "sprite": "assets/skins/ember_racer.png",
+      "name": "Racer"
+    },
+    {
+      "id": "ember_firefighter",
+      "character": "ember",
+      "sprite": "assets/skins/ember_firefighter.png",
+      "name": "Firefighter"
+    },
+    {
+      "id": "ember_wizard",
+      "character": "ember",
+      "sprite": "assets/skins/ember_wizard.png",
+      "name": "Wizard"
+    },
+    {
+      "id": "ember_pumpkin",
+      "character": "ember",
+      "sprite": "assets/skins/ember_pumpkin.png",
+      "name": "Pumpkin"
+    },
+    {
+      "id": "ember_captain",
+      "character": "ember",
+      "sprite": "assets/skins/ember_captain.png",
+      "name": "Captain"
+    },
+    {
+      "id": "luna_princess",
+      "character": "luna",
+      "sprite": "assets/skins/luna_princess.png",
+      "name": "Princess"
+    },
+    {
+      "id": "luna_bunny",
+      "character": "luna",
+      "sprite": "assets/skins/luna_bunny.png",
+      "name": "Bunny"
+    },
+    {
+      "id": "luna_fairy",
+      "character": "luna",
+      "sprite": "assets/skins/luna_fairy.png",
+      "name": "Fairy"
+    },
+    {
+      "id": "luna_painter",
+      "character": "luna",
+      "sprite": "assets/skins/luna_painter.png",
+      "name": "Painter"
+    },
+    {
+      "id": "luna_mermaid",
+      "character": "luna",
+      "sprite": "assets/skins/luna_mermaid.png",
+      "name": "Mermaid"
+    },
+    {
+      "id": "luna_reindeer",
+      "character": "luna",
+      "sprite": "assets/skins/luna_reindeer.png",
+      "name": "Reindeer"
+    }
+  ],
+  "legacyProducts": [
+    {
       "id": "plush_original_friends",
       "name": "Original Friends",
       "kind": "characters",
@@ -73,22 +497,6 @@
         "treasure"
       ],
       "suggestedUSD": "2.99"
-    },
-    {
-      "id": "plush_stargazer_skin",
-      "name": "Stargazer Chitaky",
-      "kind": "skin",
-      "skin": "stargazer",
-      "character": "stitch",
-      "suggestedUSD": "1.99"
-    },
-    {
-      "id": "plush_sailor_skin",
-      "name": "Sailor Sunny",
-      "kind": "skin",
-      "skin": "sunny_sailor",
-      "character": "sunny",
-      "suggestedUSD": "1.99"
     },
     {
       "id": "plush_christmas_friends",
@@ -281,18 +689,145 @@
       "seasonal": true
     }
   ],
-  "skins": [
-    {
-      "id": "stargazer",
-      "character": "stitch",
-      "sprite": "assets/skins/stargazer.png",
-      "name": "Stargazer"
-    },
-    {
-      "id": "sunny_sailor",
-      "character": "sunny",
-      "sprite": "assets/skins/sunny-sailor.png",
-      "name": "Sailor"
-    }
-  ]
+  "earnCharacters": {
+    "minimumPops": 30,
+    "charactersPerRound": 1,
+    "order": [
+      "patch",
+      "byte",
+      "jester",
+      "splash",
+      "sprout",
+      "calico",
+      "pup",
+      "bunny",
+      "panda",
+      "fox",
+      "bear",
+      "frog",
+      "pig",
+      "penguin",
+      "owl",
+      "monkey",
+      "tiger",
+      "shark",
+      "dino",
+      "dragon",
+      "bat",
+      "ram",
+      "raccoon",
+      "octopus",
+      "ghost",
+      "robot",
+      "cactus",
+      "mushroom",
+      "cupcake",
+      "strawberry",
+      "pumpkin",
+      "cloud",
+      "planet",
+      "sol",
+      "treasure",
+      "jingle_cub",
+      "cocoa_claus",
+      "holly_hare",
+      "noel_narwhal",
+      "ginger_snap",
+      "merry_moose",
+      "pudding_plum",
+      "tinsel_turtle",
+      "ribbon_robin",
+      "snowbell_seal",
+      "boo_berry",
+      "candy_corn",
+      "cauldron_cat",
+      "cobweb_cub",
+      "fang_fawn",
+      "mallow_mummy",
+      "pumpkin_pup",
+      "spooky_squid",
+      "truffle_troll",
+      "velvet_vamp",
+      "aurora_fox",
+      "blizzard_bun",
+      "chilly_chick",
+      "frost_finch",
+      "icicle_imp",
+      "mittens_mole",
+      "polar_peach",
+      "slush_sloth",
+      "snowflake_yak",
+      "woolly_walrus",
+      "blossom_bee",
+      "clover_calf",
+      "daisy_duck",
+      "dewdrop_deer",
+      "fern_ferret",
+      "lilac_lamb",
+      "petal_piglet",
+      "pollen_puff",
+      "rainy_roo",
+      "tulip_toad",
+      "bonbon_bunny",
+      "carrot_cub",
+      "dottie_dove",
+      "egglet",
+      "flopsy_flan",
+      "jelly_joey",
+      "marzipan_mouse",
+      "peep_pea",
+      "sprinkle_squeak",
+      "truffle_tweet",
+      "beach_bean",
+      "coral_crab",
+      "coconut_cub",
+      "lemon_lobster",
+      "melon_manatee",
+      "peach_pelican",
+      "pineapple_puff",
+      "seabreeze_ray",
+      "sorbet_otter",
+      "sunny_shrimp",
+      "acorn_alpaca",
+      "amber_armadillo",
+      "chestnut_chip",
+      "cider_corgi",
+      "hazel_hedgehog",
+      "maple_moth",
+      "nutmeg_newt",
+      "persimmon_pal",
+      "russet_raccoon",
+      "toffee_turkey",
+      "blush_badger",
+      "cherry_chinchilla",
+      "cupid_capy",
+      "fondant_fawn",
+      "heart_hamster",
+      "lovey_lynx",
+      "macaron_mouse",
+      "raspberry_ram",
+      "rosebud_raven",
+      "sweetheart_swan",
+      "comet_cub",
+      "cosmic_koala",
+      "dreamy_dragon",
+      "eclipse_ewe",
+      "galaxy_gecko",
+      "lunar_lemur",
+      "meteor_moth",
+      "nebula_newbie",
+      "orbit_owl",
+      "twinkle_tapir",
+      "confetti_cub",
+      "drummer_duck",
+      "fiesta_fox",
+      "firework_finch",
+      "fortune_frog",
+      "lantern_lion",
+      "party_panda",
+      "ribbon_redpanda",
+      "sparkle_seal",
+      "wish_wombat"
+    ]
+  }
 }

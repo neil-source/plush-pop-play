@@ -1,4 +1,4 @@
-import {progress,metrics,award,migrateUpgrades,powerLevel,parseChallenge,challengeCode} from './progression.mjs';
+import {progress,metrics,award,migrateUpgrades,migrateCharacters,powerLevel,parseChallenge,challengeCode} from './progression.mjs';
 // Temporary character access comes from the build, never a saved purchase or URL flag.
 // Approximate reference body size; the wider circle leaves breathing room between bodies.
 export const SIZE=72,RADIUS=38,CANVAS=84.23,POPULATION=38,MIN_POPULATION=36,MAX_POPULATION=40,BOARD_VERSION=7;
@@ -42,11 +42,11 @@ export function selectPattern(step,input,hero,seed=1){
 export class Game{
  constructor(data,storage=null){
   this.data=data;this.storage=storage;this.previewCharacters=data.access?.previewAllCharacters===true;
-  this.allowed=[...new Set([...data.catalog.freeCharacters,...(this.previewCharacters?data.characters.map(c=>c.id):[])])];this.powers=Object.fromEntries(data.powers.map(p=>[p.id,p]));
+  this.powers=Object.fromEntries(data.powers.map(p=>[p.id,p]));
   this.profile={hero:'stitch',coins:0,best:0,sound:true,music:true,motion:true,layout:'auto',boosts:{}};
   this.round=null;this.paused=true;this.finished=false;this.chain=[];this.hints=[];this.feedback=[];this.superLeft=0;this.hintLeft=0;this.newBest=false;this.savingFailed=false;
   this.load();this.profile.progress=progress(this.profile.progress);this.practice=false;this.practiceLesson=0;this.result=null;this.nextChallenge=null;
-  if(this.round?.metrics)delete this.round.metrics.mission;if(migrateUpgrades(this.data.progression,this.profile))this.save();
+  if(this.round?.metrics)delete this.round.metrics.mission;const oldUpgrades=migrateUpgrades(this.data.progression,this.profile);if(migrateCharacters(this.data,this.profile)||oldUpgrades)this.save();
   if(this.round&&(this.round.boardVersion||4)<BOARD_VERSION){
    const r=this.round,plushies=r.bodies.filter(b=>b.type!=='bubble');
    if(!r.finale){
@@ -56,12 +56,16 @@ export class Game{
    r.boardVersion=BOARD_VERSION;this.save();
   }
  }
+ get earnedAccess(){return [...new Set([...this.data.catalog.freeCharacters,...(this.profile.progress?.earnedCharacters||[])])];}
+ get allowed(){return this.previewCharacters?this.data.characters.map(c=>c.id):this.earnedAccess;}
+ get nextFriend(){return this.data.characters.find(c=>!this.earnedAccess.includes(c.id))?.id;}
  load(){try{
   const raw=this.storage?.getItem('plush_pop_share_v1');if(!raw||raw.length>1000000)return;
   const s=JSON.parse(raw);if(s.version!==1)return;
-  const p=s.profile||{};this.profile={easy:p.easy!==false,hero:this.allowed.includes(p.hero)?p.hero:'stitch',coins:clamp(Number(p.coins)||0,0,1e9),best:clamp(Number(p.best)||0,0,1e9),sound:p.sound!==false,music:p.music!==false,motion:p.motion!==false,layout:p.layout==='classic'?'classic':'auto',boosts:{}};
+  const p=s.profile||{};this.profile={easy:p.easy!==false,hero:p.hero,coins:clamp(Number(p.coins)||0,0,1e9),best:clamp(Number(p.best)||0,0,1e9),sound:p.sound!==false,music:p.music!==false,motion:p.motion!==false,layout:p.layout==='classic'?'classic':'auto',boosts:{}};
   for(const k of ['time','score','skill'])this.profile.boosts[k]=clamp(Math.trunc(Number(p.boosts?.[k])||0),0,999);
-  this.profile.progress=progress(p.progress);
+  this.profile.progress=progress(p.progress);migrateCharacters(this.data,this.profile);
+  if(!this.allowed.includes(this.profile.hero))this.profile.hero="stitch";
   const r=s.round;if(!r)return;
   const nums=['timer','elapsed','ready','feverLeft','shuffleCooldown','lastClear','score','coins','combo','bestChain','popped','skill','fever','nextID','lane','multiplier','seed'];
   if(nums.some(k=>!Number.isFinite(r[k]))||r.timer<0||r.timer>1000||r.score<0||r.coins<0||r.coins>1e6||r.score>1e9||r.skill<0||r.skill>12||r.feverLeft<0||r.feverLeft>8)return;
@@ -175,7 +179,7 @@ export class Game{
   else if(f.type){const type=f.type;f.type=null;f.delay=.85;this.clear(r.bodies.filter(b=>b.type===type).map(b=>b.id),{bubble:true,final:true});}
   else if(!f.settled){f.settled=true;f.delay=.9;}else {this.finish();return;}this.save();
  }
- finish(){if(this.finished||this.practice)return;this.finished=true;this.paused=true;this.chain=[];this.newBest=this.round.score>this.profile.best;this.profile.best=Math.max(this.profile.best,this.round.score);this.profile.coins+=this.round.coins;this.result=award(this.data.progression,this.profile,this.round);this.emit('results',{record:this.newBest});this.save();}
+ finish(){if(this.finished||this.practice)return;this.finished=true;this.paused=true;this.chain=[];this.newBest=this.round.score>this.profile.best;this.profile.best=Math.max(this.profile.best,this.round.score);this.profile.coins+=this.round.coins;this.result=award(this.data.progression,this.profile,this.round);if(this.round.popped>=30&&this.nextFriend){const id=this.nextFriend;this.result.newCharacter=id;this.profile.progress.earnedCharacters.push(id);}this.emit('results',{record:this.newBest});this.save();}
  pause(){this.paused=true;this.chain=[];this.save();}
  resume(){if(this.round&&!this.finished)this.paused=false;}
  selectHero(id){if(this.allowed.includes(id)){this.profile.hero=id;this.save();}}

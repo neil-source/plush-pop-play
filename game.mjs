@@ -14,7 +14,7 @@ const announce=text=>{document.querySelector('#announcement').textContent=text;}
 let art,game,world,fx,idle,data,screen='menu',buttons=[],controlSignature='',activePointer=null,lastPointer=null,lastTime=0,saveClock=0,uiTime=0,focusedID=null,lastSecond=60,lastSkill=false,lastCombo=0,resultAt=0,screenBeforeSettings='menu';
 const finePointer=matchMedia('(pointer: fine)'),hoverPointer=matchMedia('(hover: hover)');
 const getLayout=()=>chooseLayout({width:game?.profile.layout==='classic'?540:innerWidth,height:innerHeight,fine:finePointer.matches,hover:hoverPointer.matches});
-let layout=getLayout(),inputMode=layout.input,collectionPage=0,bubbleAnchor=null,bubblePartner=null,bubbleValid=false,previewIDs=new Set(),buddyAnnounced=false,collectAt=-10;
+let layout=getLayout(),inputMode=layout.input,collectionPage=0,outfitPage=0,bubbleAnchor=null,bubblePartner=null,bubbleValid=false,previewIDs=new Set(),buddyAnnounced=false,collectAt=-10;
 const characterKeys=id=>['char_'+id,...[0,1,2,3].map(i=>'idle_'+id+'_'+i)];
 const roundKeys=()=>game.round.active.flatMap(id=>[...characterKeys(id),...[0,1,2,3].map(i=>'power_'+id+'_'+i)]);
 const menuKeys=()=>[game.profile.hero,...['sunny','mint','luna','ember','stitch'].filter(id=>id!==game.profile.hero&&game.allowed.includes(id)).slice(0,2)].map(id=>'char_'+id);
@@ -48,12 +48,12 @@ function syncControls(){
  for(const b of buttons){const n=controls.querySelector(`[data-id="${b.id}"]`);n.disabled=b.disabled;n.setAttribute('aria-label',b.title);n.title=b.title;}
 }
 let adultSession=false,adultGate=null,adultAction=null,gateReturn='menu';
-const adultScreens=['parents','boosts','friends','settings','challenge'];
+const adultScreens=['parents','boosts','outfits','friends','settings','challenge'];
 function askAdult(action){gateReturn=screen==='adult'?'menu':screen;adultAction=action;adultGate=new AdultGate();adultSession=false;if(screen==='play'){game.pause();gateReturn='paused';}screen='adult';}
 function gateSubmit(){if(adultGate?.correct){const action=adultAction;adultAction=null;adultGate=null;adultSession=true;screen=gateReturn;action?.();}else adultGate=new AdultGate();}
 function gateCancel(){adultAction=null;adultGate=null;go(adultScreens.includes(gateReturn)?'menu':gateReturn);}
 function revokeAdult(){adultSession=false;adultAction=null;adultGate=null;if(screen==='adult'||adultScreens.includes(screen))go('menu');}
-function go(next){if(adultScreens.includes(next)&&!adultSession){askAdult(()=>go(next));return;}if(['menu','play','collection','learn','results'].includes(next))adultSession=false;cancelBubble();if(game.practice&&next==='menu'){game.endPractice();world.reset();fx.reset();}idle?.reset();if(screen==='play'&&next!=='play')game.pause();activePointer=null;lastPointer=null;game.chain=[];controlSignature='';musicSync();const show=()=>{screen=next;};if(next==='collection')return withArtwork(pageKeys(),show);if(next==='menu')return withArtwork(menuKeys(),show);show();}
+function go(next){if(adultScreens.includes(next)&&!adultSession){askAdult(()=>go(next));return;}if(['menu','play','collection','learn','results'].includes(next))adultSession=false;cancelBubble();if(game.practice&&next==='menu'){game.endPractice();world.reset();fx.reset();}idle?.reset();if(screen==='play'&&next!=='play')game.pause();activePointer=null;lastPointer=null;game.chain=[];controlSignature='';musicSync();const show=()=>{screen=next;};if(next==='collection')return withArtwork(pageKeys(),show);if(next==='menu')return withArtwork(menuKeys(),show);if(next==='outfits')return withArtwork(data.catalog.skins.slice(outfitPage*4,outfitPage*4+4).map(s=>'skin_'+s.id),show);if(next==='results'&&game.result?.newCharacter)return withArtwork(['char_'+game.result.newCharacter],show);show();}
 function prepareFever(){art.preparingFever=true;try{draw();}finally{art.preparingFever=false;}}
 function start(){adultSession=false;idle?.reset();const candidates=navigator.onLine?game.allowed:game.allowed.filter(id=>characterKeys(id).every(k=>art.get(k)));game.start(undefined,candidates,game.profile.easy!==false);game.pause();return withArtwork(roundKeys(),()=>{world.reset();fx.reset();lastSecond=60;lastSkill=false;lastCombo=0;screen='play';activePointer=null;focusedID=null;saveClock=0;game.resume();prepareFever();if(document.hidden)pause();musicSync();announce(game.round.easy?'Tap matching friends.':'Connect three matching plushies.');});}
 function resume(){adultSession=false;idle?.reset();return withArtwork(roundKeys(),()=>{game.resume();screen='play';activePointer=null;lastPointer=null;world.wake();prepareFever();if(document.hidden)pause();musicSync();});}
@@ -166,7 +166,7 @@ function draw(){buttons=[];ctx.setTransform(canvas.width/layout.width,0,0,canvas
  art.fever=(screen==='play'||screen==='paused')&&fx.fever;art.phase=game.profile.motion?uiTime:0;
  const stage=document.querySelector('#stage');if(stage.dataset.screen!==screen)stage.dataset.screen=screen;
  if(drawSimple({screen,wide:layout.wide,game,data,image,label,button,go,start,resume,uiTime,collectionPage,turnPage,chooseHero,gate:adultGate,gateSelect:key=>{if(adultGate&&!adultGate.select(key))adultGate=new AdultGate();},gateSubmit,gateCancel,toggleEasy:()=>{game.profile.easy=game.profile.easy===false;game.save();}})){syncControls();return;}
- if(drawPolish({ctx,screen,wide:layout.wide,game,data,image,label,button,groundShadow,go,start,resume,practice,shareResult,enterChallenge,createChallenge,showSettings,resultAge:fx.time-resultAt,fx,purchaseFeedback:()=>{sound('purchase');announce('Added to your bag. Choose Use next to equip it.');}})){if(screen==='results')fx.draw(ctx,{afterShade:true});syncControls();return;}
+ if(drawPolish({ctx,screen,wide:layout.wide,game,data,image,label,button,groundShadow,go,start,resume,practice,shareResult,enterChallenge,createChallenge,showSettings,outfitPage,turnOutfitPage:step=>{outfitPage+=step;go('outfits');},resultAge:fx.time-resultAt,fx,purchaseFeedback:()=>{sound('purchase');announce('Added to your bag. Choose Use next to equip it.');}})){if(screen==='results')fx.draw(ctx,{afterShade:true});syncControls();return;}
  if(layout.wide){
   drawDesktop({ctx,art,game,data,screen,image,label,button,meter,portrait,go,start,resume,pause,showSettings,toggleLayout,drawBodies,drawFeverLights,fx,uiTime,resultAt,collectionPage,turnPage,chooseHero,card,powerText,input:inputMode,
    keepControls:ids=>{buttons=buttons.filter(b=>ids.includes(b.id));},replaceBack:()=>{buttons.find(b=>b.id==='back').action=()=>go(screenBeforeSettings);},
@@ -189,7 +189,7 @@ function drain(){for(const e of game.feedback.splice(0)){if(['pop','super','shuf
  if(['pop','shuffle','bubbleBorn','super'].includes(e.kind))world.wake();
  if(e.kind==='sound')sound(e.name);else if(e.kind==='select'){world.bump(e.body,2.5);sound('select',Math.min(1.45,1+e.count*.025));if(e.count===7)sound('chain_bloom');}else if(e.kind==='shuffle')sound('shuffle');else if(e.kind==='fever')sound('fever_start');else if(e.kind==='feverEnd')sound('fever_end');
  else if(e.kind==='announcement'){announce(e.text);if(e.text==='TIME UP')sound('time_up');}
- else if(e.kind==='results'){screen='results';resultAt=fx.time;sound(game.result?.stars||game.result?.levelUp?'reward_chime':'result');musicSync();announce(game.round.easy?'Hooray!':'Time up. '+game.round.score+' points.');}
+ else if(e.kind==='results'){go('results');resultAt=fx.time;sound(game.result?.stars||game.result?.levelUp?'reward_chime':'result');musicSync();announce(game.round.easy?'Hooray!':'Time up. '+game.round.score+' points.');}
 }}
 function frame(now){const dt=lastTime?Math.min(.05,(now-lastTime)/1000):0;lastTime=now;
  if(screen==='play'&&!game.paused){uiTime+=dt;game.tick(dt);if(!game.paused&&!game.superLeft&&!game.has('stop')&&!game.round.finale)world.advance(game.round.bodies,dt*(game.has('slow')?.55:1),game.profile.motion,game.round.feverLeft>0);idle.update(dt,activePointer!==null);fx.update(dt);drain();

@@ -29,3 +29,11 @@ export function award(catalog,profile,r){
 }
 export function challengeCode(seed,index){seed=integer(seed,4294967295)||1;return `PP1-${seed}-${index}-${(seed%997+index*31+73)%997}`;}
 export function parseChallenge(input,count){const s=String(input).trim().toUpperCase();if(!/^PP1-[0-9]{1,10}-[0-9]{1,3}-[0-9]{1,3}$/.test(s))return null;const [,a,b]=s.split('-'),seed=Number(a),index=Number(b);if(!seed||seed>4294967295||index>=count||challengeCode(seed,index)!==s)return null;return {seed,index,code:s};}
+
+// Preview access never becomes earned ownership. Credit old completed rounds once.
+export function migrateCharacters(data,profile){
+ const p=profile.progress,valid=data.characters.map(c=>c.id).filter(id=>!data.catalog.freeCharacters.includes(id));
+ const previous=p.earnedCharacters,rounds=Math.min(135,Object.values(p.friends).reduce((n,f)=>n+Math.min(135,f.rounds||0),0));
+ p.earnedCharacters=[...new Set((Array.isArray(previous)?previous:valid.slice(0,rounds)).filter(id=>valid.includes(id)))];
+ return JSON.stringify(previous)!==JSON.stringify(p.earnedCharacters);
+}

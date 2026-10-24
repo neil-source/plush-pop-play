@@ -24,7 +24,7 @@ export function drawSimple(a){
   B('parent-home','Back to play',c,h-85,290,78,()=>go('menu'),{icon:'back',color:'purple'});return true;
  }
  if(screen==='collection'){
-  back();L('PICK A FRIEND',c,120,36,w-60);
+  back();L('PICK A FRIEND',c,120,36,w-60);L(g.earnedAccess.length+' / 140 friends earned',c,161,18,w-60);L(g.nextFriend?'Next: '+a.data.characters.find(k=>k.id===g.nextFriend).name+' - finish 30 pops':'You have every friend!',c,190,15,w-60);
   const columns=wide?4:3,count=wide?12:9,rows=3,cx=wide?440:270;
   g.allowed.slice(collectionPage*count,(collectionPage+1)*count).forEach((id,i)=>{
    const x=wide?150+i%4*195:105+i%3*165,y=(wide?240:279)+Math.floor(i/columns)*(wide?157:165),selected=id===g.profile.hero;
@@ -47,8 +47,9 @@ export function drawSimple(a){
  }
  if(screen==='results'&&g.round?.easy){
   const r=g.round,earned=g.result||{},x=wide?350:c;
-  L('HOORAY!',x,125,50,500);I('char_'+r.hero,x,wide?350:345,240,240);
+  L('HOORAY!',x,125,50,500);I('char_'+(earned.newCharacter||r.hero),x,wide?350:345,240,240);L(earned.newCharacter?'New friend: '+a.data.characters.find(k=>k.id===earned.newCharacter).name:g.nextFriend?'Finish 30 pops for a new friend':'All friends collected!',x,190,24,500);
   I('polish_upgrade_star',x-125,wide?570:552,86,86);L('+'+(earned.stars||0),x-40,wide?570:552,40,90);I('icon_coin',x+74,wide?570:552,66,66);L('+'+(r.coins+(earned.coins||0)),x+170,wide?570:552,32,130);
+  if(earned.newCharacter)B('play-new-friend','Play with '+a.data.characters.find(k=>k.id===earned.newCharacter).name,wide?900:c,wide?250:635,350,62,()=>{g.selectHero(earned.newCharacter);start();},{color:'gold',size:23});
   B('again','Play again',wide?900:c,wide?390:741,350,112,start,{color:'green',icon:'play'});L('Play again',wide?900:c,wide?485:824,26,390);
   B('home','Home',wide?900:c,wide?615:909,150,70,()=>go('menu'),{icon:'back',color:'purple'});return true;
  }

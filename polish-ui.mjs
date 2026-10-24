@@ -18,7 +18,7 @@ export function drawPolish(api){
   return true;
  }
  if(screen==='boosts'){
-  title('PLUSH SHOP');L('Little helpers. Bigger adventures.',w/2,151,17,w-80);
+  title('PLUSH SHOP');B('outfits','30 outfits',w/2,155,240,50,()=>go('outfits'),{color:'gold',size:20});
   const offers=[['time','Extra time','5 extra seconds',40],['score','More points','15% more round points',60],['skill','Super start','Start with a ready super',80]];
   L('BOOSTS  /  Use your earned coins',w/2,wide?194:212,21,w-80);
   offers.forEach(([id,name,detail,cost],i)=>{
@@ -32,6 +32,19 @@ export function drawPolish(api){
   L('Using 1 spends one boost on your next new round.',w/2,wide?638:806,15,w-60);
   B('shop-play','Earn coins',w/2-130,wide?715:884,232,64,start,{color:'gold',size:23});B('shop-upgrades','Upgrades',w/2+130,wide?715:884,232,64,()=>go('friends'),{color:'blue',size:23});
   L('Coins come from playing. Boosts are optional.',w/2,h-16,14,w-60);return true;
+ }
+ if(screen==='outfits'){
+  title('30 OUTFITS');L('Cosmetic outfits - one-time Apple purchases',w/2,163,18,w-50);
+  const page=api.outfitPage||0,skins=d.catalog.skins.slice(page*4,page*4+4);
+  skins.forEach((s,i)=>{const x=wide?315+(i%2)*570:141+(i%2)*258,y=(wide?315:335)+Math.floor(i/2)*(wide?216:235);
+   I('welcome_card',x,y,wide?510:238,wide?198:220);I('skin_'+s.id,wide?x-140:x,y-26,130,130,{bodyDiameter:100});
+   L(s.name,wide?x+85:x,wide?y-35:y+63,22,wide?270:220);
+   L(d.characters.find(c=>c.id===s.character).name,wide?x+85:x,wide?y+5:y+91,17,wide?270:220);
+  });
+  B('outfits-previous','Previous outfits',wide?200:70,wide?685:766,86,66,()=>api.turnOutfitPage(-1),{icon:'back',disabled:page===0});
+  L((page+1)+' / '+Math.ceil(d.catalog.skins.length/4),w/2,wide?685:766,22,230);
+  B('outfits-next','Next outfits',wide?1000:470,wide?685:766,86,66,()=>api.turnOutfitPage(1),{icon:'play',disabled:(page+1)*4>=d.catalog.skins.length});
+  L('Outfits are bought in the Apple app.',w/2,wide?750:844,20,w-60);L('All characters can be earned by playing.',w/2,wide?780:883,17,w-60);return true;
  }
  if(screen==='friends'){
   const power=g.characterLevel(),cost=g.upgradeCost(),ready=cost&&g.profile.coins>=cost.coins&&p.stars>=cost.stars;
@@ -75,7 +88,7 @@ export function drawPolish(api){
   I('welcome_card',wide?860:270,wide?351:552,wide?620:500,298);L(g.newBest?'NEW BEST!':'NICE PLAY!',wide?330:270,104,42,wide?570:490);I('polish_medal',wide?330:270,wide?265:223,142,142);L(Math.round(r.score*Math.min(1,t/.85)),wide?330:270,wide?438:340,58,500);L('POINTS',wide?330:270,wide?496:385,18,450);
   const x=wide?860:270;L('+'+r.coins+' round coins  +'+a.coins+' rewards',x,wide?196:437,23,wide?570:485);L('Chain '+r.bestChain+'   Popped '+r.popped,x,wide?245:482,20,480);
   L('+'+a.xp+' friendship - '+c.friendshipNames[level(c,rf?.xp||0)],x,wide?313:536,23,wide?580:485,appear(.9));
-  L(a.stars?'+'+a.stars+' Power Star for playing!':'Play a round to earn a Power Star',x,wide?390:601,23,wide?570:475,appear(1.15));L(a.badge?'New character badge!':a.levelUp?'Friendship level up!':'Use your stars to upgrade your plushies.',x,wide?455:653,18,480,appear(1.4));
+  L(a.stars?'+'+a.stars+' Power Star for playing!':'Play a round to earn a Power Star',x,wide?390:601,23,wide?570:475,appear(1.15));L(a.newCharacter?'New friend: '+d.characters.find(c=>c.id===a.newCharacter).name:a.badge?'New character badge!':a.levelUp?'Friendship level up!':'Use your stars to upgrade your plushies.',x,wide?455:653,18,480,appear(1.4));
   const lv=level(c,rf?.xp||0),low=c.friendship[lv],high=c.friendship[Math.min(lv+1,c.friendship.length-1)],amount=high>low?Math.min(1,((rf?.xp||0)-low)/(high-low)):1;
   I('meter_navy',x,wide?338:555,390,10,appear(.9));const filled=390*amount*Math.max(0,Math.min(1,(t-.9)/.65));if(filled>0)I('meter_gold',x-195+filled/2,wide?338:555,filled,10,appear(.9));
   if(g.profile.motion&&(a.stars||a.levelUp)&&t>=1.1&&t<1.82){const u=Math.min(1,(t-1.1)/.55),fromX=wide?330:270,fromY=wide?265:223,toY=wide?390:601;I(a.stars?'polish_upgrade_star':'icon_coin',(1-u)**2*fromX+2*(1-u)*u*(x+200)+u*u*x,(1-u)**2*fromY+2*(1-u)*u*370+u*u*toY,40,40,{alpha:Math.min(1,(1.82-t)/.16),rainbow:false});}
