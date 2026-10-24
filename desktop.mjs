@@ -38,7 +38,7 @@ export function drawDesktop(api){
    // Only overlay controls should receive clicks while paused.
    api.keepControls(['resume','new','settings','home']);return;
   }
-  if(r.ready>0){label('READY',600,290,45);label(r.easy?'Tap matching friends':'Connect '+game.minimumChain+' matching plushies',600,338,24,490);}
+  if(r.ready>0){label('READY',600,290,45);label('Connect '+game.minimumChain+' matching plushies',600,338,24,490);}
   else if(r.elapsed<.65&&!r.popped&&game.superLeft<=0)label('GO!',600,310,58);
   if(fx.super){const t=fx.time-fx.super.start,fade=Math.min(1,t/.3,(fx.super.duration-t)/.15);ctx.fillStyle='rgba(0,0,0,'+Math.max(0,.32*fade)+')';ctx.fillRect(0,0,1200,800);ctx.save();ctx.translate(330,-74);fx.drawSuper(ctx);ctx.restore();}
   ctx.save();ctx.translate(330,-74);fx.draw(ctx,{afterShade:true});ctx.restore();

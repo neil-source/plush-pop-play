@@ -5,7 +5,7 @@ export function drawSimple(a){
  const back=()=>B('back','Back',wide?90:55,54,76,76,()=>go('menu'),{color:'purple',icon:'back'});
  if(screen==='options'){
   back();L('SETTINGS',c,119,36,w-70);
-  B('play-style',g.profile.easy!==false?'Easy: tap, no timer':'Classic: drag, timed',c,215,440,80,toggleEasy,{color:'gold',size:24});
+  B('play-style',g.profile.easy!==false?'Easy: no timer':'Classic: drag, timed',c,215,440,80,toggleEasy,{color:'gold',size:24});
   L('Changes apply to the next new round.',c,282,17,w-50);
   const rows=wide?[[c-195,386],[c+195,386],[c-195,501],[c+195,501]]:[[c,365],[c,470],[c,575],[c,680]];
   [['friends','Upgrades'],['boosts','Shop'],['settings','Sound and motion'],['challenge','Friend challenge']].forEach(([id,name],i)=>B(id,name,...rows[i],wide?340:360,80,()=>go(id),{color:i%2?'gold':'green',size:25}));
@@ -28,9 +28,9 @@ export function drawSimple(a){
   B('collection-play','Play with this friend',wide?1010:c,wide?600:877,wide?290:340,94,start,{color:'green',icon:'play'});return true;
  }
  if(screen==='learn'){
-  back();L('TAP MATCHING FRIENDS',c,135,32,w-60);
+  back();L('CONNECT 3 FRIENDS',c,135,32,w-60);
   for(const dx of [-125,0,125])I('char_'+g.profile.hero,c+dx,wide?330:370,114,114,{alpha:g.profile.motion?.75+Math.sin(a.uiTime*3+dx/125)*.25:1});
-  L('Tap a pair. Pop!',c,wide?220:250,29,w-50);I('polish_upgrade_star',c,wide?495:580,110,110);L('Take your time.',c,wide?588:729,26,w-40);
+  L('Drag across 3. Release to pop!',c,wide?220:250,26,w-50);I('polish_upgrade_star',c,wide?495:580,110,110);L('Take your time.',c,wide?588:729,26,w-40);
   B('lesson-play','Play',c,h-95,340,96,start,{color:'green',icon:'play'});return true;
  }
  if(screen==='results'&&g.round?.easy){

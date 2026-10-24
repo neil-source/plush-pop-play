@@ -48,7 +48,7 @@ function syncControls(){
 }
 function go(next){if(next==='settings'&&screen!=='settings')screenBeforeSettings=screen;cancelBubble();if(game.practice&&next==='menu'){game.endPractice();world.reset();fx.reset();}idle?.reset();if(screen==='play'&&next!=='play')game.pause();activePointer=null;lastPointer=null;game.chain=[];controlSignature='';musicSync();const show=()=>{screen=next;};if(next==='collection')return withArtwork(pageKeys(),show);if(next==='menu')return withArtwork(menuKeys(),show);if(next==='outfits')return withArtwork(data.catalog.skins.slice(outfitPage*4,outfitPage*4+4).map(s=>'skin_'+s.id),show);if(next==='results'&&game.result?.newCharacter)return withArtwork(['char_'+game.result.newCharacter],show);show();}
 function prepareFever(){art.preparingFever=true;try{draw();}finally{art.preparingFever=false;}}
-function start(){idle?.reset();const candidates=navigator.onLine?game.allowed:game.allowed.filter(id=>characterKeys(id).every(k=>art.get(k)));game.start(undefined,candidates,game.profile.easy!==false);game.pause();return withArtwork(roundKeys(),()=>{world.reset();fx.reset();lastSecond=60;lastSkill=false;lastCombo=0;screen='play';activePointer=null;focusedID=null;saveClock=0;game.resume();prepareFever();if(document.hidden)pause();musicSync();announce(game.round.easy?'Tap matching friends.':'Connect three matching plushies.');});}
+function start(){idle?.reset();const candidates=navigator.onLine?game.allowed:game.allowed.filter(id=>characterKeys(id).every(k=>art.get(k)));game.start(undefined,candidates,game.profile.easy!==false);game.pause();return withArtwork(roundKeys(),()=>{world.reset();fx.reset();lastSecond=60;lastSkill=false;lastCombo=0;screen='play';activePointer=null;focusedID=null;saveClock=0;game.resume();prepareFever();if(document.hidden)pause();musicSync();announce('Drag to connect three matching plushies.');});}
 function resume(){idle?.reset();return withArtwork(roundKeys(),()=>{game.resume();screen='play';activePointer=null;lastPointer=null;world.wake();prepareFever();if(document.hidden)pause();musicSync();});}
 function pause(){cancelBubble();idle?.reset();if(screen==='play'){game.pause();screen='paused';activePointer=null;lastPointer=null;musicSync();announce('Paused.');}}
 function showSettings(){screenBeforeSettings=screen;go('settings');}
@@ -150,7 +150,7 @@ function drawHUD(){const r=game.round;
  button('shuffle','Shuffle',477,887,76,76,()=>game.shuffle(),{icon:'shuffle',color:'gold',disabled:!game.canAct||r.shuffleCooldown>0});
  if(r.shuffleCooldown>0)label(Math.ceil(r.shuffleCooldown),477,887,23);
  if(r.power&&!r.power.pending){const keys=Object.keys(r.power.timers).filter(k=>r.power.timers[k]>0);keys.slice(0,4).forEach((k,i)=>image('icon_'+(({stop:'clock',slow:'clock',coins:'coin',score:'trophy',link:'star',reach:'shuffle'})[k]||'star'),215+i*38,828,27));}
- if(r.ready>0){label('READY',270,342,46);label(r.easy?'Tap matching friends':'Connect '+game.minimumChain+' matching plushies',270,389,22);}
+ if(r.ready>0){label('READY',270,342,46);label('Connect '+game.minimumChain+' matching plushies',270,389,22);}
  else if(r.elapsed<.65&&!r.popped&&game.superLeft<=0)label('GO!',270,366,58);
 }
 function drawFeverLights(){if(!fx.fever)return;const sides=[data.bowl.top,data.bowl.left,data.bowl.right,data.bowl.floor];let n=0;for(const line of sides)for(let i=0;i<line.length;i+=Math.max(1,Math.floor(line.length/10))){const [x,y]=line[i];image('vfx_sparkle',x,y,13,13,{alpha:game.profile.motion?.45+Math.sin(uiTime*2-n++*.45)*.2:.65});}}

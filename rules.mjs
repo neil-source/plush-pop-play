@@ -102,7 +102,7 @@ export class Game{
  }
  get canAct(){return !!this.round&&!this.paused&&!this.finished&&this.round.ready<=0&&this.superLeft<=0&&!this.round.finale;}
  has(k){return !this.round?.power?.pending&&(this.round?.power?.timers[k]||0)>0;}
- get minimumChain(){return this.round?.easy||this.has('chain')?2:3;}
+ get minimumChain(){return this.has('chain')?2:3;}
  comboActive(){const r=this.round;return r.combo>0&&(r.feverLeft>0||r.elapsed-r.lastClear<2.3);}
  matches(a,b){return a.type!=='bubble'&&b.type!=='bubble'&&(a.type===b.type||this.has('link'));}
  adjacent(a,b){return distance(a,b)<RADIUS*2+24+(this.has('reach')?65:0);}
@@ -111,8 +111,7 @@ export class Game{
   const last=this.round.bodies.find(b=>b.id===this.chain.at(-1));if(this.chain.includes(id)||(last&&!(this.matches(last,b)&&this.adjacent(last,b))))return;
   this.chain.push(id);this.emit('select',{body:clone(b),count:this.chain.length});
  }
- easyGroup(id){const first=this.round?.bodies.find(b=>b.id===id&&b.type!=='bubble'&&playable(b));if(!first)return [];const group=[first];for(let i=0;i<group.length&&group.length<24;i++)for(const b of this.round.bodies)if(!group.includes(b)&&playable(b)&&this.matches(group[i],b)&&this.adjacent(group[i],b)){group.push(b);if(group.length===24)break;}return group.map(b=>b.id);}
- release(){if(!this.canAct){this.chain=[];return;}if(this.round.easy&&this.chain.length===1){const group=this.easyGroup(this.chain[0]);this.chain=[];if(group.length>=2)this.clear(group);else this.hint();return;}if(this.chain.length<this.minimumChain){if(this.chain.length)this.emit('rejected',{body:clone(this.round.bodies.find(b=>b.id===this.chain.at(-1)))});this.chain=[];return;}
+ release(){if(!this.canAct){this.chain=[];return;}if(this.chain.length<this.minimumChain){if(this.chain.length)this.emit('rejected',{body:clone(this.round.bodies.find(b=>b.id===this.chain.at(-1)))});this.chain=[];return;}
   let ids=[...this.chain];if(this.has('blast')){const chosen=this.round.bodies.filter(b=>ids.includes(b.id));ids.push(...this.round.bodies.filter(b=>b.type!=='bubble'&&!ids.includes(b.id)&&chosen.some(a=>distance(a,b)<100)).slice(0,8).map(b=>b.id));}
   this.clear(ids);this.chain=[];
  }
