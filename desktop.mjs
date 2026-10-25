@@ -14,7 +14,7 @@ export function drawDesktop(api){
   if(game.has('stop')){ctx.fillStyle='#00000024';ctx.fillRect(0,0,1200,800);}
   label('Plush Pop',160,65,34,260);
   image('panel_blue',160,425,278,628);image('panel_blue',1040,425,278,628);
-  label(r.easy?'POPS':'TIME',160,145,19,240);image('timer_face',160,216,109);label(r.easy?Math.min(30,r.popped)+'/30':Math.max(0,Math.ceil(r.timer)),160,216,r.easy?32:45,180);
+  label('TIME',160,145,19,240);image('timer_face',160,216,109);label(Math.max(0,Math.ceil(r.timer)),160,216,45,180);
   ctx.save();ctx.beginPath();ctx.moveTo(160,216);ctx.arc(160,216,64,-Math.PI/2,-Math.PI/2+Math.PI*2*Math.min(1,r.timer/60));ctx.closePath();ctx.clip();image('fx_wave_gold',160,216,120);ctx.restore();
   label('SCORE',160,314,19);image('score_pill',160,365,245,68);label(fx.value('score'),160,365,33,220);
   label('COINS',160,426,18);image('coin_pill',160,469,218,54);image('icon_coin',132,469,31);label(fx.value('coins'),182,469,27,116,{scaleX:fx.pulse('coin'),scaleY:fx.pulse('coin')});

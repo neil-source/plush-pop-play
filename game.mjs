@@ -133,7 +133,7 @@ function drawBodies(){
  ctx.restore();
 }
 function drawHUD(){const r=game.round;
- label(r.easy?'POPS':'TIME',64,15,12);image('timer_face',64,65,80);label(r.easy?Math.min(30,r.popped)+'/30':Math.max(0,Math.ceil(r.timer)),64,65,r.easy?18:32);
+ label('TIME',64,15,12);image('timer_face',64,65,80);label(Math.max(0,Math.ceil(r.timer)),64,65,32);
  ctx.save();const fraction=Math.min(1,r.timer/60);ctx.beginPath();ctx.moveTo(64,65);ctx.arc(64,65,47,-Math.PI/2,-Math.PI/2+Math.PI*2*fraction);ctx.closePath();ctx.clip();image('fx_wave_gold',64,65,88);ctx.restore();
  image('score_pill',270,49,310,64);label(fx.value('score'),270,49,33,270);image('coin_pill',270,95,190,38);image('icon_coin',230,95,30);label(fx.value('coins'),280,95,22,110,{scaleX:fx.pulse('coin'),scaleY:fx.pulse('coin')});
  button('pause','Pause',478,64,76,76,pause,{color:'gold',icon:'pause'});

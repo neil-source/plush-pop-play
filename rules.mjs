@@ -91,7 +91,7 @@ export class Game{
   const friends=[...new Set([...candidates,...this.data.catalog.freeCharacters])].filter(id=>id!==hero&&this.allowed.includes(id));
   for(let i=friends.length-1;i>0;i--){const j=Math.floor(this.random()*(i+1));[friends[i],friends[j]]=[friends[j],friends[i]];}
   this.round.active=[hero,...friends.slice(0,this.round.easy?2:4)];
-  for(const k of ['time','score','skill'])if(!(this.round.easy&&k==='time')&&!this.practice&&!challenge&&this.profile.progress.boosts.includes(k)&&this.profile.boosts[k]>0){this.profile.boosts[k]--;if(k==='time')this.round.timer+=5;if(k==='score')this.round.multiplier*=1.15;if(k==='skill')this.round.skill=this.skillGoal;}
+  for(const k of ['time','score','skill'])if(!this.practice&&!challenge&&this.profile.progress.boosts.includes(k)&&this.profile.boosts[k]>0){this.profile.boosts[k]--;if(k==='time')this.round.timer+=5;if(k==='score')this.round.multiplier*=1.15;if(k==='skill')this.round.skill=this.skillGoal;}
   for(let i=0;i<POPULATION;i++)this.spawn(i>=POPULATION-3?hero:this.choose(this.round.active));
   this.result=null;this.paused=false;this.finished=false;this.newBest=false;this.chain=[];this.hints=[];this.superLeft=0;this.feedback=[];this.emit('sound',{name:'ready'});this.save();
  }
@@ -201,8 +201,8 @@ export class Game{
   if(this.practice){r.timer=60;if(this.practiceLesson>=3)r.skill=this.skillGoal;}
   const stopped=this.has('stop')?Math.min(dt,r.power.timers.stop):0,active=dt-stopped;
   if(r.power){for(const k of Object.keys(r.power.timers))r.power.timers[k]=Math.max(0,r.power.timers[k]-dt);if(!Object.values(r.power.timers).some(v=>v>0))r.power=null;}
-  r.elapsed+=active;if(!r.easy)r.timer=Math.max(0,r.timer-active);r.shuffleCooldown=Math.max(0,r.shuffleCooldown-active);
-  if(r.easy){if(r.popped>=30&&r.elapsed-r.lastClear>1.4){this.finish();return;}if(!this.chain.length&&!this.hintLeft&&r.elapsed-Math.max(0,r.lastClear)>4){this.hint();if(!this.hints.length&&r.shuffleCooldown<=0)this.shuffle();}}
+  r.elapsed+=active;if(!this.practice)r.timer=Math.max(0,r.timer-active);r.shuffleCooldown=Math.max(0,r.shuffleCooldown-active);
+  if(r.easy&&!this.chain.length&&!this.hintLeft&&r.elapsed-Math.max(0,r.lastClear)>4){this.hint();if(!this.hints.length&&r.shuffleCooldown<=0)this.shuffle();}
   if(r.timer<=0){this.beginFinale();return;}if(r.feverLeft>0){r.feverLeft=Math.max(0,r.feverLeft-active);if(!r.feverLeft){r.lastClear=r.elapsed;this.emit('feverEnd',{score:r.feverScore});this.save();}}
  }
 }
