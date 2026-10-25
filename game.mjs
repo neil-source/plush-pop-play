@@ -179,7 +179,7 @@ function drain(){for(const e of game.feedback.splice(0)){if(['pop','super','shuf
  else if(e.kind==='results'){go('results');resultAt=fx.time;sound(game.result?.stars||game.result?.levelUp?'reward_chime':'result');musicSync();announce(game.round.easy?'Hooray!':'Time up. '+game.round.score+' points.');}
 }}
 function frame(now){const dt=lastTime?Math.min(.05,(now-lastTime)/1000):0;lastTime=now;
- if(screen==='play'&&!game.paused){uiTime+=dt;game.tick(dt);if(!game.paused&&!game.superLeft&&!game.has('stop')&&!game.round.finale)world.advance(game.round.bodies,dt*(game.has('slow')?.55:1),game.profile.motion,game.round.feverLeft>0);idle.update(dt,activePointer!==null);fx.update(dt);drain();
+ if(screen==='play'&&!game.paused){uiTime+=dt;game.tick(dt);if(!game.paused&&!game.superLeft&&!game.has('stop')&&!game.round.finale)world.advance(game.round.bodies,dt*(game.has('slow')?.55:1),game.profile.motion,game.round.feverLeft>0,activePointer===null&&game.chain.length===0);idle.update(dt,activePointer!==null);fx.update(dt);drain();
   if(bubbleAnchor!==null&&lastPointer)updateBubblePreview(lastPointer);
   if(!game.round.easy&&game.pairTargets.length&&game.superLeft<=0&&!buddyAnnounced){buddyAnnounced=true;sound('buddy_ready');fx.badge('BUDDY READY','Tap TAG for a second attack',270,290);}if(!game.pairTargets.length)buddyAnnounced=false;
   const r=game.round,second=Math.ceil(r.timer);if(second!==lastSecond&&second>0&&second<=5&&!r.finale){fx.badge(String(second),'',160,280,.5);sound('time_warning');}lastSecond=second;

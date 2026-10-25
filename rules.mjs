@@ -96,7 +96,13 @@ export class Game{
   for(let i=0;i<POPULATION;i++)this.spawn(i>=POPULATION-3?hero:this.choose(this.round.active));
   this.result=null;this.paused=false;this.finished=false;this.newBest=false;this.chain=[];this.hints=[];this.superLeft=0;this.feedback=[];this.emit('sound',{name:'ready'});this.save();
  }
- spawn(type){const r=this.round,x=60+(r.lane++%7)*70+this.random()*10-5;let y=92;
+ spawn(type){const r=this.round,jitter=this.random()*10-5,bottom=this.data.bowl?Math.max(...this.data.bowl.floor.map(p=>p[1])):774;let lane=r.lane%7,deepest=-Infinity;
+  for(let offset=0;offset<7;offset++){
+   const candidate=(r.lane+offset)%7,x=60+candidate*70;let roof=bottom-RADIUS,queued=0;
+   for(const b of r.bodies)if(Math.abs(b.x-x)<RADIUS*2){if(b.y<205)queued++;else roof=Math.min(roof,b.y-RADIUS*2);}
+   const depth=roof-queued*RADIUS*2-Math.abs(x-270)*.4;if(depth>deepest){deepest=depth;lane=candidate;}
+  }
+  const x=60+lane*70+jitter;r.lane++;let y=92;
   for(const b of r.bodies)if(Math.abs(b.x-x)<RADIUS*2)y=Math.min(y,b.y-CANVAS-8);
   // A gentle inward drift prevents straight towers against the side walls.
   const id=r.nextID++,rest=((id*137)%101/100-.5)*1.3;r.bodies.push({id,type,x,y,vx:(270-x)*.1,vy:85,angle:rest*.4,kind:'blast',squash:0});

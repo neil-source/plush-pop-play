@@ -2,11 +2,22 @@ import {RADIUS} from './rules.mjs';
 import {SoftPose} from './motion.mjs';
 const radius=b=>b.type==='bubble'?24:RADIUS;
 const CELL=Math.max(48,RADIUS*2);
+// Match the native wall-stack assist; only move toward an unoccupied short step.
+export function sideVelocity(b,bodies,left,right,dt,floorY=Infinity){
+ const r=radius(b);if(b.y<205||b.y>816||Math.abs(b.vy)>=90||Math.abs(b.vx)>=75)return b.vx;
+ const direction=b.x<left+r*4.8?1:b.x>right-r*4.8?-1:0;
+ if(!direction||direction*b.vx>=60)return b.vx;
+ if(b.y>=floorY-r*2)return b.vx;
+ const x=b.x+direction*r*.65,y=b.y;
+ for(const other of bodies)if(other.id!==b.id&&Math.hypot(other.x-x,other.y-y)<r+radius(other)-2)return b.vx;
+ return direction*Math.min(60,direction*b.vx+240*dt);
+}
 export class World{
  constructor(geometry){
   this.accumulator=0;this.quiet=0;this.sleeping=false;this.poses=new Map();
   this.left=geometry.left[0][0];this.right=geometry.right[0][0];
   const floor=geometry.floor,at=x=>{for(let i=1;i<floor.length;i++)if(x<=floor[i][0]){const [ax,ay]=floor[i-1],[bx,by]=floor[i];return ay+Math.max(0,(x-ax)/(bx-ax))*(by-ay);}return floor.at(-1)[1];};
+  this.floorAt=at;
   this.limits=new Map();for(const r of [RADIUS,24])this.limits.set(r,Float64Array.from({length:541},(_,x)=>Math.min(...Array.from({length:24},(_,i)=>at(x+Math.cos(i*Math.PI/12)*r)-Math.sin(i*Math.PI/12)*r))));
  }
  ground(b){const values=this.limits.get(radius(b)),x=Math.max(0,Math.min(539.99,b.x)),a=Math.floor(x);return values[a]+(values[a+1]-values[a])*(x-a);}
@@ -20,12 +31,14 @@ export class World{
    if(b.vy>0){b.vx+=slope*b.vy*.25;b.vy*= -.04;}b.vx*=.97;
   }
  }
- advance(bodies,dt,motion=true,fever=false){
-  if(!this.sleeping){this.accumulator+=Math.min(.1,dt);while(this.accumulator>=1/120){this.step(bodies,1/120,motion,fever);this.accumulator-=1/120;}}
+ advance(bodies,dt,motion=true,fever=false,settle=true){
+  if(settle&&this.settlingHeld)this.wake();this.settlingHeld=!settle;
+  if(!this.sleeping){this.accumulator+=Math.min(.1,dt);while(this.accumulator>=1/120){this.step(bodies,1/120,motion,fever,settle);this.accumulator-=1/120;}}
   const ids=new Set(bodies.map(b=>b.id));for(const id of this.poses.keys())if(!ids.has(id))this.poses.delete(id);
   for(const b of bodies)if(b.type!=='bubble')this.pose(b).step(dt,b.vy,motion);
  }
- step(bodies,dt,motion,fever){
+ step(bodies,dt,motion,fever,settle=true){
+  if(settle)for(const b of bodies)b.vx=sideVelocity(b,bodies,this.left,this.right,dt,this.floorAt(b.x));
   for(const b of bodies){b.px=b.x;b.py=b.y;b.vy=Math.min(760,b.vy+1100*dt);b.vx*=.997;b.x+=b.vx*dt;b.y+=b.vy*dt;
    const rest=b.type==='bubble'?0:((b.id*137)%101/100-.5)*1.3,lean=motion?Math.max(-.18,Math.min(.18,b.vx/1800)):0;
    b.angle+=(rest+lean-b.angle)*Math.min(1,dt*4);this.contain(b);
