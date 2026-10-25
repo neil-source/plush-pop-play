@@ -23,7 +23,7 @@ const ALIASES = {
   icon_coin: 'vfx_coin', selection_ring: 'vfx_ring', chain_link: 'vfx_ribbon', chain_node: 'vfx_sparkle',
   panel_blue: 'panel_dark', panel_navy: 'panel_dark', card_blue: 'panel_teal', card_cream: 'panel_cream',
   score_pill: 'meter_track', coin_pill: 'meter_track', skill_frame: 'panel_teal', tooltip: 'wide_teal',
-  timer_face: 'round_teal', meter_navy: 'meter_track', meter_pink: 'meter_coral',
+  meter_navy: 'meter_track', meter_pink: 'meter_coral',
   meter_purple: 'wide_lavender', meter_green: 'wide_teal', meter_cyan: 'wide_teal',
 };
 const BUBBLES = {blast: 'star', time: 'clock', coin: 'coin', score: 'trophy'};

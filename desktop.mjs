@@ -14,8 +14,8 @@ export function drawDesktop(api){
   if(game.has('stop')){ctx.fillStyle='#00000024';ctx.fillRect(0,0,1200,800);}
   label('Plush Pop',160,65,34,260);
   image('panel_blue',160,425,278,628);image('panel_blue',1040,425,278,628);
-  label('TIME',160,145,19,240);image('timer_face',160,216,109);label(Math.max(0,Math.ceil(r.timer)),160,216,45,180);
-  ctx.save();ctx.beginPath();ctx.moveTo(160,216);ctx.arc(160,216,64,-Math.PI/2,-Math.PI/2+Math.PI*2*Math.min(1,r.timer/60));ctx.closePath();ctx.clip();image('fx_wave_gold',160,216,120);ctx.restore();
+  image('timer_face',160,216,132);label('TIME',160,184,14);label(Math.max(0,Math.ceil(r.timer)),160,223,45,180);
+  meter('meter_gold',Math.max(0,Math.min(1,r.timer/60)),160,257,64,8);
   label('SCORE',160,314,19);image('score_pill',160,365,245,68);label(fx.value('score'),160,365,33,220);
   label('COINS',160,426,18);image('coin_pill',160,469,218,54);image('icon_coin',132,469,31);label(fx.value('coins'),182,469,27,116,{scaleX:fx.pulse('coin'),scaleY:fx.pulse('coin')});
   if(!r.easy&&r.combo>1&&game.comboActive())label(r.combo+' COMBO',160,536,23,235);
@@ -68,7 +68,7 @@ export function drawDesktop(api){
  }
  if(screen==='boosts'){
   header('BOOSTS');label(game.profile.coins+' coins',600,152,30);
-  [['time','5 extra seconds',40],['score','15% more points',60],['skill','Start with a full skill',80]].forEach(([id,title,cost],i)=>{
+  [['score','15% more points',60],['skill','Start with a full skill',80]].forEach(([id,title,cost],i)=>{
    const x=225+i*375;image('panel_blue',x,417,338,394);image('icon_'+({time:'clock',score:'trophy',skill:'star'})[id],x,303,83);label(title,x,407,26,302);label('Owned: '+(game.profile.boosts[id]||0),x,458,21,280);button('use-'+id,game.profile.progress.boosts.includes(id)?'Selected':'Select',x,503,230,42,()=>game.toggleBoost(id),{color:game.profile.progress.boosts.includes(id)?'green':'blue',size:20});
    button('buy-'+id,cost+' coins',x,573,270,62,()=>{if(game.buyBoost(id))api.purchaseFeedback();},{disabled:game.profile.coins<cost,color:'gold',size:27});
   });label('Only selected boosts are used next round.',600,694,23,1050);footer();return;

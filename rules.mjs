@@ -46,7 +46,7 @@ export class Game{
   this.profile={hero:'stitch',coins:0,best:0,sound:true,music:true,motion:true,layout:'auto',boosts:{}};
   this.round=null;this.paused=true;this.finished=false;this.chain=[];this.hints=[];this.feedback=[];this.superLeft=0;this.hintLeft=0;this.newBest=false;this.savingFailed=false;
   this.load();this.profile.progress=progress(this.profile.progress);this.practice=false;this.practiceLesson=0;this.result=null;this.nextChallenge=null;
-  if(this.round?.metrics)delete this.round.metrics.mission;const oldUpgrades=migrateUpgrades(this.data.progression,this.profile);if(migrateCharacters(this.data,this.profile)||oldUpgrades)this.save();
+  if(this.round?.metrics)delete this.round.metrics.mission;const oldUpgrades=migrateUpgrades(this.data.progression,this.profile),retiredTimeBoost=this.retireTimeBoost();if(migrateCharacters(this.data,this.profile)||oldUpgrades||retiredTimeBoost)this.save();
   if(this.round&&(this.round.boardVersion||4)<BOARD_VERSION){
    const r=this.round,plushies=r.bodies.filter(b=>b.type!=='bubble');
    if(!r.finale){
@@ -56,6 +56,7 @@ export class Game{
    r.boardVersion=BOARD_VERSION;this.save();
   }
  }
+ retireTimeBoost(){const count=this.profile.boosts.time||0,selected=this.profile.progress.boosts.includes('time');this.profile.coins=Math.min(1e9,this.profile.coins+count*40);delete this.profile.boosts.time;this.profile.progress.boosts=this.profile.progress.boosts.filter(id=>id!=='time');return count>0||selected;}
  get earnedAccess(){return [...new Set([...this.data.catalog.freeCharacters,...(this.profile.progress?.earnedCharacters||[])])];}
  get allowed(){return this.previewCharacters?this.data.characters.map(c=>c.id):this.earnedAccess;}
  get nextFriend(){return this.data.characters.find(c=>!this.earnedAccess.includes(c.id))?.id;}
@@ -91,7 +92,7 @@ export class Game{
   const friends=[...new Set([...candidates,...this.data.catalog.freeCharacters])].filter(id=>id!==hero&&this.allowed.includes(id));
   for(let i=friends.length-1;i>0;i--){const j=Math.floor(this.random()*(i+1));[friends[i],friends[j]]=[friends[j],friends[i]];}
   this.round.active=[hero,...friends.slice(0,this.round.easy?2:4)];
-  for(const k of ['time','score','skill'])if(!this.practice&&!challenge&&this.profile.progress.boosts.includes(k)&&this.profile.boosts[k]>0){this.profile.boosts[k]--;if(k==='time')this.round.timer+=5;if(k==='score')this.round.multiplier*=1.15;if(k==='skill')this.round.skill=this.skillGoal;}
+  for(const k of ['score','skill'])if(!this.practice&&!challenge&&this.profile.progress.boosts.includes(k)&&this.profile.boosts[k]>0){this.profile.boosts[k]--;if(k==='score')this.round.multiplier*=1.15;if(k==='skill')this.round.skill=this.skillGoal;}
   for(let i=0;i<POPULATION;i++)this.spawn(i>=POPULATION-3?hero:this.choose(this.round.active));
   this.result=null;this.paused=false;this.finished=false;this.newBest=false;this.chain=[];this.hints=[];this.superLeft=0;this.feedback=[];this.emit('sound',{name:'ready'});this.save();
  }
@@ -182,7 +183,7 @@ export class Game{
  pause(){this.paused=true;this.chain=[];this.save();}
  resume(){if(this.round&&!this.finished)this.paused=false;}
  selectHero(id){if(this.allowed.includes(id)){this.profile.hero=id;this.save();}}
- toggleBoost(id){const p=this.profile.progress;if(!['time','score','skill'].includes(id))return;p.boosts=p.boosts.includes(id)?p.boosts.filter(x=>x!==id):[...p.boosts,id];this.save();}
+ toggleBoost(id){const p=this.profile.progress;if(!['score','skill'].includes(id))return;p.boosts=p.boosts.includes(id)?p.boosts.filter(x=>x!==id):[...p.boosts,id];this.save();}
  characterLevel(id=this.profile.hero){return powerLevel(this.profile.progress,id);}
  get skillGoal(){return 13-Math.max(1,Math.min(5,this.round?.upgradeLevel||1));}
  upgradeCost(id=this.profile.hero){const level=this.characterLevel(id);return this.data.progression.upgrades.find(u=>u.level===level+1)||null;}
@@ -194,7 +195,7 @@ export class Game{
  beginPractice(power=false){if(!this.practice){this.practiceSaved=this.round;this.practiceWasFinished=this.finished;}this.practice=true;this.practiceLesson=power?3:0;this.start(12345);this.round.skill=power?this.skillGoal:0;for(const b of this.round.bodies.slice(-14))b.type=this.round.hero;}
  endPractice(){if(!this.practice)return;this.round=this.practiceSaved;this.finished=this.practiceWasFinished;this.practice=false;this.paused=true;this.superLeft=0;this.chain=[];this.feedback=[];this.save();}
  get practiceText(){return ['Drag through 3 matching plushies','Now connect 7 to make a bubble','Tap your glowing bubble','Tap your leader to try a super','Well done! Try Fever, or finish'][Math.min(4,this.practiceLesson)];}
- buyBoost(id){const price={time:40,score:60,skill:80}[id];if(!price||this.profile.coins<price)return false;this.profile.coins-=price;this.profile.boosts[id]=(this.profile.boosts[id]||0)+1;this.save();return true;}
+ buyBoost(id){const price={score:60,skill:80}[id];if(!price||this.profile.coins<price)return false;this.profile.coins-=price;this.profile.boosts[id]=(this.profile.boosts[id]||0)+1;this.save();return true;}
  tick(dt){if(this.paused||this.finished||!this.round)return;const r=this.round;this.hintLeft=Math.max(0,this.hintLeft-dt);if(!this.hintLeft)this.hints=[];
   if(this.superLeft>0){this.superLeft=Math.max(0,this.superLeft-dt);if(!this.superLeft){if(r.power)r.power.pending=false;this.save();}return;}
   if(r.finale){this.tickFinale(dt);return;}if(r.ready>0){r.ready=Math.max(0,r.ready-dt);if(!r.ready)this.emit('sound',{name:'go'});return;}

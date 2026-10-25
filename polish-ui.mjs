@@ -20,10 +20,10 @@ export function drawPolish(api){
  }
  if(screen==='boosts'){
   title('PLUSH SHOP');B('outfits','30 outfits',w/2,155,240,50,()=>go('outfits'),{color:'gold',size:20});
-  const offers=[['time','Extra time','5 extra seconds',40],['score','More points','15% more round points',60],['skill','Super start','Start with a ready super',80]];
+  const offers=[['score','More points','15% more round points',60],['skill','Super start','Start with a ready super',80]];
   L('BOOSTS  /  Use your earned coins',w/2,wide?194:212,21,w-80);
   offers.forEach(([id,name,detail,cost],i)=>{
-   const x=wide?218+i*382:270,y=wide?416:333+i*174,owned=g.profile.boosts[id]||0,selected=p.boosts.includes(id);
+   const x=wide?409+i*382:270,y=wide?416:333+i*174,owned=g.profile.boosts[id]||0,selected=p.boosts.includes(id);
    I('welcome_card',x,y,wide?354:492,wide?365:158);
    I('welcome_'+id,wide?x:x-183,wide?y-102:y-10,79,87);L(name,wide?x:x+45,wide?y-30:y-51,27,wide?320:340);L(detail,wide?x:x+45,wide?y+9:y-21,17,wide?320:340);
    L('In bag: '+owned,wide?x:x-182,wide?y+48:y+53,wide?18:14,wide?320:110);

@@ -87,7 +87,7 @@ function drawCollection(){
 }
 function drawBoosts(){
  label('BOOSTS',270,135,44);image('icon_coin',210,200,36);label(game.profile.coins,290,200,28);
- const offers=[['time','5 extra seconds',40],['score','15% more points',60],['skill','Start with a full skill',80]];
+ const offers=[['score','15% more points',60],['skill','Start with a full skill',80]];
  offers.forEach(([id,title,cost],i)=>{const y=330+i*175;image('panel_blue',270,y,460,150);label(title,270,y-38,24,420);label('Owned: '+(game.profile.boosts[id]||0),150,y+1,17,170);button('use-'+id,game.profile.progress.boosts.includes(id)?'Selected':'Select',150,y+43,170,43,()=>game.toggleBoost(id),{color:game.profile.progress.boosts.includes(id)?'green':'blue',size:17});button('buy-'+id,cost+' coins',355,y+22,220,62,()=>{if(game.buyBoost(id)){sound('purchase');announce('Boost ready for your next new round.');}},{disabled:game.profile.coins<cost,color:'gold',size:21});});
  label('Only selected boosts are used next round.',270,792,18,460);button('back','Back',270,870,280,76,()=>go('menu'),{color:'purple'});
 }
@@ -133,8 +133,8 @@ function drawBodies(){
  ctx.restore();
 }
 function drawHUD(){const r=game.round;
- label('TIME',64,15,12);image('timer_face',64,65,80);label(Math.max(0,Math.ceil(r.timer)),64,65,32);
- ctx.save();const fraction=Math.min(1,r.timer/60);ctx.beginPath();ctx.moveTo(64,65);ctx.arc(64,65,47,-Math.PI/2,-Math.PI/2+Math.PI*2*fraction);ctx.closePath();ctx.clip();image('fx_wave_gold',64,65,88);ctx.restore();
+ image('timer_face',64,66,92);label('TIME',64,43,10);label(Math.max(0,Math.ceil(r.timer)),64,71,32);
+ meter('meter_gold',Math.max(0,Math.min(1,r.timer/60)),64,95,44,6);
  image('score_pill',270,49,310,64);label(fx.value('score'),270,49,33,270);image('coin_pill',270,95,190,38);image('icon_coin',230,95,30);label(fx.value('coins'),280,95,22,110,{scaleX:fx.pulse('coin'),scaleY:fx.pulse('coin')});
  button('pause','Pause',478,64,76,76,pause,{color:'gold',icon:'pause'});
  if(!r.easy&&r.combo>1&&game.comboActive())label(r.combo+' COMBO',275,139,17,130);
