@@ -51,7 +51,7 @@ export function drawDesktop(api){
   image('panel_blue',910,417,442,574);
   label('LET\'S PLAY!',910,209,38,380);label(game.profile.coins+' coins',910,272,24,365);label('BEST '+game.profile.best,910,324,25,370);
   const pending=r&&!game.finished;button(pending?'resume':'play',pending?'Resume round':'Play',910,427,370,100,pending?resume:start,{color:'green',size:37});
-  button('collection','Collection',910,552,370,74,()=>go('collection'),{color:'purple',size:29});button('boosts','Boosts',910,650,370,69,()=>go('boosts'),{color:'purple'});
+  button('collection','Collection',910,552,370,74,()=>go('collection'),{color:'purple',size:29});button('shop','Shop',910,650,370,69,()=>go('outfits'),{color:'purple'});
   label(game.previewCharacters?'All 140 characters unlocked for preview':'Pick your favorite plushie and play',365,715,21,620);footer();return;
  }
  if(screen==='collection'){
@@ -65,13 +65,6 @@ export function drawDesktop(api){
   image('panel_blue',1010,415,300,536);image('char_'+game.profile.hero,1010,297,206,206);label(data.characters.find(c=>c.id===game.profile.hero).name,1010,439,27,260);label(game.powers[game.profile.hero].name,1010,492,23,260);
   // Short lines keep powers readable beside the larger collection.
   game.powers[game.profile.hero].steps.slice(0,3).forEach((step,i)=>label(powerText(step),1010,540+i*34,17,256));footer();return;
- }
- if(screen==='boosts'){
-  header('BOOSTS');label(game.profile.coins+' coins',600,152,30);
-  [['score','15% more points',60],['skill','Start with a full skill',80]].forEach(([id,title,cost],i)=>{
-   const x=225+i*375;image('panel_blue',x,417,338,394);image('icon_'+({time:'clock',score:'trophy',skill:'star'})[id],x,303,83);label(title,x,407,26,302);label('Owned: '+(game.profile.boosts[id]||0),x,458,21,280);button('use-'+id,game.profile.progress.boosts.includes(id)?'Selected':'Select',x,503,230,42,()=>game.toggleBoost(id),{color:game.profile.progress.boosts.includes(id)?'green':'blue',size:20});
-   button('buy-'+id,cost+' coins',x,573,270,62,()=>{if(game.buyBoost(id))api.purchaseFeedback();},{disabled:game.profile.coins<cost,color:'gold',size:27});
-  });label('Only selected boosts are used next round.',600,694,23,1050);footer();return;
  }
  if(screen==='settings'){
   header('SETTINGS');api.replaceBack();image('char_'+game.profile.hero,310,385,290,290);label(input==='touch'?'Touch and drag to play':'Click and drag to play',310,581,26,490);

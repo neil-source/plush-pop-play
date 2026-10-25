@@ -66,7 +66,7 @@ function drawMenu(){
  const pending=game.round&&!game.finished;
  button(pending?'resume':'play',pending?'Resume round':'Play',270,722,472,110,pending?resume:start,{color:'green',size:38});
  button('collection','Collection',151,832,222,74,()=>go('collection'),{color:'purple'});
- button('boosts','Boosts',389,832,222,74,()=>go('boosts'),{color:'purple'});
+ button('shop','Shop',389,832,222,74,()=>go('outfits'),{color:'purple'});
  label('Drag through 3+ matching plushies',270,901,17,455);
  label(inputHint({input:inputMode,appleTouch:/iPad|iPhone|iPod/.test(navigator.userAgent)||navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1,installed:navigator.standalone||matchMedia('(display-mode: standalone)').matches}),270,932,13,470);
 }
@@ -84,12 +84,6 @@ function drawCollection(){
  const power=game.powers[game.profile.hero];label(power.name,270,733,25,450);
  label(power.steps.map(powerText).join(' / '),270,774,18,470);
  button('back','Back',270,871,280,76,()=>go('menu'),{color:'purple'});
-}
-function drawBoosts(){
- label('BOOSTS',270,135,44);image('icon_coin',210,200,36);label(game.profile.coins,290,200,28);
- const offers=[['score','15% more points',60],['skill','Start with a full skill',80]];
- offers.forEach(([id,title,cost],i)=>{const y=330+i*175;image('panel_blue',270,y,460,150);label(title,270,y-38,24,420);label('Owned: '+(game.profile.boosts[id]||0),150,y+1,17,170);button('use-'+id,game.profile.progress.boosts.includes(id)?'Selected':'Select',150,y+43,170,43,()=>game.toggleBoost(id),{color:game.profile.progress.boosts.includes(id)?'green':'blue',size:17});button('buy-'+id,cost+' coins',355,y+22,220,62,()=>{if(game.buyBoost(id)){sound('purchase');announce('Boost ready for your next new round.');}},{disabled:game.profile.coins<cost,color:'gold',size:21});});
- label('Only selected boosts are used next round.',270,792,18,460);button('back','Back',270,870,280,76,()=>go('menu'),{color:'purple'});
 }
 function drawSettings(){
  label('SETTINGS',270,170,43);
@@ -159,11 +153,11 @@ function draw(){buttons=[];ctx.setTransform(canvas.width/layout.width,0,0,canvas
  art.fever=(screen==='play'||screen==='paused')&&fx.fever;art.phase=game.profile.motion?uiTime:0;
  const stage=document.querySelector('#stage');if(stage.dataset.screen!==screen)stage.dataset.screen=screen;
  if(drawSimple({screen,wide:layout.wide,game,data,image,label,button,go,start,resume,uiTime,collectionPage,turnPage,chooseHero,toggleEasy:()=>{game.profile.easy=game.profile.easy===false;game.save();}})){syncControls();return;}
- if(drawPolish({ctx,screen,wide:layout.wide,game,data,image,label,button,groundShadow,go,start,resume,practice,shareResult,enterChallenge,createChallenge,showSettings,outfitPage,turnOutfitPage:step=>{outfitPage+=step;go('outfits');},resultAge:fx.time-resultAt,fx,purchaseFeedback:()=>{sound('purchase');announce('Added to your bag. Choose Use next to equip it.');}})){if(screen==='results')fx.draw(ctx,{afterShade:true});syncControls();return;}
+ if(drawPolish({ctx,screen,wide:layout.wide,game,data,image,label,button,groundShadow,go,start,resume,practice,shareResult,enterChallenge,createChallenge,showSettings,outfitPage,turnOutfitPage:step=>{outfitPage+=step;go('outfits');},resultAge:fx.time-resultAt,fx})){if(screen==='results')fx.draw(ctx,{afterShade:true});syncControls();return;}
  if(layout.wide){
   drawDesktop({ctx,art,game,data,screen,image,label,button,meter,portrait,go,start,resume,pause,showSettings,toggleLayout,drawBodies,drawFeverLights,fx,uiTime,resultAt,collectionPage,turnPage,chooseHero,card,powerText,input:inputMode,
    keepControls:ids=>{buttons=buttons.filter(b=>ids.includes(b.id));},replaceBack:()=>{buttons.find(b=>b.id==='back').action=()=>go(screenBeforeSettings);},
-   toggleSetting:key=>{game.profile[key]=!game.profile[key];game.save();musicSync();},purchaseFeedback:()=>{sound('purchase');announce('Boost ready for your next new round.');}});
+   toggleSetting:key=>{game.profile[key]=!game.profile[key];game.save();musicSync();}});
   drawPractice();if(game.savingFailed)label('Progress cannot be saved in this browser.',600,793,12,1100);syncControls();return;
  }
  const gameplay=screen==='play'||screen==='paused';
@@ -174,7 +168,7 @@ function draw(){buttons=[];ctx.setTransform(canvas.width/layout.width,0,0,canvas
    fx.draw(ctx,{afterShade:true});
    if(fx.super){image('button_gold_round',478,64,76);image('icon_pause',478,64,37);}
   }else{ctx.fillStyle='#082e34aa';ctx.fillRect(0,0,540,960);drawPause();}}
- else if(screen==='menu')drawMenu();else if(screen==='collection')drawCollection();else if(screen==='boosts')drawBoosts();else if(screen==='settings')drawSettings();else if(screen==='results'){drawResults();fx.draw(ctx,{afterShade:true});}
+ else if(screen==='menu')drawMenu();else if(screen==='collection')drawCollection();else if(screen==='settings')drawSettings();else if(screen==='results'){drawResults();fx.draw(ctx,{afterShade:true});}
  drawPractice();if(game.savingFailed)label('Progress cannot be saved in this browser.',270,952,12,490);
  syncControls();
 }

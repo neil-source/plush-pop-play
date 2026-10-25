@@ -8,7 +8,7 @@ export function drawSimple(a){
   B('play-style',g.profile.easy!==false?'Easy: 3 types, 60 sec':'Classic: 5 types, 60 sec',c,215,440,80,toggleEasy,{color:'gold',size:24});
   L('Changes apply to the next new round.',c,282,17,w-50);
   const rows=wide?[[c-195,386],[c+195,386],[c-195,501],[c+195,501]]:[[c,365],[c,470],[c,575],[c,680]];
-  [['friends','Upgrades'],['boosts','Shop'],['settings','Sound and motion'],['challenge','Friend challenge']].forEach(([id,name],i)=>B(id,name,...rows[i],wide?340:360,80,()=>go(id),{color:i%2?'gold':'green',size:25}));
+  [['friends','Upgrades'],['outfits','Shop'],['settings','Sound and motion'],['challenge','Friend challenge']].forEach(([id,name],i)=>B(id,name,...rows[i],wide?340:360,80,()=>go(id),{color:i%2?'gold':'green',size:25}));
   B('options-home','Back to play',c,h-85,290,78,()=>go('menu'),{icon:'back',color:'purple'});return true;
  }
  if(screen==='collection'){
